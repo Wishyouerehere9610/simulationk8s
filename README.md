@@ -1,44 +1,19 @@
-#catsconti.github.io
-```yaml
-controller:
-  image:
-    registry: localhost:5000/k8s.gcr.io
-    image: ingress-nginx/controller
-    tag: "v1.0.3"
-    digest: ""
-  service:
-    type: NodePort
-    nodePorts:
-      http: 32080
-      https: 32443
-      tcp:
-        3000: 32808
-  admissionWebhooks:
-    patch:
-      image:
-        registry: localhost:5000/k8s.gcr.io
-        image: ingress-nginx/kube-webhook-certgen
-        tag: v1.0
-        digest: ""
-        pullPolicy: IfNotPresent
-defaultBackend:
-  enabled: false
-  name: defaultbackend
-  image:
-    registry: k8s.gcr.io
-    image: defaultbackend-amd64
-    tag: "1.5"
-    pullPolicy: IfNotPresent
-imagePullSecrets: []
+# ben.wangz's blog
 
-./bin/helm install \
-    --create-namespace --namespace defaule \
-    gitea-ingress-nginx \
-    ingress-nginx \
-    --version 4.0.5 \
-    --repo https://kubernetes.github.io/ingress-nginx \
-    --values $(pwd)/ingress.nginx.values.yaml \
-    --atomic
-```
+* [useful commands](commands/README.md)
+* [qemu](qemu/README.md)
+* [linux](linux/README.md)
+* [docker](docker/README.md)
+* [kubernetes](kubernetes/README.md)
+* others
+    + [mirror sites from website](mirror.sites.from.website.md)
+* github projects
+    1. [docker in docker with sshd](https://github.com/ben-wangz/docker-dind-sshd)
+    2. [docker image of centos with systemd and sshd](https://github.com/ben-wangz/docker-systemd)
+    3. [greenplum docker image](https://github.com/ben-wangz/greenplum-docker):
+       support singleton and cluster but just suitable for testing
+    4. [docker image of novnc client](https://github.com/ben-wangz/docker-novnc)
+    5. [docs for ants](https://github.com/ben-wangz/ant-doc): Yes, I treat ants as pets.
+* TODO: [about me](ben.wangz.md)
 
-
+[浙ICP备2021024222号](https://beian.miit.gov.cn/)
