@@ -23,11 +23,14 @@
 ### do it
 
 1. [create local cluster for testing](../../kubernetes/basic/local.cluster.for.testing.md)
+
 2. install ingress nginx
     * prepare [ingress.nginx.values.yaml](../../kubernetes/basic/resources/ingress.nginx.values.yaml.md)
+    
     * prepare images
         + ```shell
-          for IMAGE in "k8s.gcr.io/ingress-nginx/controller:v1.0.3" "k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.0"
+          for IMAGE in "k8s.gcr.io/ingress-nginx/controller:v1.0.3" \
+              "k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.0"
           do
               LOCAL_IMAGE="localhost:5000/$IMAGE"
               docker image inspect $IMAGE || docker pull $IMAGE
@@ -35,6 +38,7 @@
               docker push $LOCAL_IMAGE
           done
           ```
+    
     * install with helm
         + ```shell
           ./bin/helm install \
@@ -46,7 +50,15 @@
               --values ingress.nginx.values.yaml \
               --atomic
           ```
-3. install gitea
+    
+3. modeified `ingress`
+   
+   * prepare [gitea.ingress.values.com](resources/ingress.value.yaml)
+   * TODO: 
+     * 增加 ` ingress controller `  的标签选择?
+     * 使用gitea自带的`ingress`配置
+   
+4. install gitea
     * prepare [gitea.values.yaml](./resources/gitea.values.yaml.md)
     * prepare images
         + ```shell
@@ -87,11 +99,23 @@
               --values gitea.values.yaml \
               --atomic
           ```
-4. register an account
+    
 5. visit gitea from website
     * port-forward
         + ```shell
           ./bin/kubectl --namespace application port-forward svc/my-gitea-http 3000:3000 --address 0.0.0.0
           ```
     * visit http://$HOST:3000
+    * username and password
+        + ```shell
+          ./bin/kubectl get secret gitea-admin-secret -n gitea -o jsonpath={.data.username} | base64 --decode && echo
+          ./bin/kubectl get secret gitea-admin-secret -n gitea -o jsonpath={.data.password} | base64 --decode && echo
+          ```
+
 6. visit gitea with ssh
+    * port-forward
+        + ```shell
+          ./bin/kubectl --namespace application port-forward svc/my-gitea-ssh 222:22 --address 0.0.0.0
+          ```
+   
+   
