@@ -29,6 +29,43 @@ gitea:
   admin:
     existingSecret: gitea-admin-secret
     email: "ben.wangz@foxmail.com"
+  config:
+    default:
+      APP_NAME: Gitea
+      RUN_USER: git
+      RUN_MODE: prod
+    repository:
+      MAX_CREATION_LIMIT: 10
+      DISABLED_REPO_UNITS: repo.wiki,repo.ext_wiki
+      DEFAULT_REPO_UNITS: repo.code,repo.releases,repo.issues,repo.pulls,repo.wiki,repo.projects
+      DISABLE_STARS: true
+    ui:
+      SEARCH_REPO_DESCRIPTION: false
+    server:
+      LANDING_PAGE: login
+      DOMATN: gitea.conti.net
+      SSH_DOMAIN: gitea.conti.net
+    admin:
+      DISABLE_REGULAR_ORG_CREATION: true
+    security:
+      INSTALL_LOCK: true
+    service:
+      DISABLE_REGISTRATION: true
+      ENABLE_NOTIFY_MAIL: true
+      DEFAULT_ALLOW_CREATE_ORGANIZATION: false
+      SHOW_REGISTRATION_BUTTON: false
+      explore:
+        DISABLE_USERS_PAGE: true
+    mailer:
+      ENABLED: true
+      IS_TLS_ENABLED: true
+      MAILER_TYPE: smtp
+      HOST: smtpdm.aliyun.com:465
+      FROM: messenger@email.catconti.icu
+      USER: messenger@email.catconti.icu
+      PASSWD: WSXqaz1234
+    other:
+      SHOW_FOOTER_VERSION: false
   database:
     builtIn:
       postgresql:
