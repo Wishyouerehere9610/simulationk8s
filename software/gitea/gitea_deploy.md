@@ -119,12 +119,12 @@
     
     * 创建测试仓库
     
-        ```tex
-        在网页上创建测试库(用户创建)
-        ```
+        * ```tex
+          在网页上创建测试库(用户创建)
+          ```
     
     + 测试ssh链接是否正常
     
-      ```yaml
-      git clone ssh:/git clone ssh://git@192.168.31.31:222/libokang/test.git
-      ```
+      * ```shell
+        git clone ssh:/git clone ssh://git@192.168.31.31:222/libokang/test.git
+        ```
