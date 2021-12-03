@@ -53,7 +53,7 @@
     
 3. modeified `ingress`
    
-   * prepare [gitea.ingress.values.com](resources/ingress.value.yaml)
+   * prepare [gitea.ingress.values.com](resources/gitea.ingress.values.yaml)
    * TODO: 
      * 增加 ` ingress controller `  的标签选择?
      * 使用gitea自带的`ingress`配置
@@ -106,16 +106,25 @@
           ./bin/kubectl --namespace application port-forward svc/my-gitea-http 3000:3000 --address 0.0.0.0
           ```
     * visit http://$HOST:3000
-    * username and password
+    * password
         + ```shell
-          ./bin/kubectl get secret gitea-admin-secret -n gitea -o jsonpath={.data.username} | base64 --decode && echo
           ./bin/kubectl get secret gitea-admin-secret -n gitea -o jsonpath={.data.password} | base64 --decode && echo
           ```
-
-6. visit gitea with ssh
+    
+6. other
     * port-forward
         + ```shell
           ./bin/kubectl --namespace application port-forward svc/my-gitea-ssh 222:22 --address 0.0.0.0
           ```
-   
-   
+    
+    * 创建测试仓库
+    
+        ```tex
+        在网页上创建测试库(用户创建)
+        ```
+    
+    + 测试ssh链接是否正常
+    
+      ```yaml
+      git clone ssh:/git clone ssh://git@192.168.31.31:222/libokang/test.git
+      ```
