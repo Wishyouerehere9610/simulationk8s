@@ -22,9 +22,9 @@
 
 ### do it
 
-1. [create local cluster for testing](../basic/local.cluster.for.testing.md)
+1. [create local cluster for testing](../../kubernetes/basic/local.cluster.for.testing.md)
 2. install ingress nginx
-    * prepare [ingress.nginx.values.yaml](../basic/resources/ingress.nginx.values.yaml.md)
+    * prepare [ingress.nginx.values.yaml](../../kubernetes/basic/resources/ingress.nginx.values.yaml.md)
     * prepare images
         + ```shell
           for IMAGE in "k8s.gcr.io/ingress-nginx/controller:v1.0.3" "k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.0"
@@ -47,7 +47,7 @@
               --atomic
           ```
 3. install gitea
-    * prepare [gitea.values.yaml](resources/gitea.values.yaml.md)
+    * prepare [gitea.values.yaml](../../kubernetes/software/resources/gitea.values.yaml.md)
     * prepare images
         + ```shell
           for IMAGE in "gitea/gitea:1.15.3" \

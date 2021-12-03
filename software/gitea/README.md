@@ -1,4 +1,4 @@
 ## gitea
 
-* [gitea_deploy](resources/gitea-config.md)
-* [gitea_use](resources/gitea-config.md)
+* [gitea_deploy](gitea_deploy.md)
+* [gitea_use](gitea_deploy.md)
