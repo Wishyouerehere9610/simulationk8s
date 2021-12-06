@@ -1,9 +1,39 @@
 # gitea function
+
+* [gitea.config.values](https://docs.gitea.io/en-us/config-cheat-sheet/#overall-default)
+
+## 管理角度
+## 基本功能
+* Easy upgrade process
+* Markdown support
+* Integrated Git-powered wiki
+* Deploy Tokens
+* Repository Tokens with write rights
+* External git mirroring
+
+## 优点
+* Low resource usage
+* Multiple database support
+* Multiple OS support
+* Orgmode support
+* CSV support
+* Third-party render tool support
+
+## 缺点
+* Static Git-powered pages
+* Built-in Container Registry
+* Built-in CI/CD
+* Subgroups: groups within groups
+
+
+
 ## 基本功能点
+* 仓库管理
+  * 仓库描述
 * 特性:
   * 支持markwodn
   * 支持Orgmode
-  * 外部Git镜像(迁移相关)
+  * 外部Git镜像(迁移相关,已禁用)
 * 仓库管理:
   * 仓库描述
   * 仓库内代码搜索

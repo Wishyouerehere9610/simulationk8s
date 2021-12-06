@@ -7,17 +7,19 @@ service:
     type: NodePort
     port: 22
 ingress:
-  enabled: false
+  enabled: true
   # className: nginx
-  annotations: { }
-  # kubernetes.io/ingress.class: nginx
-  # kubernetes.io/tls-acme: "true"
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/proxy-body-size: 10g
+    # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: git.example.com
+    - host: gitea.conti.net
       paths:
         - path: /
           pathType: Prefix
-  tls: [ ]
+  #tls: [ ]
   #  - secretName: chart-example-tls
   #    hosts:
   #      - git.example.com
@@ -27,8 +29,7 @@ persistence:
   storageClass: standard
 gitea:
   admin:
-    username: "gitea_admin"
-    password: "AAbb1234"
+    existingSecret: gitea-admin-secret
     email: "ben.wangz@foxmail.com"
   config:
     default:
@@ -38,8 +39,9 @@ gitea:
     repository:
       MAX_CREATION_LIMIT: 10
       DISABLED_REPO_UNITS: repo.wiki,repo.ext_wiki
-      DEFAULT_REPO_UNITS: repo.code,repo.releases,repo.issues,repo.pulls,repo.wiki,repo.projects
+      DEFAULT_REPO_UNITS: repo.code,repo.releases,repo.issues,repo.pulls,repo.projects
       DISABLE_STARS: true
+      DISABLE_MIGRATIONS: true
     ui:
       SHOW_USER_EMAIL: false
       SEARCH_REPO_DESCRIPTION: false
@@ -53,8 +55,8 @@ gitea:
     security:
       INSTALL_LOCK: true
     service:
-      DISABLE_REGISTRATION: true
       REGISTER_EMAIL_CONFIRM: true
+      DISABLE_REGISTRATION: true
       ENABLE_NOTIFY_MAIL: true
       DEFAULT_ALLOW_CREATE_ORGANIZATION: false
       SHOW_REGISTRATION_BUTTON: false
