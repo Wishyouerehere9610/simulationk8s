@@ -9,6 +9,12 @@
 * [Add ssh keys](resources/add_ssh_keys.md)
 
 ## 使用教程
+* 基本操作
+  * 登录
+  * 修改密码
+* 项目管理
+  * 新建项目
+  * 编辑和删除用户
 * Code management
   * [New repository](resources/new_repository.md)
   * [Setting repository](resources/setting_repository.md)
