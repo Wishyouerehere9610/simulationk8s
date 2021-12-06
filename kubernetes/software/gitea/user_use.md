@@ -13,25 +13,25 @@
   * [删除仓库]()
   * [修改仓库]()
 * issue 管理
-  * [自己仓库的]()
-  * [指定给我的]()
-  * [自己创建的]()
-  * [提到自己的]()
+  * [In your repositories]()
+  * [Assigned to you]()
+  * [Created by you]()
+  * [Mentioning you]()
 * Pull/Merge requests
-  * [自己仓库的]()
-  * [指定给我的]()
-  * [自己创建的]()
-  * [提到自己的]()
-  * [已提交评审]()
+  * [In your repositories]()
+  * [Assigned to you]()
+  * [Created by you]()
+  * [Mentioning you]()
+  * [Review requested]()
 * 里程碑管理
-  * [自己仓库的]()
+  * [In your repositories]()
 * 个人设置
-  * 个人信息
-  * 账号
-  * 安全
-  * 应用
-  * SSH/GPG
-  * 组织
-  * 仓库列表
+  * [profile]()
+  * [Account]()
+  * [Security]()
+  * [Application]()
+  * [SSH/GPG]()
+  * [Organization]()
+  * [Repositories]()
 ## Git常用命令
 ## 总结
