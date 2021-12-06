@@ -1,10 +1,13 @@
 # Gitea用户使用手册
 ## 前言
 * [Gitea与Gitlab的区别]()
+
 ## 注册账号
 * [Register](resources/account_umber.md)
+
 ## 配置SSH
 * [Add ssh keys](resources/add_ssh_keys.md)
+
 ## 使用教程
 * Code management
   * [New repository](resources/new_repository.md)
@@ -20,6 +23,8 @@
   * [pass](resources/user_setting.md)
 * Project actual combat process
   * [case](resources/case.md)
+
 ## Git常用命令
 * [Git commands](resources/git_commands.md)
+
 ## 总结
