@@ -27,7 +27,8 @@ persistence:
   storageClass: standard
 gitea:
   admin:
-    existingSecret: gitea-admin-secret
+    username: "gitea_admin"
+    password: "AAbb1234"
     email: "ben.wangz@foxmail.com"
   config:
     default:
@@ -40,27 +41,30 @@ gitea:
       DEFAULT_REPO_UNITS: repo.code,repo.releases,repo.issues,repo.pulls,repo.wiki,repo.projects
       DISABLE_STARS: true
     ui:
+      SHOW_USER_EMAIL: false
       SEARCH_REPO_DESCRIPTION: false
     server:
       LANDING_PAGE: login
-      DOMATN: gitea.conti.net
+      DOMAIN: gitea.conti.net
       SSH_DOMAIN: gitea.conti.net
+      SSH_AUTHORIZED_PRINCIPALS_ALLOW: email
     admin:
       DISABLE_REGULAR_ORG_CREATION: true
     security:
       INSTALL_LOCK: true
     service:
       DISABLE_REGISTRATION: true
+      REGISTER_EMAIL_CONFIRM: true
       ENABLE_NOTIFY_MAIL: true
       DEFAULT_ALLOW_CREATE_ORGANIZATION: false
       SHOW_REGISTRATION_BUTTON: false
       explore:
         DISABLE_USERS_PAGE: true
-    mailer:
-      ENABLED: true
-      IS_TLS_ENABLED: true
-      MAILER_TYPE: smtp
-      HOST: smtpdm.aliyun.com:465
+    mailer:                                                                      
+      ENABLED: true                                                              
+      IS_TLS_ENABLED: true                                                       
+      MAILER_TYPE: smtp                                                          
+      HOST: smtpdm.aliyun.com:465                                                
       FROM: messenger@email.catconti.icu
       USER: messenger@email.catconti.icu
       PASSWD: WSXqaz1234

@@ -1,5 +1,5 @@
 # software
 
-* [gitea](gitea/README.md)
-* [nginx](gitea/README.md)
+* [gitea](../kubernetes/software/gitea/README.md)
+* [nginx](../kubernetes/software/gitea/README.md)
 
