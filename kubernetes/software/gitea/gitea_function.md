@@ -2,6 +2,7 @@
 
 * [gitea.config.values](https://docs.gitea.io/en-us/config-cheat-sheet/#overall-default)
 
+
 ## 管理角度
 ## 基本功能
 * Easy upgrade process
