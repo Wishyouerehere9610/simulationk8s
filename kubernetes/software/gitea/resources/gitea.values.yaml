@@ -31,7 +31,7 @@ gitea:
       RUN_MODE: prod
     repository:
       MAX_CREATION_LIMIT: 10
-      DISABLED_REPO_UNITS: repo.wiki,repo.ext_wiki
+      DISABLED_REPO_UNITS: repo.wiki,repo.ext_wiki,repo.projects
       DEFAULT_REPO_UNITS: repo.code,repo.releases,repo.issues,repo.pulls
       DISABLE_STARS: true
       DISABLE_MIGRATIONS: true
@@ -54,8 +54,9 @@ gitea:
       ENABLE_NOTIFY_MAIL: true
       DEFAULT_ALLOW_CREATE_ORGANIZATION: false
       SHOW_REGISTRATION_BUTTON: false
-      explore:
-        DISABLE_USERS_PAGE: true
+      SHOW_MILESTONES_DASHBOARD_PAGE: false
+    service.explore:
+      DISABLE_USERS_PAGE: true
     mailer:                                                                      
       ENABLED: true                                                              
       IS_TLS_ENABLED: true                                                       
