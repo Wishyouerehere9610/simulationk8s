@@ -42,6 +42,7 @@ gitea:
       DEFAULT_REPO_UNITS: repo.code,repo.releases,repo.issues,repo.pulls,repo.projects
       DISABLE_STARS: true
       DISABLE_MIGRATIONS: true
+      DEFAULT_BRANCH: main
     ui:
       SHOW_USER_EMAIL: false
       SEARCH_REPO_DESCRIPTION: false
