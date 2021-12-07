@@ -17,3 +17,5 @@ http://gitea.conti.net
 #### 测试服务 [gitea.conti.net](http://gitea.conti.net)
 *  修改本机hosts文件     10.11.12.173 gitea.conti.com
    * ![image-20211207162833171](http://conti-picture-database.oss-cn-hangzhou.aliyuncs.com/img/image-20211207162833171.png)
+* 测试账号 Rose:wfbyt525
+* 测试账号 Jack:wfbyt525
