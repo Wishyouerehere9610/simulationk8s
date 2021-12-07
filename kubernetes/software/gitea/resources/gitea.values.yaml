@@ -39,7 +39,7 @@ gitea:
     repository:
       MAX_CREATION_LIMIT: 10
       DISABLED_REPO_UNITS: repo.wiki,repo.ext_wiki
-      DEFAULT_REPO_UNITS: repo.code,repo.releases,repo.issues,repo.pulls,repo.projects
+      DEFAULT_REPO_UNITS: repo.code,repo.releases,repo.issues,repo.pulls
       DISABLE_STARS: true
       DISABLE_MIGRATIONS: true
       DEFAULT_BRANCH: main
@@ -71,6 +71,11 @@ gitea:
       FROM: messenger@email.catconti.icu
       USER: messenger@email.catconti.icu
       PASSWD: WSXqaz1234
+    i18n:
+      LANGS: en-US,zh-CN,zh-HK,zh-TW
+      NAMES: English,简体中文,繁體中文(中国香港),繁體中文(中国台灣)
+    oauth2:
+      ENABLE: false
     other:
       SHOW_FOOTER_VERSION: false
   database:

@@ -40,8 +40,8 @@
 ### 存储库 - 拉取请求 ( `repository.pull-request`)
 
 - `WORK_IN_PROGRESS_PREFIXES`: **WIP:,[WIP]** : 拉取请求标题中使用的前缀列表，将它们标记为正在进行中
-- `CLOSE_KEYWORDS`：**关闭**，**关闭**，**关闭**，**修复**，**修复**，**修复**，**解决**，**解决**，已**解决**：拉取请求注释中使用的关键字列表以自动关闭相关问题
-- `REOPEN_KEYWORDS`：**重新打开**，**重新打开**，**重新打开**：在拉取请求注释中使用的关键字列表以自动重新打开相关问题
+- `CLOSE_KEYWORDS`：**close**, **closes**, **closed**, **fix**, **fixes**, **fixed**, **resolve**, **resolves**, **resolved** ：拉取请求注释中使用的关键字列表以自动关闭相关问题
+- `REOPEN_KEYWORDS`：**reopen**, **reopens**, **reopened**：在拉取请求注释中使用的关键字列表以自动重新打开相关问题
 - `DEFAULT_MERGE_MESSAGE_COMMITS_LIMIT`: **50** : 在壁球提交的默认合并消息中，最多包括这么多次提交。设置`-1`为包括所有提交
 - `DEFAULT_MERGE_MESSAGE_SIZE`：**5120**：在壁球提交的默认合并消息中限制提交消息的大小。设置为`-1`没有限制。仅当`POPULATE_SQUASH_COMMENT_WITH_COMMIT_MESSAGES`是时使用`true`。
 - `DEFAULT_MERGE_MESSAGE_ALL_AUTHORS`: **false** : 在壁球提交的默认合并消息中，将所有提交包含在共同作者中的所有作者，否则只使用有限列表中的那些
@@ -52,7 +52,7 @@
 
 ### 存储库 - 问题 ( `repository.issue`)
 
-- `LOCK_REASONS`：**太热，离题，已解决，垃圾邮件**：可以锁定拉取请求或问题的原因列表
+- `LOCK_REASONS`：**Too heated,Off-topic,Resolved,Spam** ：可以锁定拉取请求或问题的原因列表
 
 ### 存储库 - 上传 ( `repository.upload`)
 
@@ -74,15 +74,7 @@
 
 - `SIGNING_NAME`& `SIGNING_EMAIL`：如果提供 KEYID 作为 ，请将`SIGNING_KEY`它们用作签名者的姓名和电子邮件地址。这些应该与密钥的公开名称和电子邮件地址相匹配。
 
-- ```
-  INITIAL_COMMIT
-  ```
-
-  : 
-
-  always
-
-   : [never, pubkey, twofa, always]: 签署初始提交。
+- `INITIAL_COMMIT`:  always  : [never, pubkey, twofa, always]: 签署初始提交。
 
   - `never`: 从不签字
   - `pubkey`: 只有当用户有公钥时才签名
@@ -90,15 +82,7 @@
   - `always`: 总是签名
   - `never`和以外的选项`always`可以组合为逗号分隔的列表。
 
-- ```
-  DEFAULT_TRUST_MODEL
-  ```
-
-  : 
-
-  collaborator
-
-   : [collaborator, committer, collaboratorcommitter]：用于验证提交的默认信任模型。
+- `DEFAULT_TRUST_MODEL`: collaborator  : [collaborator, committer,collaboratorcommitter]：用于验证提交的默认信任模型。
 
   - `collaborator`：信任由合作者的密钥签名的签名。
   - `committer`: 信任与提交者匹配的签名（这匹配 GitHub 并将强制 Gitea 签名的提交让 Gitea 作为提交者）。
@@ -106,29 +90,12 @@
 
 - `WIKI`: **never** : [never, pubkey, twofa, always, parentsigned]: 签署对 wiki 的承诺。
 
-- ```
-  CRUD_ACTIONS
-  ```
-
-  : 
-
-  pubkey, twofa, parentsigned
-
-   : [never, pubkey, twofa, parentsigned, always]: 签署 CRUD 操作。
+- `CRUD_ACTIONS` : pubkey, twofa, parentsigned : [never, pubkey, twofa, parentsigned, always]: 签署 CRUD 操作。
 
   - 选项如上，另外还有：
   - `parentsigned`：仅在父提交已签名时才签名。
 
-- ```
-  MERGES
-  ```
-
-  : 
-
-  pubkey, twofa, basesigned, commitssigned
-
-   : [never, pubkey, twofa, Approved, basesigned, commitssigned, always]: 签名合并。
-
+- `MERGES`: pubkey, twofa, basesigned, commitssigned : [never, pubkey, twofa, Approved, basesigned, commitssigned, always]: 签名合并。
   - `approved`：仅将批准的合并签署到受保护的分支。
   - `basesigned`：仅当基础仓库中的父提交被签名时才签名。
   - `headsigned`: 只有在 head 分支中的 head commit 被签名时才签名。
@@ -144,9 +111,9 @@
 
 `Content-Type: application/vnd.android.package-archive`下载带有`.apk`文件扩展名的文件时，以下配置设置标题。
 
-```ini
-.apk=application/vnd.android.package-archive
-```
+* ```ini
+  .apk=application/vnd.android.package-archive
+  ```
 
 ## CORS ( `cors`)
 
@@ -188,15 +155,15 @@
 
 ### 用户界面 - 元数据 ( `ui.meta`)
 
-- `AUTHOR`：**Gitea - 喝杯茶的 Git**：主页的作者元标记。
-- `DESCRIPTION`：**Gitea（Git with a cup of tea）是一个用 Go 编写的无痛自托管 Git 服务**：主页的描述元标记。
+- `AUTHOR`：**Gitea - Git with a cup of tea**：主页的作者元标记。
+- `DESCRIPTION`：**Gitea (Git with a cup of tea) is a painless self-hosted Git service written in Go**：主页的描述元标记。
 - `KEYWORDS`: **go,git,self-hosted,gitea** : 主页的关键词元标签。
 
 ### 用户界面 - 通知 ( `ui.notification`)
 
 - `MIN_TIMEOUT`: **10s** : 这些选项控制轮询通知端点以更新通知计数的频率。在页面加载后，将检查通知计数`MIN_TIMEOUT`。超时将增加至`MAX_TIMEOUT`由`TIMEOUT_STEP`如果通知数是不变的。将 MIN_TIMEOUT 设置为 0 以关闭。
-- `MAX_TIMEOUT`: **60 年代**。
-- `TIMEOUT_STEP`: **10 秒**。
+- `MAX_TIMEOUT`: **60s**。
+- `TIMEOUT_STEP`: **10s**。
 - `EVENT_SOURCE_UPDATE_TIME`: **10s** : 此设置确定查询数据库以更新通知计数的频率。如果浏览器客户端支持`EventSource`and `SharedWorker`， a`SharedWorker`将优先用于轮询通知端点。设置为**-1**以禁用`EventSource`.
 
 ### 用户界面 - SVG 图像 ( `ui.svg`)
@@ -240,7 +207,7 @@
 - `SSH_AUTHORIZED_KEYS_BACKUP`: **true** : 重写所有密钥时启用 SSH 授权密钥备份，默认为 true。
 - `SSH_TRUSTED_USER_CA_KEYS`: **<empty>** : 指定受信任的证书颁发机构的公钥来签署用户证书以进行身份验证。多个键应以逗号分隔。例如`ssh-<algorithm> <key>`或`ssh-<algorithm> <key1>, ssh-<algorithm> <key2>`。有关更多信息，请参见`TrustedUserCAKeys`sshd 配置手册页。为空时不会创建文件，`SSH_AUTHORIZED_PRINCIPALS_ALLOW`默认为`off`.
 - `SSH_TRUSTED_USER_CA_KEYS_FILENAME`: **`RUN_USER`/.ssh/gitea-trusted-user-ca-keys.pem** : **Gitea**`TrustedUserCaKeys`将管理的文件的绝对路径。如果您正在运行自己的 ssh 服务器并且想要使用 Gitea 托管文件，则还需要修改 sshd_config 以指向该文件。官方 docker 镜像将自动运行，无需进一步配置。
-- `SSH_AUTHORIZED_PRINCIPALS_ALLOW`：**关闭**或**用户名，电子邮件**：[关闭，用户名，电子邮件，任何东西]：指定允许用户用作主体的主体值。当设置为`anything`不检查主体字符串时。设置为`off`授权委托人时不允许设置。
+- `SSH_AUTHORIZED_PRINCIPALS_ALLOW`：**off**或**username**，**电子邮件**：[off，usernmae，email，任何东西]：指定允许用户用作主体的主体值。当设置为`anything`不检查主体字符串时。设置为`off`授权委托人时不允许设置。
 - `SSH_CREATE_AUTHORIZED_PRINCIPALS_FILE`: **false/true** :Gitea 将默认创建一个authorized_principals 文件，当它不使用内部ssh 服务器并且`SSH_AUTHORIZED_PRINCIPALS_ALLOW`不是`off`。
 - `SSH_AUTHORIZED_PRINCIPALS_BACKUP`: **false/true** : 重写所有密钥时启用 SSH 授权主体备份，如果`SSH_AUTHORIZED_PRINCIPALS_ALLOW`不是，则默认为 true `off`。
 - `SSH_AUTHORIZED_KEYS_COMMAND_TEMPLATE`: **{{.AppPath}} –config={{.CustomConf}} serv key-{{.Key.ID}}** : 设置传递授权密钥的命令模板。可能的键有：AppPath、AppWorkPath、CustomConf、CustomPath、Key - 其中 Key 是 a `models.PublicKey`，其他是 shellquoted 的字符串。
@@ -259,7 +226,7 @@
 - `CERT_FILE`: **https/cert.pem** : 用于 HTTPS 的证书文件路径。链接时，服务器证书必须先出现，然后是中间 CA 证书（如果有）。从 1.11 开始，路径是相对于`CUSTOM_PATH`.
 - `KEY_FILE`: **https/key.pem** : 用于 HTTPS 的密钥文件路径。从 1.11 开始，路径是相对于`CUSTOM_PATH`.
 - `STATIC_ROOT_PATH`: **./** : 上一级模板和静态文件路径。
-- `APP_DATA_PATH`：**数据**（**docker**上的**/data/gitea**）：应用程序数据的默认路径。
+- `APP_DATA_PATH`：**data**（**docker**上的**/data/gitea**）：应用程序数据的默认路径。
 - `STATIC_CACHE_TIME`：**6H**：Web浏览器缓存时间上静态的资源`custom/`，`public/`并且所有上传的头像。请注意，此缓存在`RUN_MODE`“dev”时被禁用。
 - `ENABLE_GZIP`: **false** : 为运行时生成的内容启用 gzip 压缩，排除静态资源。
 - `ENABLE_PPROF`: **false** : 应用程序分析（内存和 CPU）。对于“web”命令，它监听 localhost:6060。将“serv”命令将其转储到磁盘上的`PPROF_DATA_PATH`作为`(cpuprofile|memprofile)_<username>_<temporary id>`
@@ -320,26 +287,12 @@
 ## 数据库 ( `database`)
 
 - `DB_TYPE`: **mysql** : 使用的数据库类型 [mysql, postgres, mssql, sqlite3]。
-
 - `HOST`: **127.0.0.1:3306** : unix socket [mysql, postgres] 的数据库主机地址和端口或绝对路径（例如：/var/run/mysqld/mysqld.sock）。
-
 - `NAME`: **gitea** : 数据库名称。
-
 - `USER`: **root** : 数据库用户名。
-
-- `PASSWD`: **<空>** : 数据库用户密码。如果您在密码中使用特殊字符，请使用“您的密码”或““您的密码””来引用。
-
+- `PASSWD`: **<empty>** : 数据库用户密码。如果您在密码中使用特殊字符，请使用“您的密码”或““您的密码””来引用。
 - `SCHEMA`: **<empty>** : 仅适用于 PostgreSQL，如果与“public”不同，则使用模式。模式必须事先存在，用户必须对其具有创建权限，并且必须将用户搜索路径设置为首先查看模式（例如`ALTER USER user SET SEARCH_PATH = schema_name,"$user",public;`）。
-
-- ```
-  SSL_MODE
-  ```
-
-  : 
-
-  disable
-
-   : 用于连接数据库的 SSL/TLS 加密模式。此选项仅适用于 PostgreSQL 和 MySQL。
+- `SSL_MODE` :  disable  : 用于连接数据库的 SSL/TLS 加密模式。此选项仅适用于 PostgreSQL 和 MySQL。
 
   - MySQL 的有效值：
     - `true`：启用 TLS，并根据其根证书验证数据库服务器证书。选择此选项时，请确保验证数据库服务器证书（例如 CA 证书）所需的根证书位于数据库和 Gitea 服务器的系统证书存储中。有关如何将 CA 证书添加到证书库的说明，请参阅您的系统文档。
@@ -352,26 +305,16 @@
     - `require`：无需任何验证即可启用 TLS。
     - `verify-ca`：启用 TLS，并根据其根证书验证数据库服务器证书。
     - `verify-full`：启用 TLS 并验证数据库服务器名称与`Common Name`或`Subject Alternative Name`字段中的给定证书匹配。
-
 - `SQLITE_TIMEOUT`: **500** : 仅对 sqlite3 的查询超时。
-
 - `ITERATE_BUFFER_SIZE`: **50** : 用于迭代的内部缓冲区大小。
-
 - `CHARSET`: **utf8mb4** : 仅适用于 MySQL，“utf8”或“utf8mb4”。注意：对于“utf8mb4”，您必须使用 MySQL InnoDB > 5.6。Gitea 无法检查这一点。
-
 - `PATH`: **data/gitea.db** : 仅适用于 SQLite3，数据库文件路径。
-
 - `LOG_SQL`: **true** : 记录执行的 SQL。
-
 - `DB_RETRIES`: **10** : 允许多少次 ORM init / DB 连接尝试。
-
 - `DB_RETRY_BACKOFF`: **3s** : time.Duration 在尝试另一个 ORM init / DB 连接尝试之前等待，如果失败。
-
 - `MAX_OPEN_CONNS` **0**：数据库最大打开连接数 - 默认为 0，表示没有限制。
-
 - `MAX_IDLE_CONNS` **2** : 连接池上的最大空闲数据库连接数，默认为 2 - 这将被限制为`MAX_OPEN_CONNS`.
-
-- `CONN_MAX_LIFETIME` **0 或 3s**：设置可以重用数据库连接的最长时间 - 默认为 0，这意味着没有限制（MySQL 除外，它是 3s - 参见 #6804 和 #7071）。
+- `CONN_MAX_LIFETIME` **0 or 3s**：设置可以重用数据库连接的最长时间 - 默认为 0，这意味着没有限制（MySQL 除外，它是 3s - 参见 #6804 和 #7071）。
 
 请参阅 #8540 & #8273 以进一步讨论`MAX_OPEN_CONNS`, `MAX_IDLE_CONNS`&的适当值`CONN_MAX_LIFETIME`及其与端口耗尽的关系。
 
@@ -398,83 +341,16 @@
 - `MAX_FILE_SIZE`：**1048576**：要编制索引的文件的最大字节数。
 - `STARTUP_TIMEOUT`: **30s** : 如果索引器启动时间超过此超时时间 - 失败。（这个超时将被添加到上面的子进程的锤子时间 - 因为直到前一个父进程关闭之前 bleve 才会启动。）设置为零以永不超时。
 
-## 队列（`queue`和`queue.*`）
-
-配置 at`[queue]`将设置队列的默认值，并覆盖各个队列的`[queue.*]`. （但是，请参见下文。）
-
-- `TYPE`：**持久化通道**：通用队列类型，目前支持：`persistable-channel`（使用性LevelDB内部）， ，`channel`，，`level``redis``dummy`
-- `DATADIR`: **queues/** : Base DataDir 用于存储持久和级别队列。`DATADIR`对于单个队列可以分`queue.name`节设置，但默认为`DATADIR/`**`common`**. （以前每个队列都默认为`DATADIR/`**`name`**。）
-- `LENGTH`: **20** : 通道队列阻塞前的最大队列大小
-- `BATCH_LENGTH`: **20** : 在传递给处理程序之前批处理数据
-- `CONN_STR`: **redis://127.0.0.1:6379/0** : redis 队列类型的连接字符串。可以使用查询参数设置选项。同样，LevelDB 选项也可以使用：**leveldb://relative/path?option=value**或**leveldb:///absolute/path?option=value 设置**，并将覆盖`DATADIR`
-- `QUEUE_NAME`: **_queue** : 默认redis 和磁盘队列名称的后缀。单个队列将默认为但可以在特定部分中被覆盖。**`name`**`QUEUE_NAME``queue.name`
-- `SET_NAME`: **_unique** : 将添加到默认 redis 和`set`唯一队列的磁盘队列名称的后缀。单个队列将默认为 _ _ 但可以在特定部分中被覆盖。**`name`**`QUEUE_NAME``SET_NAME``queue.name`
-- `WRAP_IF_NECESSARY`: **true** : 如果所选队列尚未准备好创建，则将使用可超时队列包装队列 - （仅与级别队列相关。）
-- `MAX_ATTEMPTS`: **10** : 创建包装队列的最大尝试次数
-- `TIMEOUT`: **GRACEFUL_HAMMER_TIME + 30s** : 如果创建包装队列的时间比创建时间长，则超时。
-- 默认情况下，队列带有一个动态扩展的工作池。以下设置对此进行了配置：
-- `WORKERS`: **0** (v1.14 and before: **1** ): 队列的初始工作线程数。
-- `MAX_WORKERS`: **10** : 队列的最大工作程序 go-routines 数。
-- `BLOCK_TIMEOUT`: **1s** : 如果此时队列阻塞，则增加 worker 的数量 -`BLOCK_TIMEOUT`然后在提升过程中再次提升之前将增加一倍。
-- `BOOST_TIMEOUT`: **5m** : Boost worker 将在这么长时间后超时。
-- `BOOST_WORKERS`: **1** (v1.14 and before: **5** ): 如果有提升，这么多的工人将被添加到工人池中。
-
-Gitea 创建以下非唯一队列：
-
-- `code_indexer`
-- `issue_indexer`
-- `notification-service`
-- `task`
-- `mail`
-- `push_update`
-
-以及以下独特的队列：
-
-- `repo_stats_update`
-- `repo-archive`
-- `mirror`
-- `pr_patch_checker`
-
-某些队列具有覆盖默认设置的默认值`[queue]`（这主要是为了支持旧配置）：
-
-- ```
-  [queue.issue_indexer]
-  ```
-
-  - `TYPE`这将默认为`[queue]` `TYPE`是否已设置，但如果未设置，则将进行适当的转换`[indexer]` `ISSUE_INDEXER_QUEUE_TYPE`。
-  - `LENGTH``[indexer]` `UPDATE_BUFFER_LEN`如果设置，将默认为。
-  - `BATCH_LENGTH``[indexer]` `ISSUE_INDEXER_QUEUE_BATCH_NUMBER`如果设置，将默认为。
-  - `DATADIR``[indexer]` `ISSUE_INDEXER_QUEUE_DIR`如果设置，将默认为。
-  - `CONN_STR``[indexer]` `ISSUE_INDEXER_QUEUE_CONN_STR`如果设置，将默认为。
-
-- ```
-  [queue.mailer]
-  ```
-
-  - `LENGTH`将默认为**100**或任何`[mailer]` `SEND_BUFFER_LEN`值。
-
-- ```
-  [queue.pr_patch_checker]
-  ```
-
-  - `LENGTH`将默认为**1000**或任何`[repository]` `PULL_REQUEST_QUEUE_LENGTH`值。
-
-- ```
-  [queue.mirror]
-  ```
-
-  - `LENGTH`将默认为**1000**或任何`[repository]` `MIRROR_QUEUE_LENGTH`值。
-
 ## 管理员 ( `admin`)
 
-- `DEFAULT_EMAIL_NOTIFICATIONS`：**启用**：用户电子邮件通知的默认配置（用户可配置）。选项：启用、提及、禁用
+- `DEFAULT_EMAIL_NOTIFICATIONS`：**启用**：用户电子邮件通知的默认配置（用户可配置）。选项：enabled, onmention, disabled
 - `DISABLE_REGULAR_ORG_CREATION`: **false** : 禁止普通（非管理员）用户创建组织。
 
 ## 安全 ( `security`)
 
 - `INSTALL_LOCK`: **false** : 禁止访问安装页面。
 
-- `SECRET_KEY`: **<每次安装时随机>** : 全局密钥。这应该改变。
+- `SECRET_KEY`: **<random at every install>** : 全局密钥。这应该改变。
 
 - `LOGIN_REMEMBER_DAYS`: **7** : Cookie 的生命周期，以天为单位。
 
@@ -508,22 +384,13 @@ Gitea 创建以下非唯一队列：
 
 - `MIN_PASSWORD_LENGTH`: **6** : 新用户的最小密码长度。
 
-- ```
-  PASSWORD_COMPLEXITY
-  ```
-
-  : 
-
-  off
-
-   : 通过最低复杂性所需的逗号分隔的字符类列表。如果留空或未指定有效值，则禁用（关闭）检查：
-
+- `PASSWORD_COMPLEXITY` :  off  : 通过最低复杂性所需的逗号分隔的字符类列表。如果留空或未指定有效值，则禁用（关闭）检查：
   - 较低 - 使用一个或多个较低的拉丁字符
   - upper - 使用一个或多个大写拉丁字符
   - digit - 使用一位或多位数字
   - spec - 使用一个或多个特殊字符作为 `!"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~`
   - off - 不检查密码复杂性
-
+  
 - `PASSWORD_CHECK_PWN`: **false** : 检查[HaveIBeenPwned](https://haveibeenpwned.com/Passwords)以查看密码是否已泄露。
 
 - `SUCCESSFUL_TOKENS_CACHE_SIZE`: **20** : 缓存成功的令牌哈希。API 令牌作为 pbkdf2 散列存储在数据库中，但这意味着当有多个 API 操作时，可能会出现显着的散列负载。该缓存将成功散列的令牌存储在 LRU 缓存中，作为性能和安全性之间的平衡。
@@ -543,15 +410,7 @@ Gitea 创建以下非唯一队列：
 
 - `ENABLE_AUTO_REGISTRATION`: **false** : 自动为新的 oauth2 用户创建用户帐户。
 
-- ```
-  USERNAME
-  ```
-
-  : 
-
-  nickname
-
-   : 新 oauth2 账户的用户名来源：
+- `USERNAME ` : nickname : 新 oauth2 账户的用户名来源：
 
   - userid - 使用 userid / sub 属性
   - 昵称 - 使用昵称属性
@@ -559,16 +418,7 @@ Gitea 创建以下非唯一队列：
 
 - `UPDATE_AVATAR`: **false** : 如果 oauth2 提供者可用，则更新头像。每次登录都会执行更新。
 
-- ```
-  ACCOUNT_LINKING
-  ```
-
-  : 
-
-  login
-
-   : 如果帐户/电子邮件已经存在，如何处理：
-
+- `ACCOUNT_LINKING`: login : 如果帐户/电子邮件已经存在，如何处理：
   - 禁用 - 显示错误
   - 登录 - 显示链接登录的帐户
   - 自动 - 自动与帐户关联（请注意，这将授予对现有帐户的访问权限，因为提供了相同的用户名或电子邮件。您必须确保这不会导致您的身份验证提供商出现问题。）
@@ -589,7 +439,7 @@ Gitea 创建以下非唯一队列：
 - `ENABLE_REVERSE_PROXY_EMAIL`: **false** : 启用此选项以允许使用提供的电子邮件而不是生成的电子邮件自动注册。
 - `ENABLE_CAPTCHA`: **false** : 启用此项以使用验证码验证进行注册。
 - `REQUIRE_EXTERNAL_REGISTRATION_CAPTCHA`: **false** : 启用此选项以强制验证码，即使对于外部帐户（即 GitHub、OpenID Connect 等）也是如此。你`ENABLE_CAPTCHA`也必须。
-- `CAPTCHA_TYPE`：**图像**：[图像，recaptcha，hcaptcha]
+- `CAPTCHA_TYPE`：**iamge**：[图像，recaptcha，hcaptcha]
 - `RECAPTCHA_SECRET`: **""** : 转到https://www.google.com/recaptcha/admin获取 recaptcha 的秘密。
 - `RECAPTCHA_SITEKEY`: **""** : 转到https://www.google.com/recaptcha/admin获取 recaptcha 的站点密钥。
 - `RECAPTCHA_URL`: **https://www.google.com/recaptcha/** : 设置recaptcha url - 允许使用recaptcha net。
@@ -641,26 +491,8 @@ Gitea 创建以下非唯一队列：
 - `DELIVER_TIMEOUT`: **5** : 用于拍摄 webhooks 的传送超时（秒）。
 
 - ```
-  ALLOWED_HOST_LIST
+  ALLOWED_HOST_LIST：external ：自 1.15.7 起。默认为external
   ```
-
-  ：
-
-  外部
-
-  ：自 1.15.7 起。默认
-
-  ```
-  *
-  ```
-
-  为 1.15.x，
-
-  ```
-  external
-  ```
-
-  1.16 及更高版本。出于安全原因，Webhook 只能调用允许的主机。逗号分隔的列表。
 
   - 内置网络：
     - `loopback`: IPv4 为 127.0.0.0/8，IPv6 为 ::1/128，包括本地主机。
@@ -669,7 +501,7 @@ Gitea 创建以下非唯一队列：
     - `*`: 允许所有主机。
   - CIDR 列表：`1.2.3.0/8`用于 IPv4 和`2001:db8::/32`用于 IPv6
   - 通配符主机：`*.mydomain.com`,`192.168.100.*`
-
+  
 - `SKIP_TLS_VERIFY`: **false** : 允许不安全的认证。
 
 - `PAGING_NUM`: **10** : 一页中显示的 webhook 历史事件的数量。
@@ -687,30 +519,18 @@ Gitea 创建以下非唯一队列：
 - `HELO_HOSTNAME`: **<empty>** : HELO 操作的自定义主机名。
 
 - ```
-  HOST
+  HOST: <empty> : SMTP 邮件主机地址和端口（例如：smtp.gitea.io:587）。
   ```
-
-  : 
-
-  <empty>
-
-   : SMTP 邮件主机地址和端口（例如：smtp.gitea.io:587）。
 
   - 根据 RFC 8314，如果支持，建议在端口 465 上使用隐式 TLS/SMTPS，否则应使用通过端口 587 上的 STARTTLS 的机会性 TLS。
 
 - ```
-  IS_TLS_ENABLED
+  IS_TLS_ENABLED: false : 即使不在默认的 SMTPS 端口上，也强制使用 TLS 进行连接。
   ```
-
-  : 
-
-  false
-
-   : 即使不在默认的 SMTPS 端口上，也强制使用 TLS 进行连接。
 
   - 请注意，如果端口以`465`隐式 TLS/SMTPS/SMTP over TLS结尾，则尽管有此设置，但仍将使用。
   - 否则，如果`IS_TLS_ENABLED=false`服务器支持，`STARTTLS`则将使用它。因此，如果`STARTTLS`是首选，您应该设置`IS_TLS_ENABLED=false`.
-
+  
 - `FROM`: **<empty>** : Mail from address, RFC 5322。这可以只是一个电子邮件地址，或“名称”<email@example.com> 格式。
 
 - `ENVELOPE_FROM`: **<empty>** : 地址设置为 SMTP 邮件信封上的发件人地址。设置为`<>`发送空地址。
@@ -718,38 +538,20 @@ Gitea 创建以下非唯一队列：
 - `USER`: **<empty>** : 邮寄用户的用户名（通常是发件人的电子邮件地址）。
 
 - ```
-  PASSWD
+  PASSWD: <empty> : 邮寄用户的密码。如果您在密码中使用特殊字符，请使用“您的密码”进行引用。
   ```
-
-  : 
-
-  <empty>
-
-   : 邮寄用户的密码。如果您在密码中使用特殊字符，请使用“您的密码”进行引用。
 
   - 请注意：仅当使用 TLS（可以通过`STARTTLS`）或对 SMTP 服务器通信进行加密时才支持身份验证`HOST=localhost`。有关详细信息，请参阅[电子邮件设置](https://docs.gitea.io/en-us/email-setup/)。
 
 - `SEND_AS_PLAIN_TEXT`: **false** : 以纯文本形式发送邮件。
 
 - ```
-  SKIP_VERIFY
+  SKIP_VERIFY: false : 是否跳过证书验证；true禁用验证。
   ```
-
-  : 
-
-  false
-
-   : 是否跳过证书验证；
-
-  ```
-  true
-  ```
-
-  禁用验证。
 
   - **警告：**此选项不安全。请考虑将证书添加到系统信任库。
   - **注意：** Gitea 只支持带 STARTTLS 的 SMTP。
-
+  
 - `USE_CERTIFICATE`: **false** : 使用客户端证书。
 
 - `CERT_FILE`：**自定义/邮件/cert.pem**
@@ -759,14 +561,8 @@ Gitea 创建以下非唯一队列：
 - `SUBJECT_PREFIX`: **<empty>** : 要放在电子邮件主题行之前的前缀。
 
 - ```
-  MAILER_TYPE
+  MAILER_TYPE: smtp : [smtp, sendmail, dummy]
   ```
-
-  : 
-
-  smtp
-
-   : [smtp, sendmail, dummy]
 
   - **smtp**使用 SMTP 发送邮件
   - **sendmail**使用操作系统的`sendmail`命令而不是 SMTP。这在 linux 系统上很常见。
@@ -791,32 +587,8 @@ Gitea 创建以下非唯一队列：
 - `INTERVAL`: **60** : 垃圾收集间隔（秒），仅适用于内存和双队列缓存。
 
 - ```
-  HOST
+  HOST：<empty>：用于连接字符串redis和memcache用于twoqueue设置队列的配置。
   ```
-
-  ：
-
-  <空>
-
-  ：用于连接字符串
-
-  ```
-  redis
-  ```
-
-  和
-
-  ```
-  memcache
-  ```
-
-  。用于
-
-  ```
-  twoqueue
-  ```
-
-  设置队列的配置。
 
   - Redis: `redis://:macaron@127.0.0.1:6379/0?pool_size=100&idle_timeout=180s`
   - 内存缓存： `127.0.0.1:9090;127.0.0.1:9091`
@@ -846,12 +618,12 @@ Gitea 创建以下非唯一队列：
 - `GRAVATAR_SOURCE`: **gravatar** : 可以`gravatar`，`duoshuo`或者类似的 `http://cn.gravatar.com/avatar/`。
 - `DISABLE_GRAVATAR`: **false** : 启用此选项以仅使用本地头像。
 - `ENABLE_FEDERATED_AVATAR`: **false**：启用对联合头像的支持（请参阅 [http://www.libravatar.org](http://www.libravatar.org/)）。
-- `AVATAR_STORAGE_TYPE`：**默认**： 中定义的存储类型`[storage.xxx]`。如果没有部分是 type `default`，则默认为读取。`[storage]``[storage]``local`
+- `AVATAR_STORAGE_TYPE`：**default**： 中定义的存储类型`[storage.xxx]`。如果没有部分是 type `default`，则默认为读取。`[storage]``[storage]``local`
 - `AVATAR_UPLOAD_PATH`: **data/avatars** : 存储用户头像图像文件的路径。
 - `AVATAR_MAX_WIDTH`：**4096**：最大头像图像宽度（以像素为单位）。
 - `AVATAR_MAX_HEIGHT`：**3072**：最大头像图像高度（以像素为单位）。
 - `AVATAR_MAX_FILE_SIZE`：**1048576** (1Mb)：最大头像图像文件大小（以字节为单位）。
-- `REPOSITORY_AVATAR_STORAGE_TYPE`：**默认**： 中定义的存储类型`[storage.xxx]`。如果没有部分是 type `default`，则默认为读取。`[storage]``[storage]``local`
+- `REPOSITORY_AVATAR_STORAGE_TYPE`：**default**： 中定义的存储类型`[storage.xxx]`。如果没有部分是 type `default`，则默认为读取。`[storage]``[storage]``local`
 - `REPOSITORY_AVATAR_UPLOAD_PATH`: **data/repo-avatars** : 存储库头像图像文件的路径。
 - `REPOSITORY_AVATAR_FALLBACK`: **none** : Gitea 如何处理缺少的仓库头像
   - none = 不显示头像
@@ -863,8 +635,8 @@ Gitea 创建以下非唯一队列：
 
 项目板的默认模板：
 
-- `PROJECT_BOARD_BASIC_KANBAN_TYPE`:**待办、进行中、已完成**
-- `PROJECT_BOARD_BUG_TRIAGE_TYPE`：**需要分类、高优先级、低优先级、关闭**
+- `PROJECT_BOARD_BASIC_KANBAN_TYPE`::**To Do, In Progress, Done**
+- `PROJECT_BOARD_BUG_TRIAGE_TYPE`：**Needs Triage, High Priority, Low Priority, Closed**
 
 ## 问题和拉取请求附件 ( `attachment`)
 
@@ -874,7 +646,7 @@ Gitea 创建以下非唯一队列：
 - `MAX_FILES`: **5** : 一次可以上传的最大附件数。
 - `STORAGE_TYPE`: **local** : 附件、`local`本地磁盘或`minio`s3 兼容对象存储服务的存储类型，默认为`local`或其他名称定义`[storage.xxx]`
 - `SERVE_DIRECT`: **false** : 允许存储驱动程序重定向到经过身份验证的 URL 以直接提供文件。目前，仅通过签名 URL 支持 Minio/S3，本地不执行任何操作。
-- `PATH`：**数据/附件**：存储附件的路径仅在 STORAGE_TYPE 为`local`
+- `PATH`：**data/attachments**：存储附件的路径仅在 STORAGE_TYPE 为`local`
 - `MINIO_ENDPOINT`: **localhost:9000** : Minio 端点仅在 STORAGE_TYPE 时可用`minio`
 - `MINIO_ACCESS_KEY_ID`: Minio accessKeyID 仅当 STORAGE_TYPE 为连接时可用 `minio`
 - `MINIO_SECRET_ACCESS_KEY`: Minio secretAccessKey 仅当 STORAGE_TYPE 为连接时可用 `minio`
@@ -882,85 +654,6 @@ Gitea 创建以下非唯一队列：
 - `MINIO_LOCATION`: **us-east-1** : Minio location to create bucket only 当 STORAGE_TYPE 是`minio`
 - `MINIO_BASE_PATH`：**attachments/**：存储桶上的 Minio 基本路径仅在 STORAGE_TYPE 为`minio`
 - `MINIO_USE_SSL`: **false** : Minio 启用 ssl 仅当 STORAGE_TYPE 为`minio`
-
-## 日志 ( `log`)
-
-- `ROOT_PATH`: **<empty>** : 日志文件的根路径。
-
-- `MODE`：**控制台**：记录模式。对于多种模式，请使用逗号分隔值。您可以在每个模式日志小节中配置每个模式`\[log.modename\]`。默认情况下，文件模式将登录到`$ROOT_PATH/gitea.log`.
-
-- `LEVEL`:**信息**: 一般日志级别。[跟踪、调试、信息、警告、错误、严重、致命、无]
-
-- `STACKTRACE_LEVEL`：**无**：记录创建堆栈跟踪的默认日志级别。[跟踪、调试、信息、警告、错误、严重、致命、无]
-
-- `ROUTER_LOG_LEVEL`:**信息**: 路由器应该登录的日志级别。（如果您正在设置访问日志，建议将其放在 Debug 中。）
-
-- `ROUTER`: **console** : 路由器应该登录的日志的模式或名称。（如果您将`,`其设置为它会记录到默认的 Gitea 记录器。） 注意：您必须`DISABLE_ROUTER_LOG`设置`false`为该选项才能生效。在每个模式日志小节中配置每个模式`\[log.modename.router\]`。
-
-- `ENABLE_ACCESS_LOG`: **false** : 以 NCSA 通用日志格式或按照以下模板创建 access.log
-
-- `ENABLE_SSH_LOG`: **false** : 将 ssh 日志保存到日志文件
-
-- `ACCESS`: **file** : 访问记录器的记录模式，使用逗号分隔值。在每个模式日志小节中配置每个模式`\[log.modename.access\]`。默认情况下，文件模式将登录到`$ROOT_PATH/access.log`. （如果您将`,`其设置为它会记录到默认的 Gitea 记录器。）
-
-- ```
-  ACCESS_LOG_TEMPLATE
-  ```
-
-  ::
-
-  `{{.Ctx.RemoteAddr}} - {{.Identity}} {{.Start.Format "[02/Jan/2006:15:04:05 -0700]" }} "{{.Ctx.Req.Method}} {{.Ctx.Req.URL.RequestURI}} {{.Ctx.Req.Proto}}" {{.ResponseWriter.Status}} {{.ResponseWriter.Size}} "{{.Ctx.Req.Referer}}\" \"{{.Ctx.Req.UserAgent}}"`
-
-  设置用于创建访问日志的模板。
-
-  - 以下变量可用：
-  - `Ctx`:`context.Context`请求的。
-  - `Identity`: SignedUserName 或`"-"`如果未登录。
-  - `Start`: 请求的开始时间。
-  - `ResponseWriter`：来自请求的 responseWriter。
-  - 您必须非常小心以确保此模板不会抛出错误或恐慌，因为此模板在恐慌/恢复脚本之外运行。
-
-- `ENABLE_XORM_LOG`: **true** : 设置是否执行 XORM 日志记录。请注意，可以通过`LOG_SQL`在`[database]`部分设置为 false来禁用 SQL 语句日志记录。
-
-### 日志小节 ( `log.name`, `log.name.*`)
-
-- `LEVEL`: **log.LEVEL** : 设置这个子记录器的日志级别。默认为`LEVEL`全局`[log]`部分中的集合。
-- `STACKTRACE_LEVEL`: **log.STACKTRACE_LEVEL** : 设置记录堆栈跟踪的日志级别。
-- `MODE`: **name** : 设置此子记录器的模式 - 默认为提供的子节名称。这允许您在不同级别拥有两个不同的文件记录器。
-- `EXPRESSION`: **""** : 匹配函数名、文件或消息的正则表达式。默认为空。只有与表达式匹配的日志消息才会保存在记录器中。
-- `FLAGS`: **stdflags** : 表示日志标志的逗号分隔字符串。默认为`stdflags`which 代表前缀：`2009/01/23 01:23:23 ...a/b/c/d.go:23:runtime.Caller() [I]: message`。`none`意味着不要前缀日志行。请参阅`modules/log/base.go`以获取更多信息。
-- `PREFIX`: **""** : 此记录器中每个日志行的附加前缀。默认为空。
-- `COLORIZE`: **false** : 默认为日志行着色
-
-### 控制台日志模式（`log.console`、`log.console.*`、 或`MODE=console`）
-
-- 对于控制台记录器`COLORIZE`将默认为`true`如果不在 Windows 上或终端被确定为能够着色。
-- `STDERR`: **false** : 使用 Stderr 而不是 Stdout。
-
-### 文件日志模式（`log.file`,`log.file.*`或`MODE=file`）
-
-- `FILE_NAME`: 设置这个记录器的文件名。如上所述的默认值。如果相对将相对于`ROOT_PATH`
-- `LOG_ROTATE`: **true** : 轮换日志文件。
-- `MAX_SIZE_SHIFT`: **28** : 单个文件的最大大小偏移，28 代表 256Mb。
-- `DAILY_ROTATE`: **true** : 每天轮换日志。
-- `MAX_DAYS`: **7** : n 天后删除日志文件
-- `COMPRESS`: **true** : 默认情况下使用 gzip 压缩旧日志文件
-- `COMPRESSION_LEVEL`: **-1** : 压缩级别
-
-### Conn 日志模式（`log.conn`,`log.conn.*`或`MODE=conn`）
-
-- `RECONNECT_ON_MSG`: **false** : 为每条消息重新连接主机。
-- `RECONNECT`: **false** : 连接丢失时尝试重新连接。
-- `PROTOCOL`: **tcp** : 设置协议，“tcp”、“unix”或“udp”。
-- `ADDR`: **:7020** : 设置要连接的地址。
-
-### SMTP 日志模式（`log.smtp`,`log.smtp.*`或`MODE=smtp`）
-
-- `USER`：要发送的用户电子邮件地址。
-- `PASSWD`: smtp 服务器的密码。
-- `HOST`: **127.0.0.1:25** : 要连接的 SMTP 主机。
-- `RECEIVERS`: 要发送到的电子邮件地址。
-- `SUBJECT`:**来自 Gitea 的诊断信息**
 
 ## 时间 ( `cron`)
 
