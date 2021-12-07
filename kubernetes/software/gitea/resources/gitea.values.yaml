@@ -30,7 +30,7 @@ persistence:
 gitea:
   admin:
     existingSecret: gitea-admin-secret
-    email: "ben.wangz@foxmail.com"
+    email: "conti821@163.com"
   config:
     default:
       APP_NAME: Gitea

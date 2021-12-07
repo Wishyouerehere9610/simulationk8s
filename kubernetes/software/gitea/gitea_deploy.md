@@ -52,6 +52,7 @@
           ```
 
 3. install gitea
+    * [gitea_config](https://docs.gitea.io/en-us/config-cheat-sheet/)
     * prepare [gitea.values.yaml](resources/gitea.values.yaml.md)
     * prepare images
         + ```shell

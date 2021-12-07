@@ -2,4 +2,4 @@
 
 * [gitea_deploy](gitea_deploy.md)
 * [gitea_docs](gitea_docs.md)
-* [conti](conti.md)
+* [conti](resources/conti.mds)
