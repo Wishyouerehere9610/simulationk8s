@@ -2,9 +2,10 @@
 
 ## 使用教程
 * 账号管理
-  * [管理员手册](resources/gitea_admin.md)
+  * [管理员手册(Admin)](resources/gitea_admin.md)
   * [用户手册](resources/account_umber.md)
-* [组织管理(只对管理员开放)](resources/gitea_admin.md)
+* Organization
+  * [Admin](resources/gitea_admin.md)
 * 仓库管理
   * [New repository](resources/new_repository.md)
   * [Fork](resources/frok.md)
