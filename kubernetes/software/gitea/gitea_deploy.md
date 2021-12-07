@@ -122,5 +122,5 @@
     + 测试ssh链接是否正常
 
       * ```shell
-        git clone ssh:/git clone ssh://git@192.168.31.31:222/libokang/test.git
+        git clone ssh://git@192.168.31.31:222/libokang/test.git
         ```
