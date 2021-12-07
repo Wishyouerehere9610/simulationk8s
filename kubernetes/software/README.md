@@ -1,4 +1,4 @@
 ### software
 
-* [gitea](./gitea/gitea_deploy.md)
+* [gitea](gitea/README.md)
 * [minio](minio/minio.md)
