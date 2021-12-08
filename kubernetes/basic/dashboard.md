@@ -17,7 +17,7 @@
     + kind
     + kubectl
     + helm
-* we recommend to use [qemu machine](../../qemu/README.md)
+* we recommend to use [qemu machine](../../linux/qemu/README.md)
 
 ### purpose
 

@@ -1,0 +1,1 @@
+[gitea.values.yaml](confluence.values.yaml ':include')

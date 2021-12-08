@@ -28,7 +28,7 @@
 ### pre-requirements
 
 * [a k8s cluster created by kind](../create.local.cluster.with.kind.md)
-* we recommend to use [qemu machine](../../qemu/README.md) because we will modify the devices: /dev/loopX
+* we recommend to use [qemu machine](../../linux/qemu/README.md) because we will modify the devices: /dev/loopX
 
 ### purpose
 
@@ -44,7 +44,7 @@
 
 ### do it
 
-1. optional, [create centos 8 with qemu](../../qemu/create.centos.8.with.qemu.md)
+1. optional, [create centos 8 with qemu](../../linux/qemu/create.centos.8.with.qemu.md)
     * remember to modify `cpus=2` and `-m 6G`
     * ```shell
       dnf -y install tar git vim

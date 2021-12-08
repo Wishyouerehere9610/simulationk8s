@@ -8,8 +8,8 @@
 
 * a machine with x86_64 cpu
 * you can use qemu to virtualize a machine
-    + [install with linux](../qemu/install.with.linux.md)
-    + [install with mac](../qemu/install.with.mac.md)
+    + [install with linux](qemu/install.with.linux.md)
+    + [install with mac](qemu/install.with.mac.md)
 
 ## do it
 

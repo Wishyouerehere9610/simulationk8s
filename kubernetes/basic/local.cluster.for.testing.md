@@ -17,7 +17,7 @@
     + kind
     + kubectl
     + helm
-* we recommend to use [qemu machine](../../qemu/README.md)
+* we recommend to use [qemu machine](../../linux/qemu/README.md)
 
 ### purpose
 
@@ -26,7 +26,7 @@
 
 ### do it
 
-1. optional, [create centos 8 with qemu](../../qemu/create.centos.8.with.qemu.md)
+1. optional, [create centos 8 with qemu](../../linux/qemu/create.centos.8.with.qemu.md)
     * ```shell
       qemu-system-x86_64 \
           -accel kvm \

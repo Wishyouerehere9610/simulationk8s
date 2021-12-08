@@ -1,10 +1,5 @@
 ### Gitea用户使用手册
 
-# 修改hosts文件
-10.11.12.173 gitea.conti.net
-
-http://gitea.conti.net
-
 * 账号管理
   * [管理员手册](resources/gitea_admin.md)
   * [用户手册](resources/gitea_user.md)
@@ -20,3 +15,4 @@ http://gitea.conti.net
 * 测试账号 `Rose`: wfbyt525
 * 测试账号 `Jack`: wfbyt525
 * 测试服务暂时只支持HTTP方式上传下载相关文件
+* [gitea_config.yaml](resources/conti_gitea_config.yaml.md)

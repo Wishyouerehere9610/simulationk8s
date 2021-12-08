@@ -52,7 +52,6 @@
           ```
 
 3. install gitea
-    * [gitea_config](https://docs.gitea.io/en-us/config-cheat-sheet/)
     * prepare [gitea.values.yaml](resources/gitea.values.yaml.md)
     * prepare images
         + ```shell
@@ -90,7 +89,7 @@
               gitea \
               --version 4.1.1 \
               --repo https://dl.gitea.io/charts \
-              --values gitea.values.yaml \
+              --values confluence.values.yaml \
               --atomic
           ```
 
@@ -121,6 +120,6 @@
 
     + 测试ssh链接是否正常
 
-      * ```shell
-        git clone ssh://git@192.168.31.31:222/libokang/test.git
-        ```
+        * ```shell
+          git clone ssh://git@192.168.31.31:222/libokang/test.git
+          ```
