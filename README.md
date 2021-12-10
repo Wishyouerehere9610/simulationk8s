@@ -16,5 +16,3 @@
     + [docs for ants](https://github.com/ben-wangz/ant-doc): Yes, I treat ants as pets.
 * TODO: [about me](https://github.com/ben.wangz.md)
 
-
-<div style="text-align: center;"> <div class="footer"><a href="http://beian.miit.gov.cn">等待备案</a></div>
