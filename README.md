@@ -17,7 +17,4 @@
 * TODO: [about me](https://github.com/ben.wangz.md)
 
 
-
-
-
-<div class="footer"><center><a href="http://beian.miit.gov.cn">等待备案</a></div>
+<div style="text-align: center;"> <div class="footer"><a href="http://beian.miit.gov.cn">等待备案</a></div>

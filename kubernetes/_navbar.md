@@ -1,2 +1,2 @@
-- Language / 语言
+- Language
   - [English](/)
