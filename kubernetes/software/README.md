@@ -4,3 +4,4 @@
 * [gitea_docs](gitea/gitea_docs.md)
 * [minio](minio/minio.md)
 * [confluence](confluence/confluence.md)
+* [cert-manage](cert-manage/cert-manage.md)
