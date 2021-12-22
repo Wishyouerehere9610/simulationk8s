@@ -29,6 +29,21 @@
           --values alidns.yaml \
           --atomic
       ```
+      
+      * ```yaml
+        image:
+          repository: localhost:5000/ghcr.io/devmachine-fr/cert-manager-alidns-webhook/cert-manager-alidns-webhook
+          tag: 0.2.0
+          pullPolicy: IfNotPresent
+          privateRegistry:
+            enabled: false
+            dockerRegistrySecret: alibaba-container-registry
+        certManager:
+          namespace: application
+          serviceAccountName: my-cert-manager
+        ```
+      
+        
 
 3. 两种方式
 
