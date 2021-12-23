@@ -1,14 +1,14 @@
-### create local cluster with kind
+### 创建kind集群
 
 1. be sure your machine have 2 cores and 4G memory at least
 2. [download kubernetes binary tools](download.kubernetes.binary.tools.md)
     * kind
     * kubectl
 3. configuration
-    * [kind.cluster.yaml](resources/kind/kind.cluster.yaml.md)
+    * [kind.create.cluster.sh](resources/kind.create.cluster.sh.md)
 4. create cluster
     * ```shell
-      kind create cluster --config $(pwd)/kind.cluster.yaml
+      bash kind.create.cluster.sh
       ```
 5. check with kubectl
     * ```shell

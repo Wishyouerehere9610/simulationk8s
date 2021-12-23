@@ -1,4 +1,4 @@
-## deploy
+## alidns-webhook
 
 ### mainusage
 
@@ -11,7 +11,7 @@
 * docker
 * kind集群
 ### do it
-1. prepare [alidns-webhook.yaml](alidns-webhook.yaml.md)
+1. prepare [alidns-webhook.yaml](../alidns_webhook/alidns_webhook.yaml.md)
 2. 准备镜像
     * ```shell
       for IMAGE in "ghcr.io/devmachine-fr/cert-manager-alidns-webhook/cert-manager-alidns-webhook:0.2.0"
