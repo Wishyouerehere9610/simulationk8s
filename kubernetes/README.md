@@ -1,10 +1,9 @@
-### kubernetes
+## kubernetes
 
 * [download kubernetes binary tools](download.kubernetes.binary.tools.md)
 * [create local cluster with kind](create.local.cluster.with.kind.md)
-* [storage](storage/README.md)
 * [basic components](basic/README.md)
-* [monitor](monitor/README.md)
 * [software](software/README.md)
-* [production](production/README.md)
-* [helm3 常用命令](helm3commands.md)
+* other
+  * [helm3](helm/helm3.md)
+  * [conceptions](conceptions/README.md)

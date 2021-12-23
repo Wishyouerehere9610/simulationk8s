@@ -1,56 +1,39 @@
 ## deploy
-1. ```shell
-   for IMAGE in "ghcr.io/devmachine-fr/cert-manager-alidns-webhook/cert-manager-alidns-webhook:0.2.0"
-   do
-   LOCAL_IMAGE="localhost:5000/$IMAGE"
-   docker image inspect $IMAGE || docker pull $IMAGE
-   docker image tag $IMAGE $LOCAL_IMAGE
-   docker push $LOCAL_IMAGE
-    done
-   ```
 
-2. 两种方式
+### mainusage
 
+### conceptions
+
+### purpose
+
+### precondition
+* linux
+* docker
+* kind集群
+### do it
+1. prepare [alidns-webhook.yaml](alidns-webhook.yaml.md)
+2. 准备镜像
     * ```shell
-      helm install \
-          --create-namespace --namespace application \
-          my-cert-manager \
-          https://github.com/DEVmachine-fr/cert-manager-alidns-webhook/releases/download/alidns-webhook-0.6.0/alidns-webhook-0.6.0.tgz \
-          --values alidns.yaml \
-          --atomic
+      for IMAGE in "ghcr.io/devmachine-fr/cert-manager-alidns-webhook/cert-manager-alidns-webhook:0.2.0"
+      do
+          LOCAL_IMAGE="localhost:5000/$IMAGE"
+          docker image inspect $IMAGE || docker pull $IMAGE
+          docker image tag $IMAGE $LOCAL_IMAGE
+          docker push $LOCAL_IMAGE
+      done
       ```
-
-    * ```shell
-      wget https://github.com/DEVmachine-fr/cert-manager-alidns-webhook/releases/download/alidns-webhook-0.6.0/alidns-webhook-0.6.0.tgz
-      
-      helm install \
-          --create-namespace --namespace application \
-          my-alidns-webhook ./alidns-webhook \
-          --values alidns.yaml \
-          --atomic
-      ```
-      
-      * ```yaml
-        image:
-          repository: localhost:5000/ghcr.io/devmachine-fr/cert-manager-alidns-webhook/cert-manager-alidns-webhook
-          tag: 0.2.0
-          pullPolicy: IfNotPresent
-          privateRegistry:
-            enabled: false
-            dockerRegistrySecret: alibaba-container-registry
-        certManager:
-          namespace: application
-          serviceAccountName: my-cert-manager
-        ```
-      
-        
-
-3. 两种方式
-
-   * ```yaml
-     kubectl delete certificate conti2021 -n application 
-     kubectl delete issuer letsencrypt -n application
-     
+3. install
+   * ```shell
+     helm install \
+     --create-namespace --namespace application \
+     my-alidns-webhook \
+     https://github.com/DEVmachine-fr/cert-manager-alidns-webhook/releases/download/alidns-webhook-0.6.0/alidns-webhook-0.6.0.tgz \
+     --values alidns.yaml \
+     --atomic
+     ```
+4. 申请证书的两种方式
+   * Certificate直接申请
+     ```yaml 
      cat << EOF | kubectl apply -f -
      apiVersion: cert-manager.io/v1
      kind: Issuer
@@ -96,11 +79,8 @@
          kind: Issuer
      EOF
      ```
-   
-   * ```shell
-     kubectl delete ClusterIssuer letsencrypt 
-     kubectl delete ingress my-ingress -n application
-     
+   * 通过ingress申请
+     ```shell
      cat <<EOF | kubectl apply -f - 
      apiVersion: cert-manager.io/v1
      kind: ClusterIssuer
@@ -152,8 +132,7 @@
                servicePort: 80
      EOF
      ```
-   
-   * 假如说需要nginx
+* 假如说需要nginx
      
      * ```yaml
        apiVersion: apps/v1beta1

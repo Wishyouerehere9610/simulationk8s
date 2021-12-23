@@ -1,4 +1,4 @@
-### commands
+## commands
 
 1. what's this?
     * record some useful commands
