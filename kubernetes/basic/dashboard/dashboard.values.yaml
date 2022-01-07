@@ -1,0 +1,23 @@
+image:
+  repository: localhost:5000/kubernetesui/dashboard
+  tag: v2.4.0
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/issuer: self-signed-issuer
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: 'true'
+    nginx.ingress.kubernetes.io/secure-backends: "true"
+  paths:
+    - /
+  hosts:
+    - dashboard.kube.conti.icu
+  tls:
+    - secretName: dashboard.kube.conti-tls
+      hosts:
+        - dashboard.kube.conti.icu
+serviceAccount:
+  create: true
+  name: dashboard

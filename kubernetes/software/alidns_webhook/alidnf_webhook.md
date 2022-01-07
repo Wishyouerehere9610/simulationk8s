@@ -11,7 +11,7 @@
 ### precondition
 * [kuberneter by kind](/kubernetes/create.local.cluster.with.kind.md)
 * [ingress-nginx](/kubernetes/basic/ingress.nginx.md)
-* [cert-manage](/kubernetes/basic/cert.manager.md)
+* [cert-manage](/kubernetes/basic/cert-manager/cert.manager.md)
 
 ### do it
 * prepare [alidns-webhook.yaml](alidns_webhook.yaml.md)

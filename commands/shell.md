@@ -98,3 +98,29 @@ journalctl -u docker
 ```shell
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 ```
+
+### 修改密码
+```shell
+#
+echo '123456' | passwd --stdin conti
+
+#
+echo '123456' | 
+```
+
+### 两台节点互信
+```shell
+echo ${RSA} >> ~/.ssh/authorized_keys
+```
+
+### SSH 参数
+```shell
+# 警告信息
+-o "StrictHostKeyChecking no"
+
+# 主机已存在
+-o "UserKnownHostsFile /dev/null"
+```
+
+
+

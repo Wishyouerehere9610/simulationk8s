@@ -1,14 +1,15 @@
 ## commands
 
-1. what's this?
-    * record some useful commands
-2. content
-    * [shell](shell.md)
-    * [java](java.md)
-    * [git](git.md)
-    * [python](python.md)
-    * [mysql](mysql.md)
-    * [vim](vim.md)
-    * [mac](mac.md)
-    * [VBoxManage](VBoxManage.md) will be retired
-    * [kubernetes](kubernetes.md)  will be retired
+* [shell](/linux/commands.md)
+* [database](database/README.md)
+* [docker](/docker/commands.md)
+* [kubernetes](/kubernetes/commands.md)
+* [language](/language/README.md)  
+
+* [java](java.md)
+* [python](python.md)
+* [database](database/README.md)
+
+* Other
+  * [vim](vim.md)
+  * [git](git.md)

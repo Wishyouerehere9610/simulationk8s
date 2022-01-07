@@ -2,7 +2,7 @@
 
 ## main usage
 
-* chart-museum for helm charts
+* a registry for docker
 
 ## conceptions
 
@@ -12,38 +12,37 @@
 
 ### pre-requirements
 
-* [a k8s cluster created by kind](../create.local.cluster.with.kind.md) have been read and practised
-* [download kubernetes binary tools](../download.kubernetes.binary.tools.md)
+* [a k8s cluster created by kind](../../create.local.cluster.with.kind.md) have been read and practised
+* [download kubernetes binary tools](../../download.kubernetes.binary.tools.md)
     + kind
     + kubectl
     + helm
-* we recommend to use [qemu machine](../../linux/qemu/README.md)
+* we recommend to use [qemu machine](../../../linux/qemu/README.md)
 
 ### purpose
 
 * create a kubernetes cluster by kind
 * setup ingress
 * setup cert-manager and self-signed issuer
-* setup chart-museum
-* test chart-museum
+* setup docker registry
+* test docker registry
 
 ### do it
 
-1. [create local cluster for testing](local.cluster.for.testing.md)
-2. setup [ingress-nginx](ingress.nginx.md)
-3. setup [cert-manager](cert-manager/cert.manager.md)
+1. [create local cluster for testing](../local.cluster.for.testing.md)
+2. setup [ingress-nginx](../ingress.nginx.md)
+3. setup [cert-manager](../cert-manager/cert.manager.md)
 4. configure self-signed issuer
     * `self-signed` issuer
-        + prepare [self.signed.and.ca.issuer.yaml](resources/self.signed.and.ca.issuer.yaml.md)
+        + prepare [self.signed.and.ca.issuer.yaml](../resources/self.signed.and.ca.issuer.yaml.md)
         + ```shell
           ./bin/kubectl -n basic-components apply -f self.signed.and.ca.issuer.yaml
           ```
-5. setup chart-museum
-    * prepare [chart.museum.values.yaml](resources/chart.museum.values.yaml.md)
+5. setup docker registry
+    * prepare [docker.registry.values.yaml](../resources/docker.registry.values.yaml.md)
     * prepare images
         + ```shell
-          for IMAGE in "ghcr.io/helm/chartmuseum:0.13.1" \
-              "bitnami/minideb:buster"
+          for IMAGE in "registry:2.7.1"
           do
               LOCAL_IMAGE="localhost:5000/$IMAGE"
               docker image inspect $IMAGE || docker pull $IMAGE
@@ -55,14 +54,21 @@
         + ```shell
           ./bin/helm install \
               --create-namespace --namespace basic-components \
-              my-chart-museum \
-              chartmuseum \
-              --version 3.4.0 \
-              --repo https://chartmuseum.github.io/charts \
-              --values chart.museum.values.yaml \
+              my-docker-registry \
+              docker-registry \
+              --version 1.14.0 \
+              --repo https://helm.twun.io \
+              --values $(pwd)/docker.registry.values.yaml \
               --atomic
           ```
-6. test `helm push` and `helm pull` from `chart-museum`
+    * configure ingress
+        + NOTE: ingress in helm chart is not compatible enough for us, we have to install ingress manually
+        + prepare [docker.registry.ingress.yaml](../resources/docker.registry.ingress.yaml.md)
+        + apply ingress
+            * ```shell
+              ./bin/kubectl -n basic-components apply -f docker.registry.ingress.yaml
+              ```
+6. test `docker push` and `docker pull` from `docker-registry`
     * configure `/etc/hosts` to point `` to the host
     * configure docker client as our tls is self-signed
         + ```shell

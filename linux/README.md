@@ -5,3 +5,5 @@
 * [loop back devices with lvm](loop.back.devices.with.lvm.md)
 * [Load balance](load_balance.md)
 * [qemu](qemu/README.md)
+* other
+  * [commands](commands.md)

@@ -1,5 +1,5 @@
 ## software
 
-* [gitea](gitea/gitea_deploy.md)
-* [alidns-webhook](alidns_webhook/alidnf_webhook.md)
-
+* [gitea](gitea.md)
+* [sshd](sshd.md)
+* [haproxy](haproxy.md)

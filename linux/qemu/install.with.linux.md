@@ -50,8 +50,8 @@
     * ```shell
       qemu-system-x86_64 \
           -accel kvm \
-          -cpu kvm64 -smp cpus=1 \
-          -m 1G \
+          -cpu kvm64 -smp cpus=2 \
+          -m 4G \
           -drive file=$(pwd)/CentOS-Stream-8-x86_64-boot.iso,index=1,media=cdrom \
           -drive file=$(pwd)/centos.8.qcow2,if=virtio,index=0,media=disk,format=qcow2 \
           -rtc base=localtime \
@@ -91,8 +91,8 @@
     * ```shell
       qemu-system-x86_64 \
           -accel kvm \
-          -cpu kvm64 -smp cpus=1 \
-          -m 1G \
+          -cpu kvm64 -smp cpus=2 \
+          -m 6G \
           -drive file=$(pwd)/centos.8.qcow2,if=virtio,index=0,media=disk,format=qcow2 \
           -rtc base=localtime \
           -pidfile $(pwd)/centos.8.qcow2.pid \
