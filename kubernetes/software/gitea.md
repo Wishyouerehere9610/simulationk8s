@@ -22,10 +22,10 @@
 
 ### do it
 
-1. [create local cluster for testing](../../basic/local.cluster.for.testing.md)
+1. [create local cluster for testing](../basic/local.cluster.for.testing.md)
 
 2. install ingress nginx
-    * prepare [ingress.nginx.values.yaml](../../basic/resources/ingress.nginx.values.yaml.md)
+    * prepare [ingress.nginx.values.yaml](../basic/resources/ingress.nginx.values.yaml.md)
 
     * prepare images
         + ```shell
@@ -52,7 +52,7 @@
           ```
 
 3. install gitea
-    * prepare [gitea.values.yaml](resources/gitea.values.yaml.md)
+    * prepare [gitea.values.yaml](gitea/gitea.values.yaml.md)
     * prepare images
         + ```shell
           for IMAGE in "gitea/gitea:1.15.3" \

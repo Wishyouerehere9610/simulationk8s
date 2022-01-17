@@ -1,0 +1,37 @@
+## 单用户登录
+
+FROM panubo/sshd:1.5.0
+
+ADD https://dl.k8s.io/release/v1.21.2/bin/linux/amd64/kubectl /bin/kubectl
+RUN chmod 755 /bin/kubectl \
+    && /bin/kubectl config set-cluster default --server=https://kubernetes.default.svc --insecure-skip-tls-verify=true \
+    && /bin/kubectl config set-context defaultcontext --cluster=default --user=admin \
+    && /bin/kubectl config use-context defaultcontext --kubeconfig=${HOME}/.kube/config \
+    && echo '/bin/kubectl config set-credentials admin --token=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)' >> /entry.sh \
+    && echo '/usr/sbin/sshd -D -e -f /etc/ssh/sshd_config' >> /entry.sh \
+    && usermod -p '' root
+
+EXPOSE 22
+
+ENTRYPOINT ["/entry.sh"]
+
+
+
+TODO:
+## 多用户登录版
+
+FROM panubo/sshd:1.5.0
+
+ADD https://dl.k8s.io/release/v1.21.2/bin/linux/amd64/kubectl /bin/kubectl
+RUN chmod 755 /bin/kubectl && \
+    mkdir /etc/skel && \
+    echo '/bin/kubectl config set-credentials guest_user --token=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)' > /etc/skel/.bash_profile && \
+    useradd guest_user -m -s /bin/bash -d /home/guest_user && \
+    /bin/kubectl config set-cluster default --server=https://kubernetes.default.svc --insecure-skip-tls-verify=true --kubeconfig=/home/guest_user/.kube/config && \
+    /bin/kubectl config set-context defaultcontext --cluster=default --user=guest_user --kubeconfig=/home/guest_user/.kube/config && \
+    /bin/kubectl config use-context defaultcontext --kubeconfig=/home/guest_user/.kube/config && \
+    chown -R guest_user:guest_user /home/guest_user/.kube
+
+EXPOSE 22
+
+CMD /usr/sbin/sshd -D -e -f /etc/ssh/sshd_config

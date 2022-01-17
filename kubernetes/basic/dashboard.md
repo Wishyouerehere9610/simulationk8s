@@ -24,10 +24,9 @@
 ## do it
 
 1. combination of issuer and `issuerself-signed` `CA`
-   * prepare [self.signed.issuer.yaml](dashboard/self.signed.issuer.yaml.md)
+   * prepare [self.signed.clusterissuer.yaml](dashboard/self.signed.clusterissuer.yaml.md)
    * ```shell
-     kubectl get namespace dashboard > /dev/null 2>&1 || kubectl create namespace dashboard
-     kubectl -n test apply -f self.signed.issuer.yaml
+     kubectl apply -f self.signed.clusterissuer.yaml
      ```
 2. prepart [dashboard.values.yaml](dashboard/dashboard.values.yaml.md)
 3. prepare images
@@ -43,7 +42,7 @@
 3. install by helm
    * ```shell
      helm install \
-         --create-namespace --namespace dashboard \
+         --create-namespace --namespace application \
          my-dashboard \
          kubernetes-dashboard \
          --repo https://kubernetes.github.io/dashboard \
@@ -58,30 +57,34 @@
      ```shell
      kubectl -n dashboard get certificate 
      ```
+
 2. 修改hosys文件
    * hosts文件
      ```text
      修改本机hosts文件
      ```
-3. 拿到sa的token信息作为dashboard的登录信息
-   * token信息
+   
+3. 拿到sa:my-dashboard的token信息作为dashboard的登录信息
+   * TOKEN (这里用的token信息是SSHD服务sa的token信息) [SSHD](sshd.md)
      ```shell
-     SECRETNAME=$(kubectl -n dashboard get sa/dashboard -o jsonpath="{.secrets[0].name}")
+     SECRETNAME=$(kubectl -n application get sa/my-dashboard -o jsonpath="{.secrets[0].name}")
      kubectl -n dashboard get secret ${SECRETNAME} -o jsonpath={.data.token} | base64 -d
      ```
+     
    * GO [https://dashboard.kube.conti.icu](https://dashboard.kube.conti.icu)
-  
+     * ![image-20220114150039941](http://conti-picture-database.oss-cn-hangzhou.aliyuncs.com/img/image-20220114150039941.png)
 
-
-
-
-
-
-
-
-
-
-
+4. [SSHD](sshd.md) 的serviceaccount进行权限测试
+   * 获取sshd用户的TOKEN信息
+     ```shell
+     SECRETNAME=$(kubectl -n application get sa/my-sshd -o jsonpath="{.secrets[0].name}")
+     kubectl -n dashboard get secret ${SECRETNAME} -o jsonpath={.data.token} | base64 -d
+     ```
+   * 查看application下的pod权限
+     * ![image-20220114144534555](http://conti-picture-database.oss-cn-hangzhou.aliyuncs.com/img/image-20220114144534555.png)
+   * 查看所有namespace下的pod权限
+     * ![image-20220114144648191](http://conti-picture-database.oss-cn-hangzhou.aliyuncs.com/img/image-20220114144648191.png)
+   
 
 
 

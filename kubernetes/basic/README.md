@@ -1,12 +1,14 @@
 ### basic components
 
 * [local cluster for testing](local.cluster.for.testing.md)
-* [nginx](nginx.web.md)
 * [ingress-nginx](ingress.nginx.md)
-* [ingress-nginx-new](ingress.nginx.md)
-* [cert-manager-new](cert.manager.md)
-* [cert-manager](cert-manager/cert.manager.md)
-* [docker-registry](docker.registry/docker.registry.md)
-* [chart-museum](chart.museum.md)
-* [dashboard](dashboard.md)
 
+[comment]: <> (* [WIP: cert-manager-new]&#40;cert.manager.md&#41;)
+
+[comment]: <> (* [WIP: cert-manager]&#40;cert-manager/cert.manager.md&#41;)
+
+[comment]: <> (* [docker-registry]&#40;docker.registry/docker.registry.md&#41;)
+
+[comment]: <> (* [chart-museum]&#40;chart.museum.md&#41;)
+* [SSHD](sshd.md)
+* [dashboard](dashboard.md)

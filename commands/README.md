@@ -3,7 +3,7 @@
 * [shell](/linux/commands.md)
 * [database](database/README.md)
 * [docker](/docker/commands.md)
-* [kubernetes](/kubernetes/commands.md)
+* [kubernetes](/kubernetes/resources/commands.md)
 * [language](/language/README.md)  
 
 * [java](java.md)
@@ -13,3 +13,5 @@
 * Other
   * [vim](vim.md)
   * [git](git.md)
+  * [command](resource/linux.shell.md)
+  

@@ -52,7 +52,7 @@
           ```
 
 3. install gitea
-    * prepare [gitea.values.yaml](resources/gitea.values.yaml.md)
+    * prepare [gitea.values.yaml](gitea.values.yaml.md)
     * prepare images
         + ```shell
           for IMAGE in "gitea/gitea:1.15.3" \

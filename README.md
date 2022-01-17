@@ -8,8 +8,9 @@
 * [Database](database/README.md)
 
 ## Commands
-* [Command set](commands/README.md)
+* [Command](commands/README.md)
 * [Language](language/README.md)
+* [1](resource/README.md)
 
 
 
