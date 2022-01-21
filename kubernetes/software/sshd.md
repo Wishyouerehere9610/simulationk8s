@@ -26,7 +26,17 @@
     ```
 * prepare chart
   * ```shell
-    git clone --single-branch --branch dev https://github.com/ContiCat/sshd.git sshd
+    git clone https://github.com/ContiCat/sshd.git ./sshd
+    ```
+* create `sshd-secret`
+  * ```shell
+    # uses the "Array" declaration
+    # referencing the variable again with as $PASSWORD an index array is the same as ${PASSWORD[0]}
+    PASSWORD=($((echo -n $RANDOM | md5sum 2>/dev/null) || (echo -n $RANDOM | md5 2>/dev/null)))
+    # NOTE: username should have at least 6 characters
+    kubectl -n application \
+    create secret generic sshd-secret \
+    --from-literal=password=$PASSWORD
     ```
 * install by helm
   * ```shell
@@ -44,9 +54,10 @@
     ```
 * Login
   * ```shell
-    # username: sshdguest
-    # password: AAaa1234
-    ssh -o "UserKnownHostsFile /dev/null" -o "StrictHostKeyChecking no" -p 2222 sshdguest@localhost
+    # password
+    kubectl --namespace application sshd-secret -o jsonpath={.data.password} | base64 -decode 
+    # test login
+    ssh -o "UserKnownHostsFile /dev/null" -o "StrictHostKeyChecking no" -p 2222 root@localhost
     ```
 * rbac test
   * ```shell

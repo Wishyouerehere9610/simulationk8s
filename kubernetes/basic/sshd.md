@@ -16,7 +16,8 @@
 * prepart [sshd.values.yaml](sshd/sshd.values.yaml.md)
 * prepare images
   * ```shell
-    for IMAGE in "docker.io/panubo/sshd:1.5.0"
+    for IMAGE in "busybox:1.35" \
+            "docker.io/panubo/sshd:1.5.0"
     do
         LOCAL_IMAGE="localhost:5000/$IMAGE"
         docker image inspect $IMAGE || docker pull $IMAGE
@@ -44,9 +45,9 @@
     ```
 * Login
   * ```shell
-    # username: sshdguest
+    # username: sshdtest
     # password: AAaa1234
-    ssh -o "UserKnownHostsFile /dev/null" -o "StrictHostKeyChecking no" -p 2222 sshdguest@localhost
+    ssh -o "UserKnownHostsFile /dev/null" -o "StrictHostKeyChecking no" -p 2222 sshdtest@localhost
     
     # 用户可以获取自己的sshd服务pod的TOKEN信息
     cat /var/run/secrets/kubernetes.io/serviceaccount/token
