@@ -62,4 +62,32 @@
     kubectl get pod -A
     ```
     
-  
+* 用户创建
+  * 单个namespace的管理员权限
+    * prepare [rbac.namespace.admin.yaml](sshd/1.rbac.yaml.md)
+    * ```shell
+      kubectl -n application apply -f rbac.namespace.admin.yaml
+      ```
+  * 单个namespace的只读权限
+    * prepare [rbac.namespace.view.yaml](sshd/1.rbac.yaml.md)
+    * ```shell
+      kubectl -n application apply -f rbac.namespace.view.yaml
+      ```
+  * 单个namespace的读写权限
+    * prepare [rbac.namespace.edit.yaml](sshd/1.rbac.yaml.md)
+    * ```shell
+      kubectl -n application apply -f rbac.namespace.edit.yaml
+      ```
+  * cluster的只读权限
+    * prepare [rbac.namespace.edit.yaml](sshd/1.rbac.yaml.md)
+    * ```shell
+      # 这里要注意serviceaccount的namespace
+      kubectl apply -f rbac.cluster.view.yaml
+      ```
+  * cluster的读写权限
+    * prepare [rbac.namespace.edit.yaml](sshd/1.rbac.yaml.md)
+    * ```shell
+      # 这里要注意serviceaccount的namespace
+      kubectl apply -f rbac.cluster.edit.yaml
+      ```    
+  * [自定义权限](../resources/rbac.md)

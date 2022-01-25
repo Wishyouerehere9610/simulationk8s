@@ -1,4 +1,4 @@
-## RBAC 授权 showcase
+## RBAC 
 
 ### RBAC概念公式
 ```text
@@ -10,7 +10,7 @@ role/clusterrole = object + action
 
 主体subject
 ```text
-user, group, serviceaccount 权限最终落地的对象
+user, group, serviceaccount 
 ```
 
 集群资源object

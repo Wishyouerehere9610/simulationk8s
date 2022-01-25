@@ -8,14 +8,10 @@
 * [basic components](basic/README.md)
 * [software](software/README.md)
 
-!> this is bit
-
-?> qyes
 
 * other
-  <div style='color: red'>
+
   * [helm3](helm/helm3.md)
   * [RBAC](resources/rbac.md)
   * [commands](resources/commands.md)
   * [conceptions](conceptions/README.md)
-  </div>
