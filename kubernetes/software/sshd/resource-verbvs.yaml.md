@@ -1,1 +1,0 @@
-[resource-verbvs.yaml](resource-verbvs.yaml ':include')

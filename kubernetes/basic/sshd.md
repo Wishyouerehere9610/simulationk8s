@@ -16,8 +16,7 @@
 * prepart [sshd.values.yaml](sshd/sshd.values.yaml.md)
 * prepare images
   * ```shell
-    for IMAGE in "busybox:1.35" \
-            "docker.io/panubo/sshd:1.5.0"
+    for IMAGE in "docker.io/panubo/sshd:1.5.0"
     do
         LOCAL_IMAGE="localhost:5000/$IMAGE"
         docker image inspect $IMAGE || docker pull $IMAGE
@@ -25,19 +24,26 @@
         docker push $LOCAL_IMAGE
     done
     ```
-* prepare chart
+* create `sshd-secret`
   * ```shell
-    git clone --single-branch --branch dev https://github.com/ContiCat/sshd.git sshd
+    # uses the "Array" declaration
+    # referencing the variable again with as $PASSWORD an index array is the same as ${PASSWORD[0]}
+    PASSWORD=($((echo -n $RANDOM | md5sum 2>/dev/null) || (echo -n $RANDOM | md5 2>/dev/null)))
+    # NOTE: username should have at least 6 characters
+    kubectl -n application \
+    create secret generic sshd-secret \
+    --from-literal=password=$PASSWORD
     ```
 * install by helm
   * ```shell
     helm install \
         --create-namespace --namespace application \
-        my-sshd ./sshd \
+        my-sshd \
+        https://resources.conti2021.icu/chart/sshd-0.2.1.tgz \
         --values sshd.values.yaml \
         --atomic
     ```
-    
+
 ## test
 * Exposed port
   * ```shell
@@ -64,28 +70,28 @@
     
 * 用户创建
   * 单个namespace的管理员权限
-    * prepare [rbac.namespace.admin.yaml](sshd/1.rbac.yaml.md)
+    * prepare [rbac.namespace.admin.yaml](sshd/rbac.namespace.admin.yaml)
     * ```shell
       kubectl -n application apply -f rbac.namespace.admin.yaml
       ```
   * 单个namespace的只读权限
-    * prepare [rbac.namespace.view.yaml](sshd/1.rbac.yaml.md)
+    * prepare [rbac.namespace.view.yaml](sshd/rbac.namespace.view.yaml)
     * ```shell
       kubectl -n application apply -f rbac.namespace.view.yaml
       ```
   * 单个namespace的读写权限
-    * prepare [rbac.namespace.edit.yaml](sshd/1.rbac.yaml.md)
+    * prepare [rbac.namespace.edit.yaml](sshd/rbac.namespace.edit.yaml)
     * ```shell
       kubectl -n application apply -f rbac.namespace.edit.yaml
       ```
   * cluster的只读权限
-    * prepare [rbac.namespace.edit.yaml](sshd/1.rbac.yaml.md)
+    * prepare [rbac.namespace.edit.yaml](sshd/rbac.cluster.edit.yaml)
     * ```shell
       # 这里要注意serviceaccount的namespace
       kubectl apply -f rbac.cluster.view.yaml
       ```
   * cluster的读写权限
-    * prepare [rbac.namespace.edit.yaml](sshd/1.rbac.yaml.md)
+    * prepare [rbac.namespace.edit.yaml](sshd/rbac.cluster.edit.yaml)
     * ```shell
       # 这里要注意serviceaccount的namespace
       kubectl apply -f rbac.cluster.edit.yaml
