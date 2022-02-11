@@ -30,9 +30,8 @@
     # referencing the variable again with as $PASSWORD an index array is the same as ${PASSWORD[0]}
     PASSWORD=($((echo -n $RANDOM | md5sum 2>/dev/null) || (echo -n $RANDOM | md5 2>/dev/null)))
     # NOTE: username should have at least 6 characters
-    kubectl -n application \
-    create secret generic sshd-secret \
-    --from-literal=password=$PASSWORD
+    kubectl -n application create secret generic sshd-secret \
+        --from-literal=password=$PASSWORD
     ```
 * install by helm
   * ```shell
@@ -51,38 +50,38 @@
     ```
 * Login
   * ```shell
-    # username: sshdtest
-    # password: AAaa1234
-    ssh -o "UserKnownHostsFile /dev/null" -o "StrictHostKeyChecking no" -p 2222 sshdtest@localhost
+    # password
+    kubectl -n application get secret sshd-secret -o jsonpath={.data.password} | base64 --decode
+    # test login
+    ssh -o "UserKnownHostsFile /dev/null" -o "StrictHostKeyChecking no" -p 2222 root@localhost
     
-    # 用户可以获取自己的sshd服务pod的TOKEN信息
+    # sshdsa账号token信息(留用)
     cat /var/run/secrets/kubernetes.io/serviceaccount/token
-    
     ```
 * rbac test
   * ```shell
-    # role test
+    # namespace
     kubectl get pod -n application
     
-    # clusterrole test
-    kubectl get pod -A
+    # cluster
+    kubectl get pod --all-namespace
     ```
     
-* 用户创建
+* RBAC
   * 单个namespace的管理员权限
     * prepare [rbac.namespace.admin.yaml](sshd/rbac.namespace.admin.yaml)
     * ```shell
-      kubectl -n application apply -f rbac.namespace.admin.yaml
+      kubectl -n test apply -f rbac.namespace.admin.yaml
       ```
   * 单个namespace的只读权限
     * prepare [rbac.namespace.view.yaml](sshd/rbac.namespace.view.yaml)
     * ```shell
-      kubectl -n application apply -f rbac.namespace.view.yaml
+      kubectl -n test apply -f rbac.namespace.view.yaml
       ```
   * 单个namespace的读写权限
     * prepare [rbac.namespace.edit.yaml](sshd/rbac.namespace.edit.yaml)
     * ```shell
-      kubectl -n application apply -f rbac.namespace.edit.yaml
+      kubectl -n test apply -f rbac.namespace.edit.yaml
       ```
   * cluster的只读权限
     * prepare [rbac.namespace.edit.yaml](sshd/rbac.cluster.edit.yaml)

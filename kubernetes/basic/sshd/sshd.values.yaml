@@ -3,17 +3,12 @@ image:
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "1.5.0"
-
-sshd:
-  username: "sshdtest"
-  password: "AAaa1234"
-
 # namespace
 rbac:
   role:
     metadata:
-        name: "default-sshd"
-    rules: []
+        name: "sshd-role"
+    rules:
       - apiGroups: [""]
         resources: ["pods"]
         verbs: ["get", "list", "watch"]
@@ -21,7 +16,7 @@ rbac:
 # cluster
   clusterrole:
     metadata:
-      name: "default-sshd-clusterrole"
+      name: "sshd-clusterrole"
     rules:
       - apiGroups: [ "" ]
         resources: [ "pods" ]

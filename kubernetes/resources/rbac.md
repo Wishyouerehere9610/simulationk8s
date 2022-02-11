@@ -1,115 +1,138 @@
-## RBAC 
+# RBAC 
 
-### RBAC概念公式
-```text
-role/clusterrole = object + action
-单个namespace授权: rolebinding = subject + role/clusterRole 
-多个namespace授权: 多个rolebinding  = subject + clusterRole
-整个集群授权： clusterRoleBinding = subject + clusterRole
-```
-
-主体subject
-```text
-user, group, serviceaccount 
-```
-
-集群资源object
-```shell
-# 查看resources与apigroup组的包含关系
-kubectl api-resources 
-```
-```yaml
-# 基础object
-- apiGroup:[""]
-  resource:
-    -"bindings"
-    -"componentstatuses"
-    -"configmaps"
-    -"endpoints"
-    -"events"
-    -"limitranges"
-    -"namespaces"
-    -"nodes"
-    -"persistentvolumeclaims"
-    -"persistentvolumes"
-    -"pods"
-    -"podtemplates"
-    -"replicationcontrollers"
-    -"resourcequotas"
-    -"secrets"
-    -"serviceaccounts"
-    -"services"
-
-- apiGroup:["apps"]
-  resource:
-    -"controllerrevisions"
-    -"daemonsets"
-    -"deployments"
-    -"replicasets"
-    -"statefulsets"
-
-- apiGroup:["batch"]
-  resource:
-    -"cronjobs"
-    -"jobs"
-
-- apiGroup:["storage.k8s.io"]
-  resource:
-    -"csidrivers"
-    -"csinodes"
-    -"storageclasses"
-    -"volumeattachment"
-
-- apiGroup:["rbac.authorization.k8s.io"]
-  resource:
-    -"clusterrolebindings"
-    -"clusterroles"
-    -"rolebindings"
-    -"roles"
-
--apiGroup:["networking.k8s.io"]
-  resource:
-    -"ingressclasses"
-    -"ingresses"
-    -"networkpolicies"
+## subject
+* ```text
+  user, group, serviceaccount 
+  ```
+### SA 示例
+* ```shell
+  apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    name: conti-test  # sa-name
+    namespace: test   # sa-namespace
+  labels:
+    app.kubernetes.io/service: my-sshd
+  ```
+## object
+* ```shell
+  # 查看resources与apigroup组的包含关系
+  kubectl api-resources 
+  ```
+* ```yaml
+  # basic object
+  - apiGroup:[""]
+    resource:
+      -"bindings"
+      -"componentstatuses"
+      -"configmaps"
+      -"endpoints"
+      -"events"
+      -"limitranges"
+      -"namespaces"
+      -"nodes"
+      -"persistentvolumeclaims"
+      -"persistentvolumes"
+      -"pods"
+      -"podtemplates"
+      -"replicationcontrollers"
+      -"resourcequotas"
+      -"secrets"
+      -"serviceaccounts"
+      -"services"
   
-# 其他              
-mutatingwebhookconfigurations       "admissionregistration.k8s.io"     
-validatingwebhookconfigurations     "admissionregistration.k8s.io"     
-customresourcedefinitions           "apiextensions.k8s.io"     
-apiservices                         "apiregistration.k8s.io"        
-tokenreviews                        "authentication.k8s.io"     
-localsubjectaccessreviews           "authorization.k8s.io"     
-selfsubjectaccessreviews            "authorization.k8s.io"     
-selfsubjectrulesreviews             "authorization.k8s.io"     
-subjectaccessreviews                "authorization.k8s.io"     
-horizontalpodautoscalers            "autoscaling"     
-endpointslices                      "discovery.k8s.io"     
-events                              "events.k8s.io"     
-flowschemas                         "flowcontrol.apiserver.k8s.iobeta1"     
-prioritylevelconfigurations         "flowcontrol.apiserver.k8s.iobeta1"        
-runtimeclasses                      "node.k8s.io"     
-poddisruptionbudgets                "policy"      
-podsecuritypolicies                 "policybeta1"           
-priorityclasses                     "scheduling.k8s.io"         
-csistoragecapacities                "storage.k8s.iobeta1"
-```
+  - apiGroup:["apps"]
+    resource:
+      -"controllerrevisions"
+      -"daemonsets"
+      -"deployments"
+      -"replicasets"
+      -"statefulsets"
+  
+  - apiGroup:["batch"]
+    resource:
+      -"cronjobs"
+      -"jobs"
+  
+  - apiGroup:["storage.k8s.io"]
+    resource:
+      -"csidrivers"
+      -"csinodes"
+      -"storageclasses"
+      -"volumeattachment"
+  
+  - apiGroup:["rbac.authorization.k8s.io"]
+    resource:
+      -"clusterrolebindings"
+      -"clusterroles"
+      -"rolebindings"
+      -"roles"
+  
+  -apiGroup:["networking.k8s.io"]
+    resource:
+      -"ingressclasses"
+      -"ingresses"
+      -"networkpolicies"           
+  ```
 
-操作action: 
-```text
-verbs:
-  - "create"
-  - "delete"
-  - "deletecollection"
-  - "get"
-  - "list"
-  - "patch"
-  - "update"
-  - "watch"
-  - "impersonate"
-```
+## action: 
+* ```text
+  verbs:
+    - "create"
+    - "delete"
+    - "deletecollection"
+    - "get"
+    - "list"
+    - "patch"
+    - "update"
+    - "watch"
+    - "impersonate"
+  ```
 
-### 案例场景
+## Role 示例
+
+* 允许在核心API Group中读取“pods”资源:
+  ```yaml
+  rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "watch"]
+  ```
+* 允许在“extensions”和“apps”API Group中读/写“deployments”
+  ```yaml
+  rules:
+  - apiGroups: ["extensions", "apps"]
+    resources: ["deployments"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+* 允许读取 “Pod” 和 读/写 “jobs”
+  ```yaml
+  rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["batch", "extensions"]
+    resources: ["jobs"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+* 允许读取名称为 “my-config” 的 ConfigMap
+  ```yaml
+  rules:
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    resourceNames: ["my-config"]
+    verbs: ["get"]
+* 允许读取核心 Group中资源“Node”（Node属于集群范围，则必须将ClusterRole绑定ClusterRoleBinding）
+  ```yaml
+  rules:
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list", "watch"]
+* 允许非资源型“/ healthz”和所有子路径进行 “GET”和“POST”请求：（必须将ClusterRole绑定ClusterRoleBinding）：
+  ```yaml
+  rules:
+  - nonResourceURLs: ["/healthz", "/healthz/*"] # '*' in a nonResourceURL is a suffix glob match
+    verbs: ["get", "post"]
+
+## illustrate
 * 用户对单个namespace下的资源权限需求
   * ```text
     用户jeck 需要namespace(middleware)下resources(pods, services, configmaps)的读写(get,list,watch,patch,update)权限
