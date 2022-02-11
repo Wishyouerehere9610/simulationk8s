@@ -18,11 +18,3 @@ ingress:
     - secretName: dashboard.kube.conti-tls
       hosts:
         - dashboard.kube.conti.icu
-
-# 测试用的默认自带权限
-rbac:
-  clusterRoleMetrics: true
-  clusterReadOnlyRole: true
-serviceAccount:
-  create: true
-  name: my-dashboard

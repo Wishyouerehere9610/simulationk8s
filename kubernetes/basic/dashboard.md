@@ -57,29 +57,18 @@
      ```shell
      kubectl -n dashboard get certificate 
      ```
-
 2. 修改hosys文件
    * hosts文件
      ```text
      修改本机hosts文件
      ```
-   
-3. 拿到sa:my-dashboard的token信息作为dashboard的登录信息
-   * TOKEN (这里用的token信息是SSHD服务sa的token信息) [SSHD](sshd.md)
-     ```shell
-     SECRETNAME=$(kubectl -n application get sa/my-dashboard -o jsonpath="{.secrets[0].name}")
-     kubectl -n dashboard get secret ${SECRETNAME} -o jsonpath={.data.token} | base64 -d
-     ```
-     
+3. LOGIN IN 
    * GO [https://dashboard.kube.conti.icu](https://dashboard.kube.conti.icu)
+   * 这里使用SA的token信息作为dashboard的登录信息 详细信息见 =>  [RBAC](../resources/rbac.md)
+   ![img.png](img.png)
+4. 权限测试
+   * Home
      * ![image-20220114150039941](http://conti-picture-database.oss-cn-hangzhou.aliyuncs.com/img/image-20220114150039941.png)
-
-4. [SSHD](sshd.md) 的serviceaccount进行权限测试
-   * 获取sshd用户的TOKEN信息
-     ```shell
-     SECRETNAME=$(kubectl -n application get sa/my-sshd -o jsonpath="{.secrets[0].name}")
-     kubectl -n dashboard get secret ${SECRETNAME} -o jsonpath={.data.token} | base64 -d
-     ```
    * 查看application下的pod权限
      * ![image-20220114144534555](http://conti-picture-database.oss-cn-hangzhou.aliyuncs.com/img/image-20220114144534555.png)
    * 查看所有namespace下的pod权限
