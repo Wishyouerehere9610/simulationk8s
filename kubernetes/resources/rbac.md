@@ -104,6 +104,7 @@
   - apiGroups: ["extensions", "apps"]
     resources: ["deployments"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  ```
 * 允许读取 “Pod” 和 读/写 “jobs”
   ```yaml
   rules:
@@ -113,6 +114,7 @@
   - apiGroups: ["batch", "extensions"]
     resources: ["jobs"]
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  ```
 * 允许读取名称为 “my-config” 的 ConfigMap
   ```yaml
   rules:
@@ -120,18 +122,21 @@
     resources: ["configmaps"]
     resourceNames: ["my-config"]
     verbs: ["get"]
+  ```
 * 允许读取核心 Group中资源“Node”（Node属于集群范围，则必须将ClusterRole绑定ClusterRoleBinding）
   ```yaml
   rules:
   - apiGroups: [""]
     resources: ["nodes"]
     verbs: ["get", "list", "watch"]
+  ```
 * 允许非资源型“/ healthz”和所有子路径进行 “GET”和“POST”请求：（必须将ClusterRole绑定ClusterRoleBinding）：
   ```yaml
   rules:
   - nonResourceURLs: ["/healthz", "/healthz/*"] # '*' in a nonResourceURL is a suffix glob match
     verbs: ["get", "post"]
-
+  ```
+  
 ## illustrate
 * 单个namespace下的资源权限需求
   * prepare [rbac.test.yaml](rbac.test.yaml.md)
@@ -147,7 +152,8 @@
     ```
 * 用户Token信息获取
   * ```shell
-    kubectl -n test get secret $(kubectl -n test get sa conti-test -o jsonpath="{.secrets[0].name}") -o jsonpath="{.data.token}" | base64 --decode && echo
+    kubectl -n test get secret $(kubectl -n test get sa conti-test -o jsonpath="{.secrets[0].name}") \
+        -o jsonpath="{.data.token}" | base64 --decode && echo
     ```
 
 
