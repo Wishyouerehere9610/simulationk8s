@@ -133,106 +133,21 @@
     verbs: ["get", "post"]
 
 ## illustrate
-* 用户对单个namespace下的资源权限需求
-  * ```text
-    用户jeck 需要namespace(middleware)下resources(pods, services, configmaps)的读写(get,list,watch,patch,update)权限
-    ```
+* 单个namespace下的资源权限需求
+  * prepare [rbac.test.yaml](rbac.test.yaml.md)
   * ```shell
-    kind: Role
-    metadata:
-      name: jeck-rw-role
-      namespace: middleware
-    rules:
-      - apiGroups: [""] 
-        resources: ["pods"]
-        verbs: ["get", "watch", "list", "patch","update"]
+    # namespace(test)下resources(pods, services, configmaps)的读写(get,list,watch,patch,update)权限
+    kubectl -n test apply -f rbac.test.yaml
     ```
+* 多个namespce下的资源权限需求
+  * prepare [rbac.cluster.test.yaml](rbac.cluster.test.yaml.md)
   * ```shell
-    kind: RoleBinding
-    metadata:
-      name: jack-rw-role-binding
-      namespace: middleware
-    subjects:
-      - kind: ServiceAccount
-        name: jack
-        namespace: application
-    roleRef:
-      kind: Role
-      name: jeck-rw-role
-      apiGroup: "rbac.authorization.k8s.io"
+    # namespace(application, middleware)下resources(pods, services, deployments, jobs)的只读(get, watch, list)权限
+    kubectl -n test apply -f rbac.cluster.test.yaml
     ```
-* 用户对多个namespce下的资源权限需求
-  * ```text
-    用户bsyy需要namespace(application, middleware)下resources(pods, services, deployments, jobs)的只读(get, watch, list)权限
-    ```
+* 用户Token信息获取
   * ```shell
-    kind: ClusterRole
-    metadata:
-      name: bsyy-clusterrole-read
-    rules:
-      - apiGroups: [""]
-        resources: ["pods" "services"]
-        verbs: ["get", "watch", "list"]
-      - apiGroups: ["apps"]
-        resources: ["deployments"]
-        verbs: ["get", "watch", "list"]
-      - apiGroups: ["batch"]
-        resources: ["jobs"]
-        verbs: ["get", "watch", "list"]
-    ```
-  * ```shell
-    kind: RoleBinding
-    metadata:
-      name: bsyy-clusterrole-read-binding
-      namespace: middleware
-    subjects:
-      - kind: ServiceAccount
-        name: bsyy
-        namespace: application
-      roleRef:
-      kind: ClusterRole
-      name: bsyy-clusterrole-read
-      apiGroup: "rbac.authorization.k8s.io"
-    ```
-  * ```shell
-    kind: RoleBinding
-    metadata:
-      name: bsyy-clusterrole-read-binding
-      namespace: application
-    subjects:
-      - kind: ServiceAccount
-        name: bsyy
-        namespace: application
-      roleRef:
-      kind: ClusterRole
-      name: bsyy-clusterrole-read
-      apiGroup: "rbac.authorization.k8s.io"
-    ```
-* 用户对所有namespace下的资源权限需求
-  * ```text
-    用户rose需要所有namespace下的resource(pods, services)的只读权限(get, watch, list)
-    ```
-  * ```shell
-    kind: ClusterRole
-    metadata:
-      name: bsyy-clusterrole-read
-    rules:
-      - apiGroups: [""]
-        resources: ["pods", "services"]
-        verbs: ["get", "watch", "list"]
-    ```
-  * ```shell
-    kind: ClusterRoleBinding
-    metadata:
-      name: bsyy-clusterrole-read-binding
-    subjects:
-      - kind: ServiceAccount
-        name: bsyy
-        namespace: application
-      roleRef:
-      kind: ClusterRole
-      name: bsyy-clusterrole-read
-      apiGroup: "rbac.authorization.k8s.io"
+    kubectl -n test get secret $(kubectl -n test get sa conti-test -o jsonpath="{.secrets[0].name}") -o jsonpath="{.data.token}" | base64 --decode && echo
     ```
 
 

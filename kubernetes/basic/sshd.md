@@ -84,13 +84,13 @@
       kubectl -n test apply -f rbac.namespace.edit.yaml
       ```
 * cluster的只读权限
-    * prepare [rbac.namespace.edit.yaml](sshd/rbac.cluster.edit.yaml.md)
+    * prepare [rbac.cluster.edit.yaml](sshd/rbac.cluster.edit.yaml.md)
     * ```shell
       # 这里要注意serviceaccount的namespace
       kubectl apply -f rbac.cluster.view.yaml
       ```
 * cluster的读写权限
-    * prepare [rbac.namespace.edit.yaml](sshd/rbac.cluster.edit.yaml.md)
+    * prepare [rbac.cluster.edit.yaml](sshd/rbac.cluster.edit.yaml.md)
     * ```shell
       # 这里要注意serviceaccount的namespace
       kubectl apply -f rbac.cluster.edit.yaml

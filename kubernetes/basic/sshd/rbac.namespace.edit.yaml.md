@@ -1,1 +1,1 @@
-[rbac.namespace.edit.yaml](rbac.namespace.edit.yaml 'include')
+[rbac.namespace.edit.yaml](rbac.namespace.edit.yaml ':include')
