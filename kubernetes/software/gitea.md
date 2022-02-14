@@ -16,56 +16,43 @@
 
 ### purpose
 
-* create a kubernetes cluster by kind
-* setup ingress-nginx
+* prepare a kind cluster with basic components
 * install gitea
 
 ### do it
-
-1. [create local cluster for testing](../basic/local.cluster.for.testing.md)
-
-2. install ingress nginx
-    * prepare [ingress.nginx.values.yaml](../basic/resources/ingress.nginx.values.yaml.md)
-
-    * prepare images
-        + ```shell
-          for IMAGE in "k8s.gcr.io/ingress-nginx/controller:v1.0.3" \
-              "k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.0"
-          do
-              LOCAL_IMAGE="localhost:5000/$IMAGE"
-              docker image inspect $IMAGE || docker pull $IMAGE
-              docker image tag $IMAGE $LOCAL_IMAGE
-              docker push $LOCAL_IMAGE
-          done
-          ```
-
-    * install with helm
-        + ```shell
-          ./bin/helm install \
-              --create-namespace --namespace basic-components \
-              my-ingress-nginx \
-              ingress-nginx \
-              --version 4.0.5 \
-              --repo https://kubernetes.github.io/ingress-nginx \
-              --values ingress.nginx.values.yaml \
-              --atomic
-          ```
-
-3. install gitea
+1. install gitea
     * prepare [gitea.values.yaml](gitea/gitea.values.yaml.md)
     * prepare images
         + ```shell
+          DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p $DOCKER_IMAGE_PATH
+          BASE_URL="https://resource.static.zjvis.net/docker-images"
           for IMAGE in "gitea/gitea:1.15.3" \
-              "docker.io/bitnami/memcached:1.6.9-debian-10-r114" \
-              "docker.io/bitnami/memcached-exporter:0.8.0-debian-10-r105" \
-              "docker.io/bitnami/postgresql:11.11.0-debian-10-r62" \
-              "docker.io/bitnami/bitnami-shell:10" \
-              "docker.io/bitnami/postgres-exporter:0.9.0-debian-10-r34"
+                  "docker.io/bitnami/memcached:1.6.9-debian-10-r114" \
+                  "docker.io/bitnami/memcached-exporter:0.8.0-debian-10-r105" \
+                  "docker.io/bitnami/postgresql:11.11.0-debian-10-r62" \
+                  "docker.io/bitnami/bitnami-shell:10" \
+                  "docker.io/bitnami/postgres-exporter:0.9.0-debian-10-r34"
           do
-              LOCAL_IMAGE="localhost:5000/$IMAGE"
-              docker image inspect $IMAGE || docker pull $IMAGE
-              docker image tag $IMAGE $LOCAL_IMAGE
-              docker push $LOCAL_IMAGE
+              IMAGE_FILE=$DOCKER_IMAGE_PATH/$IMAGE
+              if [ ! -f $IMAGE_FILE ]; then
+                  TMP_FILE=$IMAGE_FILE.tmp \
+                      && curl -o "$TMP_FILE" -L "$BASE_URL/$IMAGE" \
+                      && mv $TMP_FILE $IMAGE_FILE
+              fi
+              docker image load -i $IMAGE_FILE
+          done
+          DOCKER_REGISTRY="docker-registry-ops-test.lab.zjvis.net:32443"
+          for IMAGE in "gitea/gitea:1.15.3" \
+                  "docker.io/bitnami/memcached:1.6.9-debian-10-r114" \
+                  "docker.io/bitnami/memcached-exporter:0.8.0-debian-10-r105" \
+                  "docker.io/bitnami/postgresql:11.11.0-debian-10-r62" \
+                  "docker.io/bitnami/bitnami-shell:10" \
+                  "docker.io/bitnami/postgres-exporter:0.9.0-debian-10-r34"
+          do
+              DOCKER_TARGET_IMAGE=$DOCKER_REGISTRY/$IMAGE
+              docker tag $IMAGE $DOCKER_TARGET_IMAGE \
+                  && docker push $DOCKER_TARGET_IMAGE \
+                  && docker image rm $DOCKER_TARGET_IMAGE
           done
           ```
     * create `gitea-admin-secret`
@@ -93,7 +80,7 @@
               --atomic
           ```
 
-4. visit gitea from website
+5. visit gitea from website
     * port-forward
         + ```shell
           ./bin/kubectl --namespace application port-forward svc/my-gitea-http 3000:3000 --address 0.0.0.0
@@ -104,7 +91,7 @@
           ./bin/kubectl get secret gitea-admin-secret -n gitea -o jsonpath={.data.password} | base64 --decode && echo
           ```
 
-5. visit gitea from SSH
+6. visit gitea from SSH
 
     * port-forward
 

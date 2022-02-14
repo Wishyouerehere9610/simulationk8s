@@ -69,28 +69,28 @@
     
 * RBAC
   * 单个namespace的管理员权限
-    * prepare [rbac.namespace.admin.yaml](sshd/rbac.namespace.admin.yaml)
+    * prepare [rbac.namespace.admin.yaml](sshd/rbac.namespace.admin.yaml ':include')
     * ```shell
       kubectl -n test apply -f rbac.namespace.admin.yaml
       ```
   * 单个namespace的只读权限
-    * prepare [rbac.namespace.view.yaml](sshd/rbac.namespace.view.yaml)
+    * prepare [rbac.namespace.view.yaml](sshd/rbac.namespace.view.yaml ':include')
     * ```shell
       kubectl -n test apply -f rbac.namespace.view.yaml
       ```
   * 单个namespace的读写权限
-    * prepare [rbac.namespace.edit.yaml](sshd/rbac.namespace.edit.yaml)
+    * prepare [rbac.namespace.edit.yaml](sshd/rbac.namespace.edit.yaml ':include')
     * ```shell
       kubectl -n test apply -f rbac.namespace.edit.yaml
       ```
   * cluster的只读权限
-    * prepare [rbac.namespace.edit.yaml](sshd/rbac.cluster.edit.yaml)
+    * prepare [rbac.namespace.edit.yaml](sshd/rbac.cluster.edit.yaml ':include')
     * ```shell
       # 这里要注意serviceaccount的namespace
       kubectl apply -f rbac.cluster.view.yaml
       ```
   * cluster的读写权限
-    * prepare [rbac.namespace.edit.yaml](sshd/rbac.cluster.edit.yaml)
+    * prepare [rbac.namespace.edit.yaml](sshd/rbac.cluster.edit.yaml ':include')
     * ```shell
       # 这里要注意serviceaccount的namespace
       kubectl apply -f rbac.cluster.edit.yaml
