@@ -31,7 +31,7 @@
 
 1. [create local cluster for testing](local.cluster.for.testing.md)
 2. setup [ingress-nginx](ingress.nginx.md)
-3. setup [cert-manager](cert-manager/cert.manager.md)
+3. setup [cert-manager](cert-manageraaa/cert.manager.md)
 4. configure self-signed issuer
     * `self-signed` issuer
         + prepare [self.signed.and.ca.issuer.yaml](resources/self.signed.and.ca.issuer.yaml.md)

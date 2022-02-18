@@ -1,16 +1,10 @@
 ## kubernetes
 
-[comment]: <> (* [download kubernetes binary tools]&#40;download.kubernetes.binary.tools.md&#41;)
-
-[comment]: <> (* [create local cluster with kind]&#40;create.local.cluster.with.kind.md&#41;)
-
-
+* [download kubernetes binary tools](download.kubernetes.binary.tools.md)
 * [basic components](basic/README.md)
 * [software](software/README.md)
 
-
 * other
-
   * [helm3](helm/helm3.md)
   * [RBAC](resources/rbac.md)
   * [commands](resources/commands.md)

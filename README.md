@@ -1,4 +1,4 @@
-# **blog.conti2021.icu**
+# **Welcome to my blog**
 
 ## Technology stack
 * [Linux](linux/README.md)

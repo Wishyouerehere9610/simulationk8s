@@ -1,88 +1,103 @@
 # cert manager
 
 ## main usage
-
 * create certification of ssl automatically by cert-manager
 * use dns01 method
 
 ## conceptions
-
 * none
 
 ## purpose
-
 * create a kubernetes cluster by kind
 * setup cert-manager
 * setup alidns-webhook
 * install nginx service and access it with https
 
-## do it
-1. [create qemu machine for kind](../create.qemu.machine.for.kind.md)
-2. [install ingress-nginx](../ingress.nginx.md)
-   
-3. prepare [cert.manager.values.yaml](cert_manager/cert.manager.values.yaml.md)
-4. prepare images
-    * ```shell
-       for IMAGE in "quay.io/jetstack/cert-manager-controller:v1.5.4" \
-           "quay.io/jetstack/cert-manager-webhook:v1.5.4" \
-           "quay.io/jetstack/cert-manager-cainjector:v1.5.4" \
-           "quay.io/jetstack/cert-manager-ctl:v1.5.4"
-       do
-           LOCAL_IMAGE="localhost:5000/$IMAGE"
-           docker image inspect $IMAGE || docker pull $IMAGE
-           docker image tag $IMAGE $LOCAL_IMAGE
-           docker push $LOCAL_IMAGE
-       done
-       ```
-5. install by helm
-    * ```shell
-       ./bin/helm install \
-           --create-namespace --namespace basic-components \
-           my-cert-manager \
-           cert-manager \
-           --version 1.5.4 \
-           --repo https://charts.jetstack.io \
-           --values $(pwd)/cert.manager.values.yaml \
-           --atomic
-       ```
+## pre-requirements
 
-## test
-* test with certificate
-    * create issuse
-        * prepare [alidns.webhook.staging.issuer.yaml](./alidns.webhook.staging.issuer.yaml.md)
-        * ```shell
-      kubectl -n basic-components apply -f alidns.webhook.staging.issuer.yaml
-      ```
-    * create certificate
-        * prepare [test.certificaete.yaml](./test.certificaete.yaml.md)
-        * ```shell
-      kubectl -n basic-components apply -f test.certificaete.yaml
-      ```
-    * certificate should have been after a while `successfully` `issued`
-        * ```shell
-      kubectl -n basic-components describe certificate cm-test
-      ```
-* test with nginx
-    * prepare [alidns.webhook.staging.nginx.values.yaml](./alidns.webhook.staging.nginx.values.yaml.md)
-    * prepare images
-        * ```shell
-      for IMAGE in \
-          "docker.io/bitnami/nginx:1.21.3-debian-10-r29"
+* [local.cluster.for.testing](local.cluster.for.testing.md)
+* [install ingress-nginx](ingress.nginx.md)
+
+## Do it
+1. prepare [cert.manager.values.yaml](cert-manager/cert.manager.values.yaml.md)
+2. prepare images
+    * ```shell
+      DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
+      BASE_URL="https://resources.conti2021.icu/docker-images"
+      LOCAL_IMAGE="localhost:5000"
+      for IMAGE in "quay.io/jetstack/cert-manager-controller:v1.5.4" \
+          "quay.io/jetstack/cert-manager-webhook:v1.5.4" \
+          "quay.io/jetstack/cert-manager-cainjector:v1.5.4" \
+          "quay.io/jetstack/cert-manager-ctl:v1.5.4"
       do
-          LOCAL_IMAGE="localhost:5000/$IMAGE"
-          docker image inspect $IMAGE || docker pull $IMAGE
-          docker image tag $IMAGE $LOCAL_IMAGE
-          docker push $LOCAL_IMAGE
+          IMAGE_FILE=$(echo ${IMAGE} | sed "s/\//_/g" | sed "s/\:/_/g").dim
+          LOCAL_IMAGE_FIEL=${DOCKER_IMAGE_PATH}/${IMAGE_FILE}
+          if [ ! -f ${LOCAL_IMAGE_FIEL} ]; then
+              curl -o ${IMAGE_FILE} -L ${BASE_URL}/${IMAGE_FILE} \
+                  && mv ${IMAGE_FILE} ${LOCAL_IMAGE_FIEL} \
+                  || rm -rf ${IMAGE_FILE}
+          fi
+          docker image load -i ${LOCAL_IMAGE_FIEL}
+          docker image inspect ${IMAGE} || docker pull ${IMAGE}
+          docker image tag ${IMAGE} ${LOCAL_IMAGE}/${IMAGE}
+          docker push ${LOCAL_IMAGE}/${IMAGE}
       done
       ```
-    * install by helm
-        * ```shell
-      helm install \
-          --create-namespace --namespace basic-components-plus \
-          alidns-letsencrypt-staging-nginx \
-          https://resource.geekcity.tech/kubernetes/charts/https/charts.bitnami.com/bitnami/nginx-9.5.7.tgz \
-          --values alidns.webhook.staging.nginx.values.yaml \
-          --atomic
-      ```
+3. install by helm
+    * ```shell
+       helm install \
+           --create-namespace --namespace basic-components \
+           my-cert-manager \
+           https://resource.static.zjvis.net/charts/charts.jetstack.io/cert-manager-v1.5.4.tgz \
+           --values cert.manager.values.yaml \
+           --atomic
+       ```
+4. isntall `alidns-webhook`
+   * prepare [alidns.webhook.values.yaml](cert-manager/alidns.webhook.values.yaml.md)
+   * make sure permissions added to `$YOUR_ACCESS_KEY_ID`
+     * ```json
+       {
+         "Version": "1",
+         "Statement": [
+           {
+             "Effect": "Allow",
+             "Action": [
+               "alidns:AddDomainRecord",
+               "alidns:DeleteDomainRecord"
+             ],
+             "Resource": "acs:alidns:*:*:domain/cnconti.cc"
+           }, {
+             "Effect": "Allow",
+             "Action": [
+               "alidns:DescribeDomains",
+               "alidns:DescribeDomainRecords"
+             ],
+             "Resource": "acs:alidns:*:*:domain/*"
+           }
+         ]
+       }
+       ```
+   * create secret of `alidns-webhook-secrets`
+     * ```shell
+       kubectl -n basic-components create secret generic alidns-webhook-secrets \
+           --from-literal="access-token=${YOUR_ACCESS_KEY_ID}" \
+           --from-literal="secret-key=${YOUR_ACCESS_KEY_SECRET}"
+       ```
+   * install by helm
+     + ```shell
+       helm install \
+           --create-namespace --namespace basic-components \
+           my-alidns-webhook \
+           https://resource.static.zjvis.net/charts/alidns-webhook-0.6.0.tgz \
+           --values alidns.webhook.values.yaml \
+           --atomic
+       ```
+5. create `clusterissuer`
+   * prepare [alidns.webhook.clusterissuer.yaml](cert-manager/alidns.webhook.clusterissuer.yaml.md)
+     * ```shell
+       kubectl -n basic-components apply -f alidns.webhook.cluster.issuer.yaml
+       ```
+## Test
+
       
       

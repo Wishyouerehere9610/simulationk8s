@@ -7,26 +7,27 @@ persistence:
   enabled: true
   size: 10Gi
   storageClass: standard
-configData:
-  auth:
-    htpasswd:
-      realm: basic-realm
-      path: /auth/htpasswd
-extraEnvVars:
-  - name: REGISTRY_AUTH
-    value: "htpasswd"
-  - name: REGISTRY_AUTH_HTPASSWD_REALM
-    value: "Registry Realm"
-  - name: REGISTRY_AUTH_HTPASSWD_PATH
-    value: "/auth/htpasswd"
-extraVolumeMounts:
-  - name: auth
-    mountPath: /auth
-    readOnly: true
-extraVolumes:
-  - name: auth
-    secret:
-      secretName: docker-registry-secret
-      items:
-        - key: htpasswd
-          path: htpasswd
+# docker-registry-password
+#configData:
+#  auth:
+#    htpasswd:
+#      realm: basic-realm
+#      path: /auth/htpasswd
+#extraEnvVars:
+#  - name: REGISTRY_AUTH
+#    value: "htpasswd"
+#  - name: REGISTRY_AUTH_HTPASSWD_REALM
+#    value: "Registry Realm"
+#  - name: REGISTRY_AUTH_HTPASSWD_PATH
+#    value: "/auth/htpasswd"
+#extraVolumeMounts:
+#  - name: auth
+#    mountPath: /auth
+#    readOnly: true
+#extraVolumes:
+#  - name: auth
+#    secret:
+#      secretName: docker-registry-secret
+#      items:
+#        - key: htpasswd
+#          path: htpasswd
