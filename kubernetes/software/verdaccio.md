@@ -16,7 +16,7 @@
 
 ## purpose
 
-* [create local cluster for testing](../basic/local.cluster.for.testing.md)
+* [create local cluster for testing](../local.cluster.for.testing.md)
 
 ## do it
 

@@ -1,19 +1,10 @@
 # kubernetes dashboard
 
 ## main usage
-
 * a web based dashboard to manage kubernetes cluster
 
 ## conceptions
-
 * none
-
-## pre-requirements
-
-* [download kubernetes binary tools](../download.kubernetes.binary.tools.md)
-* [create local cluster for testing](local.cluster.for.testing.md)
-* [ingress-nginx](ingress.nginx.md)
-* [cert-manager](cert.manager.md)
 
 ## purpose
 
@@ -21,61 +12,74 @@
 * setup kubernetes dashboard
 * create a read only user
 
-## do it
+## pre-requirements
+* [download kubernetes binary tools](../download.kubernetes.binary.tools.md)
+* [create local cluster for testing](../local.cluster.for.testing.md)
+* [ingress-nginx](ingress.nginx.md)
+* [cert-manager](cert.manager.md)
 
-1. combination of issuer and `issuerself-signed` `CA`
-   * prepare [self.signed.clusterissuer.yaml](dashboard/self.signed.clusterissuer.yaml.md)
-   * ```shell
-     kubectl apply -f self.signed.clusterissuer.yaml
-     ```
-2. prepart [dashboard.values.yaml](dashboard/dashboard.values.yaml.md)
-3. prepare images
+## Do it
+1. prepart [dashboard.values.yaml](resources/dashboard.values.yaml.md)
+2. prepare images
    * ```shell  
-     for IMAGE in "kubernetesui/dashboard:v2.4.0"
-     do
-         LOCAL_IMAGE="localhost:5000/$IMAGE"
-         docker image inspect $IMAGE || docker pull $IMAGE
-         docker image tag $IMAGE $LOCAL_IMAGE
-         docker push $LOCAL_IMAGE
-     done
+      DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
+      BASE_URL="https://resources.conti2021.icu/docker-images"
+      LOCAL_IMAGE="localhost:5000"
+      for IMAGE in "docker.io_kubernetesui_dashboard_v2.4.0.dim" \
+          "docker.io_kubernetesui_metrics-scraper_v1.0.7.dim"
+      do
+          IMAGE_FILE=$(echo ${IMAGE} | sed "s/\//_/g" | sed "s/\:/_/g").dim
+          LOCAL_IMAGE_FIEL=${DOCKER_IMAGE_PATH}/${IMAGE_FILE}
+          if [ ! -f ${LOCAL_IMAGE_FIEL} ]; then
+              curl -o ${IMAGE_FILE} -L ${BASE_URL}/${IMAGE_FILE} \
+                  && mv ${IMAGE_FILE} ${LOCAL_IMAGE_FIEL} \
+                  || rm -rf ${IMAGE_FILE}
+          fi
+          docker image load -i ${LOCAL_IMAGE_FIEL}
+          docker image inspect ${IMAGE} || docker pull ${IMAGE}
+          docker image tag ${IMAGE} ${LOCAL_IMAGE}/${IMAGE}
+          docker push ${LOCAL_IMAGE}/${IMAGE}
+      done
      ```
 3. install by helm
    * ```shell
      helm install \
-         --create-namespace --namespace application \
+         --create-namespace --namespace basic-components \
          my-dashboard \
-         kubernetes-dashboard \
-         --repo https://kubernetes.github.io/dashboard \
+         https://resources.conti2021.icu/charts/kubernetes-dashboard-5.0.5.tgz
          --values dashboard.values.yaml \
-         --version 5.0.5 \
          --atomic
      ```
 
 ## test
-1. 查看certificate状态
-   * certificate true?
-     ```shell
-     kubectl -n dashboard get certificate 
-     ```
-2. 修改hosys文件
-   * hosts文件
-     ```text
-     修改本机hosts文件
-     ```
-3. LOGIN IN 
-   * GO [https://dashboard.kube.conti.icu](https://dashboard.kube.conti.icu)
-   * 这里使用SA的token信息作为dashboard的登录信息 详细信息见 =>  [RBAC](../resources/rbac.md)
-   ![img.png](img.png)
-4. 权限测试
-   * Home
-     * ![image-20220114150039941](http://conti-picture-database.oss-cn-hangzhou.aliyuncs.com/img/image-20220114150039941.png)
-   * 查看application下的pod权限
-     * ![image-20220114144534555](http://conti-picture-database.oss-cn-hangzhou.aliyuncs.com/img/image-20220114144534555.png)
-   * 查看所有namespace下的pod权限
-     * ![image-20220114144648191](http://conti-picture-database.oss-cn-hangzhou.aliyuncs.com/img/image-20220114144648191.png)
-   
+1. check connection
+    * ```shell
+      curl --insecure --header 'Host: dashboard.test.cnconti.cc' https://localhost
+      ```
+2. create read only `user`
+    * prepare [create.user.yaml](resources/create.user.yaml.md)
+    * ```shell
+      kubectl apply -f create.user.yaml
+      ```
+3. extract user token
+    * ```shell
+      kubectl -n application get secret \
+          $(kubectl -n basic-components get ServiceAccount dashboard-ro -o jsonpath="{.secrets[0].name}") \
+          -o jsonpath="{.data.token}" | base64 --decode \
+          && echo
+      ```
+4. visit `https://dashboard.test.cnconti.cc`
+    * use the extracted token to login
 
-
+## uninstallation
+1. delete rbac resources
+    * ```shell
+      kubectl delete -f create.user.yaml
+      ```
+2. uninstall `dashboard`
+    * ```shell
+      helm -n basic-components uninstall my-dashboard
+      ```
 
 
 

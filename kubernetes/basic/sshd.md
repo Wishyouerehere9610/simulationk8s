@@ -10,7 +10,7 @@
 * Provide a unified access environment for development, operation and maintenance
 
 ## precondition
-* [create local cluster for testing](/kubernetes/basic/local.cluster.for.testing.md)
+* [create local cluster for testing](/kubernetes/local.cluster.for.testing.md)
 
 ## do it
 * prepart [sshd.values.yaml](sshd/sshd.values.yaml.md)

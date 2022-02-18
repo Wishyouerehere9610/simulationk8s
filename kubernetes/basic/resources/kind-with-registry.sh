@@ -24,6 +24,12 @@ nodes:
     - containerPort: 32080
       hostPort: 80
       protocol: TCP
+    - containerPort: 32081
+      hostPort: 81
+      protocol: TCP
+    - containerPort: 32082
+      hostPort: 82
+      protocol: TCP
     - containerPort: 32443
       hostPort: 443
       protocol: TCP

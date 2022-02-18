@@ -14,7 +14,7 @@
 * test docker registry
 
 ## pre-requirements
-* [local.cluster.for.testing](local.cluster.for.testing.md)
+* [local.cluster.for.testing](../local.cluster.for.testing.md)
 * [ingress-nginx](ingress.nginx.md)
 * [cert-manager](cert.manager.md)
 

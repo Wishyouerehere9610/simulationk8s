@@ -1,0 +1,1 @@
+[rbac.namespace.admin.yaml](rbac.namespace.admin.yaml ':include')

@@ -15,11 +15,11 @@
 
 ## pre-requirements
 
-* [local.cluster.for.testing](local.cluster.for.testing.md)
+* [local.cluster.for.testing](../local.cluster.for.testing.md)
 * [install ingress-nginx](ingress.nginx.md)
 
 ## Do it
-1. prepare [cert.manager.values.yaml](cert-manager/cert.manager.values.yaml.md)
+1. prepare [cert.manager.values.yaml](resources/cert.manager.values.yaml.md)
 2. prepare images
     * ```shell
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
@@ -53,7 +53,7 @@
            --atomic
        ```
 4. isntall `alidns-webhook`
-   * prepare [alidns.webhook.values.yaml](cert-manager/alidns.webhook.values.yaml.md)
+   * prepare [alidns.webhook.values.yaml](resources/alidns.webhook.values.yaml.md)
    * make sure permissions added to `$YOUR_ACCESS_KEY_ID`
      * ```json
        {
@@ -93,7 +93,7 @@
            --atomic
        ```
 5. create `clusterissuer`
-   * prepare [alidns.webhook.clusterissuer.yaml](cert-manager/alidns.webhook.clusterissuer.yaml.md)
+   * prepare [alidns.webhook.clusterissuer.yaml](resources/alidns.webhook.clusterissuer.yaml.md)
      * ```shell
        kubectl -n basic-components apply -f alidns.webhook.cluster.issuer.yaml
        ```
