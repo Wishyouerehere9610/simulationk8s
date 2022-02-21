@@ -1,0 +1,9 @@
+ingress:
+  enabled: false
+service:
+  type: NodePort
+  nodePort: 32500
+persistence:
+  enabled: true
+  size: 100Gi
+  storageClass: rook-cephfs-01

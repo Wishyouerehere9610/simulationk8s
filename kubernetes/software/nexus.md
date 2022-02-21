@@ -9,20 +9,22 @@
 * none
 
 ## purpose
-
-* [create local cluster for testing](../local.cluster.for.testing.md)
+* none
 
 ## pre-requirements
+* [create local cluster for testing](../local.cluster.for.testing.md)
+
 
 ## Do it
 
-1. prepare [verdaccio.values.yaml](resources/verdaccio.values.yaml.md)
+1. prepare [nexus.values.yaml](resources/nexus.values.yaml)
 2. prepare images
     * ```shell  
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
       BASE_URL="https://resources.conti2021.icu/docker-images"
       LOCAL_IMAGE="localhost:5000"
-      for IMAGE in "docker.io/verdaccio/verdaccio:5.2.0" 
+      for IMAGE in "docker.io/busybox:1.33.1-uclibc" \
+          "docker.io/sonatype/nexus3:3.37.3" 
       do
           IMAGE_FILE=$(echo ${IMAGE} | sed "s/\//_/g" | sed "s/\:/_/g").dim
           LOCAL_IMAGE_FIEL=${DOCKER_IMAGE_PATH}/${IMAGE_FILE}
@@ -41,26 +43,17 @@
     * ```shell
       helm install \
           --create-namespace --namespace application \
-          my-verdaccio \
-          https://resources.conti2021.icu/charts/verdaccio-4.6.2.tgz \
-          --values verdaccio.values.yaml \
+          my-nexus \
+          https://resources.conti2021.icu/charts/nexus-repository-manager-37.3.2.tgz \
+          --values nexus.values.yaml \
           --atomic
       ```
-## test
-1. check connection
-    * ```shell
-      curl --insecure --header 'Host: npm.test.cnconti.cc' https://localhost
-      ```
-2. visit gitea via website
-    * visit `https://npm.test.cnconti.cc`
-    * ```shell
-      kubectl -n application get secret gitea-admin-secret -o jsonpath="{.data.username}" | base64 --decode && echo
-      kubectl -n application get secret gitea-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo
-      ```
       
+## test
+
 ## uninstall 
 * ```shell
-  helm -n application uninstall my-verdaccio
+  helm -n application uninstall my-nexus
   ```
 
 

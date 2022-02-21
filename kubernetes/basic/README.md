@@ -8,9 +8,5 @@
 
 
 
-
-
-
-
-#### Imperfect
+### Imperfect
 * [sshd](sshd.md)

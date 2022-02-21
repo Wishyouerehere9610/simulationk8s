@@ -6,7 +6,6 @@
 * [software](software/README.md)
 
 * other
-  * [helm3](helm/helm3.md)
+  * [local-cluster](loca-cluster/README.md)
   * [RBAC](resources/rbac.md)
   * [commands](resources/commands.md)
-  * [conceptions](conceptions/README.md)

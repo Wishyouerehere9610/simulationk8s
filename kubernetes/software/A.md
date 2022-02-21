@@ -27,7 +27,7 @@
      ```
     
 ### nfs subdir external provisioner
-1. prepare [nfs.subdir.external.provisioner.values.yaml](nfs.subdir.external.provisioner.values.yaml.md)
+1. prepare [nfs.subdir.external.provisioner.values.yaml](../storage/nfs.subdir.external.provisioner.values.yaml.md)
 2.  configure /etc/hosts for nfs4.service.docker.local
    * ```shell
      echo 172.17.0.1 nfs4.service.docker.local >> /etc/hosts

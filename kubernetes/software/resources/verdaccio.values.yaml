@@ -1,0 +1,51 @@
+image:
+  repository: localhost:5000/docker.io/verdaccio/verdaccio
+  tag: 5.2.0
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+ingress:
+  enabled: true
+  className: ""
+  paths:
+    - /
+  extraPaths: []
+  hosts:
+    - npm.test.cnconti.com
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: alidns-webhook-letsencrypt
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+  tls:
+    - secretName: npm.test.cnconti.com-tls
+      hosts:
+        - npm.test.cnconti.com
+configMap: |
+  storage: /verdaccio/storage/data
+  auth:
+    htpasswd:
+      file: /verdaccio/storage/htpasswd
+  uplinks:
+    npmjs:
+      url: https://registry.npm.taobao.org/
+      agent_options:
+        keepAlive: true
+        maxSockets: 40
+        maxFreeSockets: 10
+  packages:
+    '@*/*':
+      # scoped packages
+      access: $all
+      publish: $authenticated
+      proxy: npmjs
+
+    '**':
+      access: $all
+      publish: $authenticated
+      proxy: npmjs
+persistence:
+  enabled: true
+  storageClass: "standard"
+  accessMode: ReadWriteOnce
+  size: 8Gi
+secrets:
+  htpasswd: []

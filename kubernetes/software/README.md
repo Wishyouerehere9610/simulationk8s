@@ -1,15 +1,9 @@
 ## software
 
-* [gitea](gitea.md)
-* [sshd](sshd.md)
-* [haproxy](haproxy.md)
-* [verdaccio](verdaccio.md)
-* [jupyterhub](jupyterhub.md)
-
-* [A](A.md)
-
-* [storage](storage/README.md)
-
-
-#### Imperfect
-* [sshd](sshd.md)
+* TODO: [gitea](gitea.md)
+* TODO: [haproxy](haproxy.md)
+* TODO: [sshd](sshd.md)
+* TODO: [jupyterhub](jupyterhub.md)
+* [docsify](docsify.md)
+* TODO: [verdaccio](verdaccio.md)
+* TODO: [nexus](nexus.md)
