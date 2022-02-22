@@ -1,4 +1,4 @@
-# haproxy
+# verdaccio
 
 ## main usage
 
@@ -9,10 +9,12 @@
 * none
 
 ## purpose
-
-* [create local cluster for testing](../local.cluster.for.testing.md)
+* none
 
 ## pre-requirements
+* [create local cluster for testing](../local.cluster.for.testing.md)
+* [ingress](../basic/ingress.nginx.md)
+* [cert-manager](../basic/cert.manager.md)
 
 ## Do it
 
@@ -46,6 +48,7 @@
           --values verdaccio.values.yaml \
           --atomic
       ```
+
 ## test
 1. check connection
     * ```shell

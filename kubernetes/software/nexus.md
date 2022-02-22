@@ -1,4 +1,4 @@
-# haproxy
+# nexus
 
 ## main usage
 
@@ -13,11 +13,12 @@
 
 ## pre-requirements
 * [create local cluster for testing](../local.cluster.for.testing.md)
-
+* [ingress](../basic/ingress.nginx.md)
+* [cert-manager](../basic/cert.manager.md)
 
 ## Do it
 
-1. prepare [nexus.values.yaml](resources/nexus.values.yaml)
+1. prepare [nexus.values.yaml](resources/nexus.values.yaml.md)
 2. prepare images
     * ```shell  
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
@@ -48,7 +49,7 @@
           --values nexus.values.yaml \
           --atomic
       ```
-      
+  
 ## test
 
 ## uninstall 

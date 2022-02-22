@@ -10,7 +10,9 @@
 * Provide a unified access environment for development, operation and maintenance
 
 ## precondition
-* [create local cluster for testing](/kubernetes/local.cluster.for.testing.md)
+* [create local cluster for testing](../local.cluster.for.testing.md)
+* [ingress](../basic/ingress.nginx.md)
+* [cert-manager](../basic/cert.manager.md)
 
 ## do it
 * prepart [sshd.values.yaml](sshd/sshd.values.yaml.md)

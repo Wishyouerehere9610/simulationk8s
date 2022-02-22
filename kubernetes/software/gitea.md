@@ -8,106 +8,88 @@
 
 * none
 
-## practise
-
-### pre-requirements
-
-* none
-
-### purpose
+## purpose
 
 * prepare a kind cluster with basic components
 * install gitea
 
-### do it
-1. install gitea
-    * prepare [gitea.values.yaml](gitea/gitea.values.yaml.md)
-    * prepare images
-        + ```shell
-          DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p $DOCKER_IMAGE_PATH
-          BASE_URL="https://resource.static.zjvis.net/docker-images"
-          for IMAGE in "gitea/gitea:1.15.3" \
-                  "docker.io/bitnami/memcached:1.6.9-debian-10-r114" \
-                  "docker.io/bitnami/memcached-exporter:0.8.0-debian-10-r105" \
-                  "docker.io/bitnami/postgresql:11.11.0-debian-10-r62" \
-                  "docker.io/bitnami/bitnami-shell:10" \
-                  "docker.io/bitnami/postgres-exporter:0.9.0-debian-10-r34"
-          do
-              IMAGE_FILE=$DOCKER_IMAGE_PATH/$IMAGE
-              if [ ! -f $IMAGE_FILE ]; then
-                  TMP_FILE=$IMAGE_FILE.tmp \
-                      && curl -o "$TMP_FILE" -L "$BASE_URL/$IMAGE" \
-                      && mv $TMP_FILE $IMAGE_FILE
-              fi
-              docker image load -i $IMAGE_FILE
-          done
-          DOCKER_REGISTRY="docker-registry-ops-test.lab.zjvis.net:32443"
-          for IMAGE in "gitea/gitea:1.15.3" \
-                  "docker.io/bitnami/memcached:1.6.9-debian-10-r114" \
-                  "docker.io/bitnami/memcached-exporter:0.8.0-debian-10-r105" \
-                  "docker.io/bitnami/postgresql:11.11.0-debian-10-r62" \
-                  "docker.io/bitnami/bitnami-shell:10" \
-                  "docker.io/bitnami/postgres-exporter:0.9.0-debian-10-r34"
-          do
-              DOCKER_TARGET_IMAGE=$DOCKER_REGISTRY/$IMAGE
-              docker tag $IMAGE $DOCKER_TARGET_IMAGE \
-                  && docker push $DOCKER_TARGET_IMAGE \
-                  && docker image rm $DOCKER_TARGET_IMAGE
-          done
-          ```
-    * create `gitea-admin-secret`
-        + ```shell
-          # uses the "Array" declaration
-          # referencing the variable again with as $PASSWORD an index array is the same as ${PASSWORD[0]}
-          ./bin/kubectl get namespace application \
-              || ./bin/kubectl create namespace application
-          PASSWORD=($((echo -n $RANDOM | md5sum 2>/dev/null) || (echo -n $RANDOM | md5 2>/dev/null)))
-          # NOTE: username should have at least 6 characters
-          ./bin/kubectl -n application \
-              create secret generic gitea-admin-secret \
-              --from-literal=username=gitea_admin \
-              --from-literal=password=$PASSWORD
-          ```
-    * install with helm
-        + ```shell
-          ./bin/helm install \
-              --create-namespace --namespace application \
-              my-gitea \
-              gitea \
-              --version 4.1.1 \
-              --repo https://dl.gitea.io/charts \
-              --values confluence.values.yaml \
-              --atomic
-          ```
+## pre-requirements
+* [create local cluster for testing](../local.cluster.for.testing.md)
+* [ingress](../basic/ingress.nginx.md)
+* [cert-manager](../basic/cert.manager.md)
 
-5. visit gitea from website
+## Do it
+1. prepare [gitea.values.yaml](docs/gitea/gitea.values.yaml.md)
+2. prepare images
+    * ```shell
+      DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
+      BASE_URL="https://resources.conti2021.icu/docker-images"
+      LOCAL_IMAGE="localhost:5000"
+      for IMAGE in "docker.io/gitea/gitea:1.15.3" \
+          "docker.io/bitnami/memcached:1.6.9-debian-10-r114" \
+          "docker.io/bitnami/memcached-exporter:0.8.0-debian-10-r105" \
+          "docker.io/bitnami/postgresql:11.11.0-debian-10-r62" \
+          "docker.io/bitnami/bitnami-shell:10" \
+          "docker.io/bitnami/postgres-exporter:0.9.0-debian-10-r34" 
+      do
+          IMAGE_FILE=$(echo ${IMAGE} | sed "s/\//_/g" | sed "s/\:/_/g").dim
+          LOCAL_IMAGE_FIEL=${DOCKER_IMAGE_PATH}/${IMAGE_FILE}
+          if [ ! -f ${LOCAL_IMAGE_FIEL} ]; then
+              curl -o ${IMAGE_FILE} -L ${BASE_URL}/${IMAGE_FILE} \
+                  && mv ${IMAGE_FILE} ${LOCAL_IMAGE_FIEL} \
+                  || rm -rf ${IMAGE_FILE}
+          fi
+          docker image load -i ${LOCAL_IMAGE_FIEL}
+          docker image inspect ${IMAGE} || docker pull ${IMAGE}
+          docker image tag ${IMAGE} ${LOCAL_IMAGE}/${IMAGE}
+          docker push ${LOCAL_IMAGE}/${IMAGE}
+      done
+      ```
+3. create `gitea-admin-secret`
+    * ```shell
+      # uses the "Array" declaration
+      # referencing the variable again with as $PASSWORD an index array is the same as ${PASSWORD[0]}
+      kubectl get namespace application \
+          || kubectl create namespace application
+      PASSWORD=($((echo -n $RANDOM | md5sum 2>/dev/null) || (echo -n $RANDOM | md5 2>/dev/null)))
+      # NOTE: username should have at least 6 characters
+      kubectl -n application \
+          create secret generic gitea-admin-secret \
+          --from-literal=username=gitea_admin \
+          --from-literal=password=$PASSWORD
+      ```
+4. install with helm
+    * ```shell
+      helm install \
+          --create-namespace --namespace application \
+          my-gitea \
+          https://resources.conti2021.icu/charts/gitea-4.1.1.tgz \
+          --values gitea.values.yaml \
+          --atomic
+      ```
+
+## Test
+* visit gitea from website
     * port-forward
         + ```shell
-          ./bin/kubectl --namespace application port-forward svc/my-gitea-http 3000:3000 --address 0.0.0.0
+          kubectl --namespace application port-forward svc/my-gitea-http 3000:3000 --address 0.0.0.0
           ```
     * visit http://$HOST:3000
     * password
         + ```shell
-          ./bin/kubectl get secret gitea-admin-secret -n gitea -o jsonpath={.data.password} | base64 --decode && echo
+          kubectl get secret gitea-admin-secret -n gitea -o jsonpath={.data.password} | base64 --decode && echo
           ```
 
-6. visit gitea from SSH
-
+* visit gitea from SSH
     * port-forward
-
         + ```shell
-          ./bin/kubectl --namespace application port-forward svc/my-gitea-ssh 222:22 --address 0.0.0.0
+          kubectl --namespace application port-forward svc/my-gitea-ssh 222:22 --address 0.0.0.0
           ```
-
     * 创建测试仓库
-
         * ```tex
           在网页上创建测试库(用户创建)
           ```
-
     + 测试ssh链接是否正常
-
         * ```shell
           git clone ssh://git@192.168.31.31:222/libokang/test.git
           ```
-        
