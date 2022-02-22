@@ -38,24 +38,44 @@
           ```
     * add `ssh-keys/id_rsa.pub` to git repo server as deploy key
 
-2. install by helm 
-    * prepare [docs-conti.nginx.yaml](resources/docs-conti.nginx.yaml.md)
-    * install by helm
-        + ```
-          helm install \
-              --create-namespace --namespace application \
-              docs-conti \
-              https://resources.conti2021.icu/charts/nginx-9.5.7.tgz \
-              --values docs-conti.nginx.yaml \
-              --atomic
-          ```
+2. prepare [docs-conti.nginx.yaml](resources/docs-conti.nginx.yaml.md)
+3. prepare images
+    * ```shell
+       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
+       BASE_URL="https://resources.conti2021.icu/docker-images"
+       LOCAL_IMAGE="localhost:5000"
+       for IMAGE in "docker.io/bitnami/nginx:1.21.4-debian-10-r0" \
+           "docker.io/bitnami/git:2.33.0-debian-10-r76" 
+       do
+           IMAGE_FILE=$(echo ${IMAGE} | sed "s/\//_/g" | sed "s/\:/_/g").dim
+           LOCAL_IMAGE_FIEL=${DOCKER_IMAGE_PATH}/${IMAGE_FILE}
+           if [ ! -f ${LOCAL_IMAGE_FIEL} ]; then
+               curl -o ${IMAGE_FILE} -L ${BASE_URL}/${IMAGE_FILE} \
+                   && mv ${IMAGE_FILE} ${LOCAL_IMAGE_FIEL} \
+                   || rm -rf ${IMAGE_FILE}
+           fi
+           docker image load -i ${LOCAL_IMAGE_FIEL}
+           docker image inspect ${IMAGE} || docker pull ${IMAGE}
+           docker image tag ${IMAGE} ${LOCAL_IMAGE}/${IMAGE}
+           docker push ${LOCAL_IMAGE}/${IMAGE}
+       done
+       ```
+4. install by helm
+    * ```
+      helm install \
+          --create-namespace --namespace application \
+          docs-conti \
+          https://resources.conti2021.icu/charts/nginx-9.5.7.tgz \
+          --values docs-conti.nginx.yaml \
+          --atomic
+      ```
 
-3. visit
+## Test
+* visit
     * ```
       curl  --header 'Host:docs-conti.cnconti.cc' http://localhost/
       ```
-
-4. upgrade
+* upgrade
     * ```
       helm upgrade \
           --namespace application \
@@ -65,7 +85,7 @@
           --atomic
       ```
 
-5. uninstall
+* uninstall
     * ````
       helm uninstall -n application docs-conti
       ````

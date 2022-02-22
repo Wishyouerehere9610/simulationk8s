@@ -19,7 +19,7 @@
 * [cert-manager](../basic/cert.manager.md)
 
 ## Do it
-1. prepare [gitea.values.yaml](docs/gitea/gitea.values.yaml.md)
+1. prepare [gitea.values.yaml](resources/gitea.values.yaml.md)
 2. prepare images
     * ```shell
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
@@ -69,7 +69,7 @@
       ```
 
 ## Test
-* visit gitea from website
+* visit `gitea.test.cnconti.cc`
     * port-forward
         + ```shell
           kubectl --namespace application port-forward svc/my-gitea-http 3000:3000 --address 0.0.0.0
@@ -83,13 +83,9 @@
 * visit gitea from SSH
     * port-forward
         + ```shell
-          kubectl --namespace application port-forward svc/my-gitea-ssh 222:22 --address 0.0.0.0
-          ```
-    * 创建测试仓库
-        * ```tex
-          在网页上创建测试库(用户创建)
+          kubectl --namespace application port-forward svc/my-gitea-ssh 1022:22 --address 0.0.0.0
           ```
     + 测试ssh链接是否正常
         * ```shell
-          git clone ssh://git@192.168.31.31:222/libokang/test.git
+          git clone ssh://git@gitea.test.cnconti.cc:1022/gitea_admin/test-repo.git
           ```

@@ -44,7 +44,7 @@ configMap: |
       proxy: npmjs
 persistence:
   enabled: true
-  storageClass: "standard"
+  storageClass: standard
   accessMode: ReadWriteOnce
   size: 8Gi
 secrets:

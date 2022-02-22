@@ -25,8 +25,8 @@
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
       BASE_URL="https://resources.conti2021.icu/docker-images"
       LOCAL_IMAGE="localhost:5000"
-      for IMAGE in "docker.io_kubernetesui_dashboard_v2.4.0.dim" \
-          "docker.io_kubernetesui_metrics-scraper_v1.0.7.dim"
+      for IMAGE in "docker.io/kubernetesui/dashboard:v2.4.0" \
+          "docker.io/kubernetesui/metrics-scraper:v1.0.7"
       do
           IMAGE_FILE=$(echo ${IMAGE} | sed "s/\//_/g" | sed "s/\:/_/g").dim
           LOCAL_IMAGE_FIEL=${DOCKER_IMAGE_PATH}/${IMAGE_FILE}

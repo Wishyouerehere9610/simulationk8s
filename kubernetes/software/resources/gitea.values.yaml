@@ -3,19 +3,28 @@ image:
   tag: 1.15.3
   pullPolicy: IfNotPresent
 service:
+  http:
+    type: ClusterIP
   ssh:
     type: NodePort
     port: 22
+    nodePort: 32022
 ingress:
   enabled: true
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/proxy-body-size: 10g
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    cert-manager.io/cluster-issuer: alidns-webhook-letsencrypt
   hosts:
     - host: gitea.test.cnconti.cc
       paths:
-        - path: /
-          pathType: Prefix
+        - path: /?(.*)
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: gitea.test.cnconti.cc
+      hosts:
+        - gitea.test.cnconti.cc
 persistence:
   enabled: true
   size: 8Gi
@@ -24,54 +33,6 @@ gitea:
   admin:
     existingSecret: gitea-admin-secret
     email: "conti821@163.com"
-  config:
-    default:
-      APP_NAME: Gitea
-      RUN_USER: git
-      RUN_MODE: prod
-    repository:
-      MAX_CREATION_LIMIT: 10
-      DISABLED_REPO_UNITS: repo.wiki,repo.ext_wiki,repo.projects
-      DEFAULT_REPO_UNITS: repo.code,repo.releases,repo.issues,repo.pulls
-      DISABLE_STARS: true
-      DISABLE_MIGRATIONS: true
-      DEFAULT_BRANCH: main
-    ui:
-      SHOW_USER_EMAIL: false
-      SEARCH_REPO_DESCRIPTION: false
-    server:
-      LANDING_PAGE: login
-      DOMAIN: gitea.test.cnconti.cc
-      SSH_DOMAIN: gitea.test.cnconti.cc
-      SSH_AUTHORIZED_PRINCIPALS_ALLOW: email
-    admin:
-      DISABLE_REGULAR_ORG_CREATION: true
-    security:
-      INSTALL_LOCK: true
-    service:
-      REGISTER_EMAIL_CONFIRM: true
-      DISABLE_REGISTRATION: true
-      ENABLE_NOTIFY_MAIL: true
-      DEFAULT_ALLOW_CREATE_ORGANIZATION: false
-      SHOW_REGISTRATION_BUTTON: false
-      SHOW_MILESTONES_DASHBOARD_PAGE: false
-    service.explore:
-      DISABLE_USERS_PAGE: true
-    mailer:                                                                      
-      ENABLED: true                                                              
-      IS_TLS_ENABLED: true                                                       
-      MAILER_TYPE: smtp                                                          
-      HOST: smtpdm.aliyun.com:465                                                
-      FROM: messager@email.cnconti.cc
-      USER: messager@email.cnconti.cc
-      PASSWD: WSXqaz1234
-    i18n:
-      LANGS: en-US,zh-CN,zh-HK,zh-TW
-      NAMES: English,简体中文,繁體中文(中国香港),繁體中文(中国台灣)
-    oauth2:
-      ENABLE: false
-    other:
-      SHOW_FOOTER_VERSION: false
   database:
     builtIn:
       postgresql:
@@ -83,6 +44,52 @@ gitea:
   cache:
     builtIn:
       enabled: true
+  config:
+    repository:
+      MAX_CREATION_LIMIT: 10
+      DISABLED_REPO_UNITS: repo.wiki,repo.ext_wiki,repo.projects
+      DEFAULT_REPO_UNITS: repo.code,repo.releases,repo.issues,repo.pulls
+      DISABLE_STARS: true
+      DEFAULT_BRANCH: main
+    ui:
+      SHOW_USER_EMAIL: false
+      SEARCH_REPO_DESCRIPTION: false
+    server:
+      PROTOCOL: http
+      # ROOT_URL: "https://gitea-ops.lab.zjvis.net:32443/"
+      LANDING_PAGE: login
+      DOMAIN: gitea.test.cnconti.cc
+      SSH_DOMAIN: gitea.test.cnconti.cc
+      SSH_PORT: 1022
+      SSH_AUTHORIZED_PRINCIPALS_ALLOW: email
+    admin:
+      DISABLE_REGULAR_ORG_CREATION: true
+    security:
+      INSTALL_LOCK: true
+    service:
+      REGISTER_EMAIL_CONFIRM: true
+      DISABLE_REGISTRATION: true
+      ENABLE_NOTIFY_MAIL: true
+      DEFAULT_ALLOW_CREATE_ORGANIZATION: false
+      SHOW_MILESTONES_DASHBOARD_PAGE: false
+    service.explore:
+      DISABLE_USERS_PAGE: true
+    mailer:
+      ENABLED: true
+      IS_TLS_ENABLED: true
+      MAILER_TYPE: smtp
+      HOST: smtpdm.aliyun.com:465
+      FROM: messager@email.cnconti.cc
+      USER: messager@email.cnconti.cc
+      # https://dm.console.aliyun.com/?spm=5176.12818093.ProductAndService--ali--widget-home-product-recent.dreta2.42d116d05M8agw#/directmail/MailAddress/cn-hangzhou
+      PASSWD: change_password_to_your_own
+    i18n:
+      LANGS: en-US,zh-CN
+      NAMES: English,简体中文
+    oauth2:
+      ENABLE: false
+    other:
+      SHOW_FOOTER_VERSION: false
 memcached:
   image:
     registry: localhost:5000/docker.io

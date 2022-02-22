@@ -25,8 +25,8 @@
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
       BASE_URL="https://resources.conti2021.icu/docker-images"
       LOCAL_IMAGE="localhost:5000"
-      for IMAGE in "docker.io_registry_2.7.1.dim" \
-          "docker.io_busybox_1.33.1-uclibc.dim"
+      for IMAGE in "docker.io/registry:2.7.1" \
+          "docker.io/busybox:1.33.1-uclibc"
       do
           IMAGE_FILE=$(echo ${IMAGE} | sed "s/\//_/g" | sed "s/\:/_/g").dim
           LOCAL_IMAGE_FIEL=${DOCKER_IMAGE_PATH}/${IMAGE_FILE}
