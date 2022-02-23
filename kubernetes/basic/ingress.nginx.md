@@ -25,7 +25,7 @@
     * prepare images
         + ```shell
           DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
-          BASE_URL="https://resources.conti2021.icu/docker-images"
+          BASE_URL="https://conti-docker-images.oss-cn-hangzhou.aliyuncs.com"
           LOCAL_IMAGE="localhost:5000"
           for IMAGE in "k8s.gcr.io/ingress-nginx/controller:v1.0.3" \
               "k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.0" \
@@ -58,7 +58,7 @@
     * prepare images
         + ```shell
           DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
-          BASE_URL="https://resources.conti2021.icu/docker-images"
+          BASE_URL="https://conti-docker-images.oss-cn-hangzhou.aliyuncs.com"
           LOCAL_IMAGE="localhost:5000"
           for IMAGE in "docker.io/bitnami/nginx:1.21.3-debian-10-r29" 
           do

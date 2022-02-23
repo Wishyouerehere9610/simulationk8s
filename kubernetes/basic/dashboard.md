@@ -23,7 +23,7 @@
 2. prepare images
    * ```shell  
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
-      BASE_URL="https://resources.conti2021.icu/docker-images"
+      BASE_URL="https://conti-docker-images.oss-cn-hangzhou.aliyuncs.com"
       LOCAL_IMAGE="localhost:5000"
       for IMAGE in "docker.io/kubernetesui/dashboard:v2.4.0" \
           "docker.io/kubernetesui/metrics-scraper:v1.0.7"

@@ -22,7 +22,7 @@
 2. prepare images
     * ```shell  
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
-      BASE_URL="https://resources.conti2021.icu/docker-images"
+      BASE_URL="https://conti-docker-images.oss-cn-hangzhou.aliyuncs.com"
       LOCAL_IMAGE="localhost:5000"
       for IMAGE in "docker.io/verdaccio/verdaccio:5.2.0" 
       do
@@ -44,22 +44,16 @@
       helm install \
           --create-namespace --namespace application \
           my-verdaccio \
-          https://resources.conti2021.icu/charts/verdaccio-4.6.2.tgz \
+          https://conti-charts.oss-cn-hangzhou.aliyuncs.com/github.com/verdaccio/charts/releases/download/verdaccio-4.6.2/verdaccio-4.6.2.tgz \
           --values verdaccio.values.yaml \
           --atomic
       ```
-
 ## test
 1. check connection
     * ```shell
       curl --insecure --header 'Host: npm.test.cnconti.cc' https://localhost
       ```
-2. visit gitea via website
-    * visit `https://npm.test.cnconti.cc`
-    * ```shell
-      kubectl -n application get secret gitea-admin-secret -o jsonpath="{.data.username}" | base64 --decode && echo
-      kubectl -n application get secret gitea-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo
-      ```
+2. visit `https://npm.test.cnconti.cc`
       
 ## uninstall 
 * ```shell

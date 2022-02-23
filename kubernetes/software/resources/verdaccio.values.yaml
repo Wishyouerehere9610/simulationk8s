@@ -5,22 +5,23 @@ image:
   pullSecrets: []
 ingress:
   enabled: true
-  className: ""
+  className: nginx
   paths:
     - /
-  extraPaths: []
   hosts:
-    - npm.test.cnconti.com
+    - npm.cnconti.cc
   annotations:
-    kubernetes.io/ingress.class: nginx
-    cert-manager.io/cluster-issuer: alidns-webhook-letsencrypt
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    cert-manager.io/cluster-issuer: self-signed-clusterissuer
   tls:
-    - secretName: npm.test.cnconti.com-tls
+    - secretName: npm.test.cnconti.cc-tls
       hosts:
-        - npm.test.cnconti.com
+        - npm.test.cnconti.cc
 configMap: |
   storage: /verdaccio/storage/data
+  web:
+    enable: true
+    title: Verdaccio
+    gravatar: true
   auth:
     htpasswd:
       file: /verdaccio/storage/htpasswd
@@ -47,5 +48,3 @@ persistence:
   storageClass: standard
   accessMode: ReadWriteOnce
   size: 8Gi
-secrets:
-  htpasswd: []

@@ -31,6 +31,7 @@
       PASSWORD=($((echo -n $RANDOM | md5sum 2>/dev/null) || (echo -n $RANDOM | md5 2>/dev/null)))
       # NOTE: username should have at least 6 characters
       kubectl -n application create secret generic sshd-secret \
+          --from-literal=username=gitea_admin
           --from-literal=password=$PASSWORD
       ```
 * install by helm

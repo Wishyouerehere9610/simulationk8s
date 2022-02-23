@@ -15,7 +15,7 @@ ingress:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/proxy-body-size: 10g
     nginx.ingress.kubernetes.io/rewrite-target: /$1
-    cert-manager.io/cluster-issuer: alidns-webhook-letsencrypt
+    cert-manager.io/cluster-issuer: self-signed-clusterissuer
   hosts:
     - host: gitea-ops.lab.zjvis.net
       paths:

@@ -42,7 +42,7 @@
 3. prepare images
     * ```shell
        DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
-       BASE_URL="https://resources.conti2021.icu/docker-images"
+       BASE_URL="https://conti-docker-images.oss-cn-hangzhou.aliyuncs.com"
        LOCAL_IMAGE="localhost:5000"
        for IMAGE in "docker.io/bitnami/nginx:1.21.4-debian-10-r0" \
            "docker.io/bitnami/git:2.33.0-debian-10-r76" 

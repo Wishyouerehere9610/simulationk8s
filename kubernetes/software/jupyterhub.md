@@ -19,7 +19,7 @@
 2. prepare images
     * ```shell
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
-      BASE_URL="https://resources.conti2021.icu/docker-images"
+      BASE_URL="https://conti-docker-images.oss-cn-hangzhou.aliyuncs.com"
       LOCAL_IMAGE="localhost:5000"
       for IMAGE in "docker.io/bitnami/jupyterhub:1.5.0-debian-10-r34" \
           "docker.io/bitnami/configurable-http-proxy:4.5.0-debian-10-r146" \

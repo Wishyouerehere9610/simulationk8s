@@ -42,7 +42,7 @@ ingress:
   path: /
   annotations:
       nginx.ingress.kubernetes.io/rewrite-target: /$1
-      cert-manager.io/cluster-issuer: alidns-webhook-letsencrypt
+      cert-manager.io/cluster-issuer: self-signed-clusterissuer
   tls: false
   secrets: jenkins.test.cnconti.cc-tls
   ingressClassName: nginx

@@ -1,12 +1,12 @@
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: alidns-webhook-letsencrypt
+  name: self-signed-clusterissuer
 spec:
   acme:
     email: conti821@163.com
     privateKeySecretRef:
-      name: alidns-webhook-letsencrypt
+      name: self-signed-clusterissuer
     server: https://acme-v02.api.letsencrypt.org/directory
     solvers:
       - dns01:
