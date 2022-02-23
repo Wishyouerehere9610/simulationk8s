@@ -1,16 +1,15 @@
 ## commands
 
-* [shell](/linux/commands.md)
-* [database](database/README.md)
-* [docker](/docker/commands.md)
+* [shell](/linux/resources/commands.md)
+* [database](database/resources/README.md)
+* [docker](/docker/resources/commands.md)
 * [kubernetes](/kubernetes/resources/commands.md)
-* [language](/language/README.md)  
+* [java](/language/java/commands.md)
+* [python](/language/python/commands.md)
 
-* [java](java.md)
-* [python](python.md)
-* [database](database/README.md)
+<br/><br/>
 
-* Other
+#### Other
   * [vim](vim.md)
   * [git](git.md)
   * [command](resource/linux.shell.md)

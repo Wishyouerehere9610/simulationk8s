@@ -11,25 +11,8 @@
 * [command](commands/README.md)
 * [language](language/README.md)
 
+
+
 <br/><br/><br/><br/><br/><br/>
 <p align="center">Tomorrow is less and less, more and more yesterday</p>
 <p align="center"><a href="url" target="https://beian.miit.gov.cn">冀ICP备2021028814号</a></p>
-
-<body>
-<style type="text/css">
-.con{
-    position:absolute;
-    width:300px;
-    height:300px
-    }
-.con p{
-    position:absolute;
-    bottom:0;
-    width:100%;
-    text-align:center
-    }
-</style>
-<div class="con">
-    <p align="center"><a href="url" target="https://beian.miit.gov.cn">冀ICP备2021028814号]</a></p>
-</div>
-</body>
