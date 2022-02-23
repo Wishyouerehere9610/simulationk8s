@@ -82,10 +82,10 @@
       git config --global user.email "youemail@example.com"
       git config --global user.name "Your Name"
       
-      touch README.md
+      touch 开源问题留存.md
       git init
       git checkout -b main
-      git add README.md
+      git add 开源问题留存.md
       git commit -m "first commit"
       git remote add origin ssh://git@gitea-ops.lab.zjvis.net:1022/gitea_admin/test-repo.git
       git push -u origin main
