@@ -1,4 +1,4 @@
-# nexus
+# jenkins
 
 ## main usage
 
@@ -18,14 +18,15 @@
 
 ## Do it
 
-1. prepare [nexus.values.yaml](resources/nexus.values.yaml.md)
+1. prepare [jenkins.values.yaml](resources/jenkins.values.yaml.md)
 2. prepare images
     * ```shell  
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
       BASE_URL="https://resources.conti2021.icu/docker-images"
       LOCAL_IMAGE="localhost:5000"
-      for IMAGE in "docker.io/busybox:1.33.1-uclibc" \
-          "docker.io/sonatype/nexus3:3.37.3" 
+      for IMAGE in "docker.io/bitnami/jenkins:2.319.3-debian-10-r7" \
+          "docker.io/bitnami/bitnami-shell:10-debian-10-r341" \
+          "docker.io/bitnami/jenkins-exporter:0.20171225.0-debian-10-r705"
       do
           IMAGE_FILE=$(echo ${IMAGE} | sed "s/\//_/g" | sed "s/\:/_/g").dim
           LOCAL_IMAGE_FIEL=${DOCKER_IMAGE_PATH}/${IMAGE_FILE}
@@ -44,17 +45,27 @@
     * ```shell
       helm install \
           --create-namespace --namespace application \
-          my-nexus \
-          https://resources.conti2021.icu/charts/nexus-repository-manager-37.3.2.tgz \
-          --values nexus.values.yaml \
+          my-jenkins \
+          https://resources.conti2021.icu/charts/jenkins-9.0.0.tgz \
+          --values jenkins.values.yaml \
           --atomic
       ```
-  
-## test
 
+## test
+1. check connection
+    * ```shell
+      curl --insecure --header 'Host: npm.test.cnconti.cc' https://localhost
+      ```
+2. visit gitea via website
+    * visit `https://npm.test.cnconti.cc`
+    * ```shell
+      kubectl -n application get secret gitea-admin-secret -o jsonpath="{.data.username}" | base64 --decode && echo
+      kubectl -n application get secret gitea-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo
+      ```
+      
 ## uninstall 
 * ```shell
-  helm -n application uninstall my-nexus
+  helm -n application uninstall  my-jenkins
   ```
 
 

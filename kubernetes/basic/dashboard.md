@@ -13,8 +13,8 @@
 * create a read only user
 
 ## pre-requirements
-* [download kubernetes binary tools](../download.kubernetes.binary.tools.md)
-* [create local cluster for testing](../local.cluster.for.testing.md)
+* [download kubernetes binary tools](../resources/download.kubernetes.binary.tools.md)
+* [create local cluster for testing](../resources/local.cluster.for.testing.md)
 * [ingress-nginx](ingress.nginx.md)
 * [cert-manager](cert.manager.md)
 

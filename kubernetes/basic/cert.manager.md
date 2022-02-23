@@ -15,7 +15,7 @@
 
 ## pre-requirements
 
-* [local.cluster.for.testing](../local.cluster.for.testing.md)
+* [local.cluster.for.testing](../resources/local.cluster.for.testing.md)
 * [install ingress-nginx](ingress.nginx.md)
 
 ## Do it

@@ -51,7 +51,7 @@
       ```
     * [install docker engine](../../docker/installation.md)
 2. download kind, kubectl and helm binaries according
-   to [download kubernetes binary tools](../download.kubernetes.binary.tools.md)
+   to [download kubernetes binary tools](../resources/download.kubernetes.binary.tools.md)
 3. create kubernetes cluster by kind
     * [kind.cluster.yaml](resources/local-static-provisioner/kind.cluster.yaml.md)
     * ```shell

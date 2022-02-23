@@ -1,0 +1,67 @@
+image:
+  registry: localhost:5000/docker.io
+  repository: bitnami/jenkins
+  tag: 2.319.3-debian-10-r7
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+  debug: false
+jenkinsUser: conti
+jenkinsPassword: "AAaa1234"
+jenkinsHost: jenkins.test.cnconti.cc
+jenkinsHome: /bitnami/jenkins/home
+## @param javaOpts Custom JVM parameters
+##
+javaOpts: []
+updateStrategy:
+  type: RollingUpdate
+containerPorts:
+  http: 8080
+  https: 8443
+service:
+  type: LoadBalancer
+  ports:
+    http: 80
+    https: 443
+  nodePorts:
+    http: ""
+    https: ""
+  clusterIP: ""
+  loadBalancerIP: ""
+  loadBalancerSourceRanges: []
+  externalTrafficPolicy: Cluster
+  annotations: {}
+ingress:
+  enabled: true
+  ## @param ingress.pathType Ingress path type
+  ##
+  pathType: ImplementationSpecific
+  ## @param ingress.apiVersion Force Ingress API version (automatically detected if not set)
+  ##
+  apiVersion: ""
+  hostname: jenkins.test.cnconti.cc
+  path: /
+  annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /$1
+      cert-manager.io/cluster-issuer: alidns-webhook-letsencrypt
+  tls: false
+  secrets: jenkins.test.cnconti.cc-tls
+  ingressClassName: nginx
+persistence:
+  enabled: true
+  storageClass: standard
+  accessModes:
+    - ReadWriteOnce
+  size: 8Gi
+volumePermissions:
+  enabled: false
+  image:
+    registry: localhost:5000/docker.io
+    repository: bitnami/bitnami-shell
+    tag: 10-debian-10-r341
+    pullPolicy: IfNotPresent
+    pullSecrets: []
+  resources:
+    limits: {}
+    requests: {}
+  securityContext:
+    runAsUser: 0

@@ -20,11 +20,11 @@
    + kind
    + kubectl
    + helm
-* we recommend to use [qemu machine](../linux/qemu/README.md)
+* we recommend to use [qemu machine](../../linux/qemu/README.md)
 
 ## Do it
 
-1. optional, [create centos 8 with qemu](../linux/qemu/create.centos.8.with.qemu.md)
+1. optional, [create centos 8 with qemu](../../linux/qemu/create.centos.8.with.qemu.md)
     * create centos8-qemu
       * ```shell
         qemu-system-x86_64 \
@@ -43,7 +43,7 @@
           ssh -o "UserKnownHostsFile /dev/null" -p 1022 root@localhost
           ```
         + default password is `123456`
-    * optional, replace yum repositories with [aliyun-centos-8](resources/aliyun-centos-8.repo.md)
+    * optional, replace yum repositories with [aliyun-centos-8](aliyun-centos-8.repo.md)
     * install docker
         + ```shell
           dnf -y install tar yum-utils device-mapper-persistent-data lvm2 docker-ce \
@@ -54,7 +54,7 @@
     * link tools to `./bin`
     * Set `kind` `kubectl` `helm` permissions to 744
 3. create cluster with a docker registry
-    * prepare [kind-with-registry.sh](basic/resources/kind-with-registry.sh.md)
+    * prepare [kind-with-registry.sh](../basic/resources/kind-with-registry.sh.md)
         + `kind.cluster.yaml` will be created by script.
     * create cluster
         + ```shell

@@ -8,6 +8,7 @@
 * [docsify](docsify.md)
 * TODO: [verdaccio](verdaccio.md)
 * TODO: [nexus](nexus.md)
+* TODO: [jenkins](jenkins.md)
 
 ### docs
 * [gitea](docs/gitea/README.md)

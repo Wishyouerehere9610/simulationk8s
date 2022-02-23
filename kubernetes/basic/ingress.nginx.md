@@ -19,7 +19,7 @@
 * none
 
 ## Do it
-1. [create local cluster for testing](../local.cluster.for.testing.md)
+1. [create local cluster for testing](../resources/local.cluster.for.testing.md)
 2. install ingress nginx
     * prepare [ingress.nginx.values.yaml](resources/ingress.nginx.values.yaml.md)
     * prepare images
