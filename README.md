@@ -11,11 +11,6 @@
 * [command](commands/README.md)
 * [language](language/README.md)
 
-<br/><br/>
-<p align="center">Tomorrow is less and less, more and more yesterday(https://beian.miit.gov.cn/)</p>
-<p align="center">[冀ICP备2021028814号](https://beian.miit.gov.cn/)</p>
-
-<p>html5</p>
-<footer class="color-F00">
-html5
-</footer>
+<br/><br/><br/><br/><br/><br/>
+<p align="center">Tomorrow is less and less, more and more yesterday</p>
+<p align="center"><a href="url" target="https://beian.miit.gov.cn">冀ICP备2021028814号]</a></p>
