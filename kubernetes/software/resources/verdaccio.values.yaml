@@ -2,39 +2,57 @@ image:
   repository: localhost:5000/docker.io/verdaccio/verdaccio
   tag: 5.2.0
   pullPolicy: IfNotPresent
-  pullSecrets: []
+  pullSecrets: [ ]
+service:
+  prot: 4873
+  type: ClusterIP
+replicaCount: 1
+resources:
+  requests:
+    cpu: 100m
+    memory: 512Mi
+  limits:
+    cpu: 1000m
+    memory: 1024Mi
 ingress:
   enabled: true
-  className: nginx
+  className: "nginx"
   paths:
     - /
   hosts:
-    - npm.cnconti.cc
+    - verdaccio.local.com
   annotations:
-    cert-manager.io/cluster-issuer: self-signed-clusterissuer
+    cert-manager.io/cluster-issuer: self-signed-issuer
   tls:
-    - secretName: npm.test.cnconti.cc-tls
+    - secretName: verdaccio.local.com-tls
       hosts:
-        - npm.test.cnconti.cc
+        - verdaccio.local.com
+serviceAccount:
+  create: false
 configMap: |
   storage: /verdaccio/storage/data
   web:
     enable: true
     title: Verdaccio
-    gravatar: true
   auth:
     htpasswd:
       file: /verdaccio/storage/htpasswd
+      max_users: -1
   uplinks:
-    npmjs:
+    npm-taobao:
       url: https://registry.npm.taobao.org/
+      agent_options:
+        keepAlive: true
+        maxSockets: 40
+        maxFreeSockets: 10
+    npmjs:
+      url: https://registry.npmjs.org/
       agent_options:
         keepAlive: true
         maxSockets: 40
         maxFreeSockets: 10
   packages:
     '@*/*':
-      # scoped packages
       access: $all
       publish: $authenticated
       proxy: npmjs
@@ -42,9 +60,19 @@ configMap: |
     '**':
       access: $all
       publish: $authenticated
-      proxy: npmjs
+      proxy: npm-taobao
+  middlewares:
+    audit:
+      enabled: true
+  logs: {type: stdout, format: pretty, level: info}
 persistence:
   enabled: true
   storageClass: standard
   accessMode: ReadWriteOnce
   size: 8Gi
+priorityClass:
+   enabled: false
+secrets:
+  htpasswd:
+    - username: "admin"
+      password: "change_password_to_your_own"

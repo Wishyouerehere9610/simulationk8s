@@ -32,17 +32,17 @@
 
 ### 制作在线镜像
 * ```shell
-  for IMAGE in "docker.io/bitnami/minio:2021.9.18-debian-10-r0" \
-      "docker.io/bitnami/minio-client:2021.9.2-debian-10-r17" \
+  for IMAGE in "docker.io/busybox:1.33.1-uclibc" \
       "docker.io/bitnami/bitnami-shell:10-debian-10-r198"
   do
       IMAGE_FILE=$(echo ${IMAGE} | sed "s/\//_/g" | sed "s/\:/_/g").dim
-      LOCAL_IMAGE_FIEL=/opt/data/docker-images/${IMAGE_FILE}
-      if [ ! -f ${LOCAL_IMAGE_FIEL} ]; then
-          docker pull ${IMAGE}
-          docker save -o ${IMAGE_FILE}  ${IMAGE}
-          mv -n ${IMAGE_FILE} ${LOCAL_IMAGE_FIEL} && rm -rf ${IMAGE_FILE}
-          chmod 644 ${LOCAL_IMAGE_FIEL}
-      fi
+      LOCAL_IMAGE_FIEL=/tmp/${IMAGE_FILE}
+      docker inspect ${IMAGE} 2>&1 > /dev/null \
+          && (docker save -o ${LOCAL_IMAGE_FIEL} ${IMAGE}) \
+          || (docker pull ${IMAGE} && docker save -o ${LOCAL_IMAGE_FIEL} ${IMAGE})
+      ossutil64 cp -rf ${LOCAL_IMAGE_FIEL} oss://aconti/docker-images/ \
+          && rm -rf ${LOCAL_IMAGE_FIEL}
   done
   ```
+
+

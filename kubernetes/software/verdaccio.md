@@ -39,7 +39,21 @@
           docker push ${LOCAL_IMAGE}/${IMAGE}
       done
       ```
-3. install by helm
+3. create `verdaccio-secret`
+   * ```shell
+     # uses the "Array" declaration
+     # referencing the variable again with as $PASSWORD an index array is the same as ${PASSWORD[0]}
+     PASSWORD=($((echo -n $RANDOM | md5sum 2>/dev/null) || (echo -n $RANDOM | md5 2>/dev/null)))
+     # NOTE: username should have at least 6 characters
+     kubectl -n application \
+         create secret generic verdaccio-secret \
+         --from-literal=username=admin \
+         --from-literal=password=$PASSWORD \
+     # username & password
+     kubectl -n application get secret verdaccio-secret -o jsonpath={.data.username} | base64 --decode && echo
+     kubectl -n application get secret verdaccio-secret -o jsonpath={.data.password} | base64 --decode && echo
+     ```
+4. install by helm
     * ```shell
       helm install \
           --create-namespace --namespace application \
@@ -48,12 +62,37 @@
           --values verdaccio.values.yaml \
           --atomic
       ```
+
 ## test
 1. check connection
     * ```shell
       curl --insecure --header 'Host: npm.test.cnconti.cc' https://localhost
       ```
-2. visit `https://npm.test.cnconti.cc`
+2. works as a npm proxy and private registry that can publish packages
+    * nothing in storage before actions
+      * ```shell
+        kubectl -n application exec -it  deployment/my-verdaccio -- ls -l /verdaccio/storage/data
+        ```
+      * prepare [npm.registry.test.sh]
+      * prepare [npm.login.expect]
+      * run npm install
+        + ```shell
+          docker run --rm \
+              --add-host verdaccio.local:172.17.0.1 \
+              -e NPM_ADMIN_USERNAME=admin \
+              -e NPM_ADMIN_PASSWORD=${PASSWORD} \
+              -e NPM_LOGIN_EMAIL=your-email@some.domain \
+              -e NPM_REGISTRY=https://verdaccio.local.com \
+              -v $(pwd)/npm.registry.test.sh:/app/npm.registry.test.sh:ro \
+              -v $(pwd)/npm.login.expect:/app/npm.login.expect:ro \
+              --workdir /app \
+              -it docker.io/node:17.5.0-alpine3.15 \
+              sh /app/npm.registry.test.sh
+          ```
+3. 
+4. 
+5. 
+6. visit `https://npm.test.cnconti.cc`
       
 ## uninstall 
 * ```shell
