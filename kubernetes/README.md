@@ -13,4 +13,3 @@
   * [commands](resources/commands.md)
   * [helm3](resources/helm.md)
   * [rbac](resources/rbac.md)
-  * [inner-login](login.md)

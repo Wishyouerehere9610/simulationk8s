@@ -1,15 +1,9 @@
 image:
-  # Sonatype Official Public Image
   repository: localhost:5000/docker.io/sonatype/nexus3
   tag: 3.37.3
   pullPolicy: IfNotPresent
+fullnameOverride: my-nexus
 nexus:
-  docker:
-    enabled: false
-    # registries:
-    #   - host: chart.local
-    #     port: 5000
-    #     secretName: registrySecret
   env:
     - name: INSTALL4J_ADD_VM_PARAMS
       value: "-Xms1200M -Xmx1200M -XX:MaxDirectMemorySize=2G -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
@@ -19,10 +13,6 @@ nexus:
     override: false
     data:
       nexus.scripts.allowCreation: true
-      # See this article for ldap configuratioon options https://support.sonatype.com/hc/en-us/articles/216597138-Setting-Advanced-LDAP-Connection-Properties-in-Nexus-Repository-Manager
-      # nexus.ldap.env.java.naming.security.authentication: simple
-  # nodeSelector:
-  #   cloud.google.com/gke-nodepool: default-pool
   resources: {}
   #   requests:
   #    Based on https://support.sonatype.com/hc/en-us/articles/115006448847#mem
@@ -37,60 +27,35 @@ nexus:
   #     memory: 4800Mi
   # The ports should only be changed if the nexus image uses a different port
   nexusPort: 8081
-deployment:
-  # # Add annotations in deployment to enhance deployment configurations
-  annotations: {}
-  # # Add init containers. e.g. to be used to give specific permissions for nexus-data.
-  # # Add your own init container or uncomment and modify the given example.
-  initContainers:
-  #   - name: fmp-volume-permission
-  #   image: busybox
-  #   imagePullPolicy: IfNotPresent
-  #   command: ['chown','-R', '200', '/nexus-data']
-  #   volumeMounts:
-  #     - name: nexus-data
-  #       mountPath: /nexus-data
-  # Uncomment and modify this to run a command after starting the nexus container.
-  postStart:
-    command:    # '["/bin/sh", "-c", "ls"]'
-  preStart:
-    command:    # '["/bin/rm", "-f", "/path/to/lockfile"]'
-  terminationGracePeriodSeconds: 120
-  additionalContainers:
-  additionalVolumes:
-  additionalVolumeMounts:
-
 ingress:
   enabled: true
   ingressClassName: "nginx"
   annotations:
-    cert-manager.io/cluster-issuer: alidns-webhook-letsencrypt
+    cert-manager.io/cluster-issuer: self-signed-clusterissuer
     nginx.ingress.kubernetes.io/proxy-body-size: 2g
     nginx.org/client-max-body-size: 2g
     nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
   hostPath: /
-  hostRepo: nexus.cnconti.cc
+  hostRepo: nexus.local.com
   tls:
-    - secretName: nexus.cnconti.cc-tls
+    - secretName: nexus.local.com-tls
       hosts:
-        - nexus.cnconti.cc
+        - nexus.local.com
 service:
-  name: nexus3
+  name: nexus
   enabled: true
-  labels: {}
-  annotations: {}
   type: ClusterIP
 persistence:
   enabled: true
   accessMode: ReadWriteOnce
   storageClass: standard
   storageSize: 8Gi
+serviceAccount:
+  create: flase
 ### 重点关注config
 config:
   enabled: false
   mountPath: /sonatype-nexus-conf
   data: []
-serviceAccount:
-  create: flase
