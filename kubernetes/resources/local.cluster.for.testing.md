@@ -56,6 +56,27 @@
 3. create cluster with a docker registry
     * prepare [kind-with-registry.sh](../basic/resources/kind-with-registry.sh.md)
         + `kind.cluster.yaml` will be created by script.
+    * prepare images
+        + ```shell
+          DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
+          BASE_URL="https://aconti.oss-cn-hangzhou.aliyuncs.com/docker-images"
+          LOCAL_IMAGE="localhost:5000"
+          for IMAGE in "docker.io/kindest/node:v1.22.1" \
+              "docker.io/registry:2"
+          do
+              IMAGE_FILE=$(echo ${IMAGE} | sed "s/\//_/g" | sed "s/\:/_/g").dim
+              LOCAL_IMAGE_FIEL=${DOCKER_IMAGE_PATH}/${IMAGE_FILE}
+              if [ ! -f ${LOCAL_IMAGE_FIEL} ]; then
+                  curl -o ${IMAGE_FILE} -L ${BASE_URL}/${IMAGE_FILE} \
+                      && mv ${IMAGE_FILE} ${LOCAL_IMAGE_FIEL} \
+                      || rm -rf ${IMAGE_FILE}
+              fi
+              docker image load -i ${LOCAL_IMAGE_FIEL}
+              docker image inspect ${IMAGE} || docker pull ${IMAGE}
+              docker image tag ${IMAGE} ${LOCAL_IMAGE}/${IMAGE}
+              docker push ${LOCAL_IMAGE}/${IMAGE}
+          done
+          ```
     * create cluster
         + ```shell
           bash kind-with-registry.sh kind kubectl

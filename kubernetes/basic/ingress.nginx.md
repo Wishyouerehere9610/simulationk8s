@@ -25,7 +25,7 @@
     * prepare images
         + ```shell
           DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
-          BASE_URL="https://conti-docker-images.oss-cn-hangzhou.aliyuncs.com"
+          BASE_URL="https://aconti.oss-cn-hangzhou.aliyuncs.com/docker-images"
           LOCAL_IMAGE="localhost:5000"
           for IMAGE in "k8s.gcr.io/ingress-nginx/controller:v1.0.3" \
               "k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.0" \
@@ -49,7 +49,7 @@
         helm install \
             --create-namespace --namespace basic-components \
             my-ingress-nginx \
-            https://resources.conti2021.icu/charts/ingress-nginx-4.0.5.tgz \
+            https://aconti.oss-cn-hangzhou.aliyuncs.com/charts/kubernetes.github.io/ingress-nginx/ingress-nginx-4.0.5.tgz \
             --values ingress.nginx.values.yaml \
             --atomic
         ```
@@ -58,7 +58,7 @@
     * prepare images
         + ```shell
           DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
-          BASE_URL="https://conti-docker-images.oss-cn-hangzhou.aliyuncs.com"
+          BASE_URL="https://aconti.oss-cn-hangzhou.aliyuncs.com/docker-images"
           LOCAL_IMAGE="localhost:5000"
           for IMAGE in "docker.io/bitnami/nginx:1.21.3-debian-10-r29" 
           do

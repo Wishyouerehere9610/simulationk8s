@@ -23,7 +23,7 @@
 2. prepare images
     * ```shell
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
-      BASE_URL="https://conti-docker-images.oss-cn-hangzhou.aliyuncs.com"
+      BASE_URL="https://aconti.oss-cn-hangzhou.aliyuncs.com/docker-images"
       LOCAL_IMAGE="localhost:5000"
       for IMAGE in "quay.io/jetstack/cert-manager-controller:v1.5.4" \
           "quay.io/jetstack/cert-manager-webhook:v1.5.4" \
@@ -48,7 +48,7 @@
        helm install \
            --create-namespace --namespace basic-components \
            my-cert-manager \
-           https://resource.static.zjvis.net/charts/charts.jetstack.io/cert-manager-v1.5.4.tgz \
+           https://aconti.oss-cn-hangzhou.aliyuncs.com/charts/charts.jetstack.io/cert-manager-v1.5.4.tgz \
            --values cert.manager.values.yaml \
            --atomic
        ```

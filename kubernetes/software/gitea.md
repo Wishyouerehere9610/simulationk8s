@@ -23,7 +23,7 @@
 2. prepare images
     * ```shell
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
-      BASE_URL="https://conti-docker-images.oss-cn-hangzhou.aliyuncs.com"
+      BASE_URL="https://aconti.oss-cn-hangzhou.aliyuncs.com/docker-images"
       LOCAL_IMAGE="localhost:5000"
       for IMAGE in "docker.io/gitea/gitea:1.15.3" \
           "docker.io/bitnami/memcached:1.6.9-debian-10-r114" \

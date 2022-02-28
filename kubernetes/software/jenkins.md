@@ -22,7 +22,7 @@
 2. prepare images
     * ```shell  
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
-      BASE_URL="https://conti-docker-images.oss-cn-hangzhou.aliyuncs.com"
+      BASE_URL="https://aconti.oss-cn-hangzhou.aliyuncs.com/docker-images"
       LOCAL_IMAGE="localhost:5000"
       for IMAGE in "docker.io/bitnami/jenkins:2.319.3-debian-10-r7" \
           "docker.io/bitnami/bitnami-shell:10-debian-10-r341" \

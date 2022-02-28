@@ -26,8 +26,7 @@
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
       BASE_URL="https://aconti.oss-cn-hangzhou.aliyuncs.com/docker-images"
       LOCAL_IMAGE="localhost:5000"
-      for IMAGE in "docker.io/busybox:1.33.1-uclibc" \
-          "docker.io/sonatype/nexus3:3.37.3" 
+      for IMAGE in "docker.io/sonatype/nexus3:3.37.3" 
       do
           IMAGE_FILE=$(echo ${IMAGE} | sed "s/\//_/g" | sed "s/\:/_/g").dim
           LOCAL_IMAGE_FIEL=${DOCKER_IMAGE_PATH}/${IMAGE_FILE}
@@ -53,35 +52,16 @@
       ```
   
 ## test
-
 1. check connection
-    * ```shell
+   * ```shell
       curl --insecure --header 'Host: nexus.cnconti.cc' https://localhost
-    * ```
-2. works as a npm proxy and private registry that can publish packages
-    * nothing in storage before actions
+      ```
+2. visit `https://nexus.cnconti.cc`
+   * login `admin`
+   * password
       * ```shell
-        kubectl -n application exec -it  deployment/my-nexus -- ls -l /verdaccio/storage/data
-        ```
-    * [test.sh]()
-    * [login.expect]()
-    * run install
-      + ```shell
-        docker run --rm \
-            --add-host verdaccio.local:172.17.0.1 \
-            -e NPM_ADMIN_USERNAME=admin \
-            -e NPM_ADMIN_PASSWORD=your-admin-password \
-            -e NPM_LOGIN_EMAIL=your-email@some.domain \
-            -e NPM_REGISTRY=https://verdaccio.local \
-            -v $(pwd)/npm.registry.test.sh:/app/npm.registry.test.sh:ro \
-            -v $(pwd)/npm.login.expect:/app/npm.login.expect:ro \
-            --workdir /app \
-            -it docker.io/node:17.5.0-alpine3.15 \
-            sh /app/npm.registry.test.sh
-        
-        ```
-3. visit `nexus.test.cnconti.cc`
-    * login
+       kubectl -n application exec -it  deployment/my-nexus -- cat /nexus-data/admin.password && echo
+       ```
 
 ## uninstall 
 * ```shell
