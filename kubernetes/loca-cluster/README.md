@@ -17,4 +17,6 @@
 * application
     * [gitea](gitea.md)
     * [dashboard](dashboard.md)
+    * [verdaccio](application/verdaccio)
+    * [nexus](application/nexus)
 * [haproxy](haproxy.md)

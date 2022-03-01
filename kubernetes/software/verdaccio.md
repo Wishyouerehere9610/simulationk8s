@@ -22,7 +22,7 @@
 2. prepare images
     * ```shell  
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
-      BASE_URL="https://aconti.oss-cn-hangzhou.aliyuncs.com/docker-images"
+      BASE_URL="https://resource.cnconti.cc/docker-images"
       LOCAL_IMAGE="localhost:5000"
       for IMAGE in "docker.io/verdaccio/verdaccio:5.2.0" 
       do
@@ -33,7 +33,7 @@
                   && mv ${IMAGE_FILE} ${LOCAL_IMAGE_FIEL} \
                   || rm -rf ${IMAGE_FILE}
           fi
-          docker image load -i ${LOCAL_IMAGE_FIEL}
+          docker image load -i ${LOCAL_IMAGE_FIEL} && rm -rf ${LOCAL_IMAGE_FIEL}
           docker image inspect ${IMAGE} || docker pull ${IMAGE}
           docker image tag ${IMAGE} ${LOCAL_IMAGE}/${IMAGE}
           docker push ${LOCAL_IMAGE}/${IMAGE}

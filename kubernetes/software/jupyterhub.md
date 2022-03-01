@@ -19,7 +19,7 @@
 2. prepare images
     * ```shell
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
-      BASE_URL="https://aconti.oss-cn-hangzhou.aliyuncs.com/docker-images"
+      BASE_URL="https://resource.cnconti.cc/docker-images"
       LOCAL_IMAGE="localhost:5000"
       for IMAGE in "docker.io/bitnami/jupyterhub:1.5.0-debian-10-r34" \
           "docker.io/bitnami/configurable-http-proxy:4.5.0-debian-10-r146" \
@@ -44,7 +44,7 @@
       helm install \
           --create-namespace --namespace application \
           my-jupyterhub \
-          https://resources.conti2021.icu/charts/jupyterhub-1.2.0.tgz \
+          https://resource.cnconti.cc/charts/jupyterhub-1.2.0.tgz \
           --values jupyterhub.values.yaml \
           --atomic
       ```
