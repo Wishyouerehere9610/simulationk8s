@@ -62,7 +62,7 @@
 1. check with docker-registry
    * ```shell
       IMAGE=docker.io/busybox:1.33.1-uclibc \
-          && TARGET_IMAGE=docker-registry.test.cnconti.cc:32443/$IMAGE \
+          && TARGET_IMAGE=docker-registry.local.com:32443/$IMAGE \
           && docker tag $IMAGE $TARGET_IMAGE \
           && docker push $TARGET_IMAGE \
           && docker image rm $IMAGE \

@@ -66,7 +66,7 @@
 ## test
 1. check connection
     * ```shell
-      curl --insecure --header 'Host: npm.test.cnconti.cc' https://localhost
+      curl --insecure --header 'Host: npm.local.com' https://localhost
       ```
 2. works as a npm proxy and private registry that can publish packages
     * nothing in storage before actions
@@ -89,10 +89,7 @@
               -it docker.io/node:17.5.0-alpine3.15 \
               sh /app/npm.registry.test.sh
           ```
-3. 
-4. 
-5. 
-6. visit `https://npm.test.cnconti.cc`
+6. visit `https://npm.local.com`
       
 ## uninstall 
 * ```shell

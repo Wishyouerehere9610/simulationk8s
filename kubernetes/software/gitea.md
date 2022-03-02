@@ -63,13 +63,13 @@
       helm install \
           --create-namespace --namespace application \
           my-gitea \
-          https://resource.cnconti.cc/charts/gitea-4.1.1.tgz \
+          https://resource.cnconti.cc/charts/dl.gitea.io/charts/gitea-4.1.1.tgz \
           --values gitea.values.yaml \
           --atomic
       ```
 
 ## Test
-* visit `gitea.test.cnconti.cc`
+* visit `gitea.local.com`
     * port-forward
         + ```shell
           kubectl --namespace application port-forward svc/my-gitea-http 3000:3000 --address 0.0.0.0
@@ -87,5 +87,5 @@
           ```
     + 测试ssh链接是否正常
         * ```shell
-          git clone ssh://git@gitea.test.cnconti.cc:1022/gitea_admin/test-repo.git
+          git clone ssh://git@gitea.local.com:1022/gitea_admin/test-repo.git
           ```

@@ -88,5 +88,5 @@
 ## Test
 1. access nginx service with ingress
     + ```shell
-      curl --header 'Host: my.nginx.tech' http://localhost
+      curl --header 'Host: my-nginx.local.com' http://localhost
       ```

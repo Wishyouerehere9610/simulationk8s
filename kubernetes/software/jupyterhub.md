@@ -53,7 +53,7 @@
 
 * check connection
   * ```shell
-    curl --insecure --header 'Host: jupyterhub.test.cnconti.cc' https://localhost
+    curl --insecure --header 'Host: jupyterhub.local.com' https://localhost
     ```
 * visit gitea via website
    - configure hosts

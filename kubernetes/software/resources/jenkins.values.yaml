@@ -7,7 +7,7 @@ image:
   debug: false
 jenkinsUser: conti
 jenkinsPassword: "AAaa1234"
-jenkinsHost: jenkins.test.cnconti.cc
+jenkinsHost: jenkins.local.com
 jenkinsHome: /bitnami/jenkins/home
 ## @param javaOpts Custom JVM parameters
 ##
@@ -38,13 +38,13 @@ ingress:
   ## @param ingress.apiVersion Force Ingress API version (automatically detected if not set)
   ##
   apiVersion: ""
-  hostname: jenkins.test.cnconti.cc
+  hostname: jenkins.local.com
   path: /
   annotations:
       nginx.ingress.kubernetes.io/rewrite-target: /$1
       cert-manager.io/cluster-issuer: self-signed-clusterissuer
   tls: false
-  secrets: jenkins.test.cnconti.cc-tls
+  secrets: jenkins.local.com-tls
   ingressClassName: nginx
 persistence:
   enabled: true

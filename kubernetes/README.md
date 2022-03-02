@@ -8,8 +8,8 @@
 
 <br/><br/>
 
-#### other
-  * [local-cluster](loca-cluster/README.md)
-  * [commands](resources/commands.md)
-  * [helm3](resources/helm.md)
-  * [rbac](resources/rbac.md)
+### other
+* [commands](resources/commands.md)
+* [local-cluster](loca-cluster/README.md)
+* [aliyun-kind](aliyun-kind/README.md)
+

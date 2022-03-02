@@ -17,14 +17,14 @@ ingress:
     nginx.ingress.kubernetes.io/rewrite-target: /$1
     cert-manager.io/cluster-issuer: self-signed-clusterissuer
   hosts:
-    - host: gitea.test.cnconti.cc
+    - host: gitea.local.com
       paths:
         - path: /?(.*)
           pathType: ImplementationSpecific
   tls:
-    - secretName: gitea.test.cnconti.cc
+    - secretName: gitea.local.com
       hosts:
-        - gitea.test.cnconti.cc
+        - gitea.local.com
 persistence:
   enabled: true
   size: 8Gi
@@ -58,8 +58,8 @@ gitea:
       PROTOCOL: http
       # ROOT_URL: "https://gitea-ops.lab.zjvis.net:32443/"
       LANDING_PAGE: login
-      DOMAIN: gitea.test.cnconti.cc
-      SSH_DOMAIN: gitea.test.cnconti.cc
+      DOMAIN: gitea.local.com
+      SSH_DOMAIN: gitea.local.com
       SSH_PORT: 1022
       SSH_AUTHORIZED_PRINCIPALS_ALLOW: email
     admin:

@@ -88,7 +88,7 @@
        helm install \
            --create-namespace --namespace basic-components \
            my-alidns-webhook \
-           https://resource.static.zjvis.net/charts/alidns-webhook-0.6.0.tgz \
+           https://resource.cnconti.cc/charts/alidns-webhook-0.6.0.tgz \
            --values alidns.webhook.values.yaml \
            --atomic
        ```

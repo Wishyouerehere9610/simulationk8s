@@ -54,7 +54,7 @@
 ## test
 1. check connection
     * ```shell
-      curl --insecure --header 'Host: dashboard.test.cnconti.cc' https://localhost
+      curl --insecure --header 'Host: dashboard.local.com' https://localhost
       ```
 2. create read only `user`
     * prepare [create.user.yaml](resources/create.user.yaml.md)
@@ -68,7 +68,7 @@
           -o jsonpath="{.data.token}" | base64 --decode \
           && echo
       ```
-4. visit `https://dashboard.test.cnconti.cc`
+4. visit `https://dashboard.local.com`
     * use the extracted token to login
 
 ## uninstallation

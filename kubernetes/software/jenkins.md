@@ -54,10 +54,10 @@
 ## test
 1. check connection
     * ```shell
-      curl --insecure --header 'Host: npm.test.cnconti.cc' https://localhost
+      curl --insecure --header 'Host: npm.local.com' https://localhost
       ```
 2. visit gitea via website
-    * visit `https://npm.test.cnconti.cc`
+    * visit `https://npm.local.com`
     * ```shell
       kubectl -n application get secret gitea-admin-secret -o jsonpath="{.data.username}" | base64 --decode && echo
       kubectl -n application get secret gitea-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo
