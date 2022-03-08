@@ -2,13 +2,13 @@
 
 ### Technology stack
 * [linux](linux/README.md)
-* [hadoop](hadoop/README.md)  
-* [docker](docker/README.md)
-* [kubernetes](kubernetes/README.md)
 * [database](database/README.md)
-
+* [frontend](frontend/README.md)
+* [backend](backend/README.md)
+* [container](container/README.md)
+* [command manual](commands/README.md)
 ### Commands
-* [command](commands/README.md)
+
 * [language](language/README.md)
 
 
