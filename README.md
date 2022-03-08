@@ -1,4 +1,4 @@
-# **Welcome to my blog**
+<p align="center"><font size="6"><b>Welcome to ContiDocs</b></font></p>
 
 ## Technology stack
 * [linux](linux/README.md)
