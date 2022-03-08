@@ -13,18 +13,21 @@
 </body>
 <script>
     window.$docsify = {
-        name: 'blog',
-        repo: 'https://github.com/ContiCat/conticat.github.io.git',
+        name: '<span>ContiDocs</span>span>',
+        repo: 'https://github.com/Austen821/ContiDocs',
         loadSidebar: true,
-        subMaxLevel: 3,
         loadNavbar: true,
+        subMaxLevel: 3,
+        maxLevel: 6,
+        themeColor: '#1B6461',
         mergeNavbar: true,
         auto2top: true,
         relativePath: true,
         search: {
+            depth: 6,
+            hideOtherSidebarContent: false,
             noData: {
                 '/': 'No results!',
-                '/zh-cn/': '没有结果!',
             },
             paths: 'auto',
             placeholder: {
@@ -32,10 +35,28 @@
                 '/zh-cn/': '搜索',
             }
         },
+        toc: {
+            scope: '.mardown-section',
+            headings: 'h1, h2, h3, h4, h5',
+            title: 'Table of Contents'
+        }
+        window.$docsify = {
+            beian: {
+                ICP: "冀ICP备2021028814号-2",
+                NISMSP: {
+                    number: "",
+                    url: "https://beian.miit.gov.cn",
+                    id: ""
+                },
+            },
+        }
     }
 </script>
 <script src="offline-docsify/docsify@4.11.4"></script>
 <script src="offline-docsify/search.min.js"></script>
+<script src="offline-docsify/pangu.min.js"></script>
+<script src="offline-docsify/dist.toc.js"></script>
+<script src="offline-docsify/emoji.min.js"></script>
 <script src="offline-docsify/zoom-image.min.js"></script>
 <script src="offline-docsify/prism-markdown.min.js"></script>
 <script src="offline-docsify/prism-bash.min.js"></script>
@@ -43,4 +64,5 @@
 <script src="offline-docsify/prism-yaml.min.js"></script>
 <script src="offline-docsify/prism-less.min.js"></script>
 <script src="offline-docsify/docsify-copy-code.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsify-beian@latest/dist/beian.min.js"></script>
 </html>
