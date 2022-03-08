@@ -1,15 +1,13 @@
 # **Welcome to my blog**
 
-### Technology stack
+## Technology stack
 * [linux](linux/README.md)
 * [database](database/README.md)
-* [frontend](frontend/README.md)
-* [backend](backend/README.md)
-* [container](container/README.md)
-* [command manual](commands/README.md)
-### Commands
-
 * [language](language/README.md)
+* [docker](docker/README.md)
+* [kubernetes](kubernetes/README.md)
+
+
 
 
 
