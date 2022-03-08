@@ -1,2 +1,1 @@
-- Language / 语言
-  - [English](/)
+* [ContiDocs](/README.md)
