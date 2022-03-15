@@ -1,0 +1,5 @@
+image:
+  repository: localhost:5000/conti-nfs-server
+  tag: 0.1.1
+  # digest:
+  pullPolicy: IfNotPresent
