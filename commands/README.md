@@ -3,7 +3,7 @@
 * [shell](/linux/resources/commands.md)
 * [database](database/resources/README.md)
 * [docker](/docker/resources/commands.md)
-* [kubernetes](/kubernetes/resources/commands.md)
+* [kubernetes](/kubernetes/commands.md)
 * [java](/language/java/commands.md)
 * [python](/language/python/commands.md)
 

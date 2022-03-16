@@ -9,7 +9,7 @@
 <br/><br/>
 
 ### other
-* [commands](resources/commands.md)
+* [commands](commands.md)
 * [local-cluster](loca-cluster/README.md)
 * [aliyun-kind](aliyun-kind/README.md)
 * [CNI](resources/cni.md)

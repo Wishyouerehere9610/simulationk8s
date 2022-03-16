@@ -45,4 +45,11 @@
   done
   ```
 
+### patch
+* pass
+  * ```shell
+    kubectl patch svc my-redis-cluster -p '{"spec":{"ports":[{"name":"tcp-redis","nodePort":"new image"}]}}'
+    ```
+
+
 
