@@ -1,42 +1,55 @@
-
-系统信息
-
-arch      #显示机器的处理器架构(1)
-uname -m  #显示机器的处理器架构(2)
-uname -r  #显示正在使用的内核版本
-dmidecode -q          #显示硬件系统部件 - (SMBIOS / DMI)
-hdparm -i /dev/hda    #罗列一个磁盘的架构特性
-hdparm -tT /dev/sda   #在磁盘上执行测试性读取操作
-cat /proc/cpuinfo     #显示CPU info的信息
-cat /proc/interrupts  #显示中断
-cat /proc/meminfo     #校验内存使用
-cat /proc/swaps       #显示哪些swap被使用
-cat /proc/version     #显示内核的版本
-cat /proc/net/dev     #显示网络适配器及统计
-cat /proc/mounts      #显示已加载的文件系统
-lspci -tv   #罗列PCI设备
-lsusb -tv   #显示USB设备
+### 下载目录信息
+* ```shell
+  wget -r -np -nH -R index.html http://url/including/files/you/want/to/download/ 
+  ```
+* `-r` 遍历所有子目录
+* `-np` 不到上一层子目录去
+* `-nH` 不要将文件保存到主机名文件夹
+* `-R index.html` 不下载 index.html 文件
 
 
-d‍‍‍‍‍‍ate显示系统日期
+### 系统信息
+* ```shell
+  arch      #显示机器的处理器架构(1)
+  uname -m  #显示机器的处理器架构(2)
+  uname -r  #显示正在使用的内核版本
+  dmidecode -q          #显示硬件系统部件 - (SMBIOS / DMI)
+  hdparm -i /dev/hda    #罗列一个磁盘的架构特性
+  hdparm -tT /dev/sda   #在磁盘上执行测试性读取操作
+  cat /proc/cpuinfo     #显示CPU info的信息
+  cat /proc/interrupts  #显示中断
+  cat /proc/meminfo     #校验内存使用
+  cat /proc/swaps       #显示哪些swap被使用
+  cat /proc/version     #显示内核的版本
+  cat /proc/net/dev     #显示网络适配器及统计
+  cat /proc/mounts      #显示已加载的文件系统
+  lspci -tv   #罗列PCI设备
+  lsusb -tv   #显示USB设备
+  ```
+
+### date显示系统日期
+* ```shell
+  cal 2007              #显示2007年的日历表
+  date 041217002007.00   #设置日期和时间 - 月日时分年.秒
+  clock -w              #将时间修改保存到 BIOS
+  ```
+
+### 关机【系统关机、重启以及登录】
+* ```shell
+  shutdown -h now    #关闭系统(1)
+  init 0            #关闭系统(2)
+  telinit 0         #关闭系统(3)
+  shutdown -h hours:minutes &   #按预定时间关闭系统
+  shutdown -c       #取消按预定时间关闭系统
+  shutdown -r now   #重启(1)
+  reboot   #重启(2)
+  logout   #注销
+  ```
 
 
-cal 2007              #显示2007年的日历表
-date 041217002007.00   #设置日期和时间 - 月日时分年.秒
-clock -w              #将时间修改保存到 BIOS
 
 
-关机【系统关机、重启以及登录】
 
-
-shutdown -h now    #关闭系统(1)
-init 0            #关闭系统(2)
-telinit 0         #关闭系统(3)
-shutdown -h hours:minutes &   #按预定时间关闭系统
-shutdown -c       #取消按预定时间关闭系统
-shutdown -r now   #重启(1)
-reboot   #重启(2)
-logout   #注销
 
 
 文件和目录

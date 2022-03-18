@@ -1,8 +1,7 @@
 ## commands
-
-* [shell](/linux/resource/commands.md)
-* [database](database/resources/README.md)
-* [docker](/docker/resources/commands.md)
+* [shell](/linux/commands.md)
+* [database](database/README.md)
+* [docker](/docker/commands.md)
 * [kubernetes](/kubernetes/commands.md)
 * [java](/language/java/commands.md)
 * [python](/language/python/commands.md)

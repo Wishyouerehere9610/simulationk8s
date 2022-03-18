@@ -12,7 +12,7 @@
 
 ## conceptions
 
-* ![lvm.svg from wikipedia](resources/lvm.svg)
+* ![lvm.svg from wikipedia](resource/lvm.svg)
 
 1. PVs: physical volumes
     * can be hard disks or partitions

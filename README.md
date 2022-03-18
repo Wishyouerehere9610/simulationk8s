@@ -8,7 +8,7 @@
 * [kubernetes](kubernetes/README.md)
 
 ## Shortcut tool
-* [commands](commands/README.md)
+* [commands](commands.md)
 * [language](language/README.md)
 * TODO: [算法](/README.md)
 * TODO: [pass](/README.md)

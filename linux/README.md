@@ -5,6 +5,7 @@
 * TODO:[loop back devices with lvm](loop.back.devices.with.lvm.md)
 * TODO:[Load balance](load_balance.md)
 * TODO:[qemu](qemu/README.md)
+* [kerberos](kerberos.md)
 
 #### other
-  * [commands](resources/commands.md)
+  * [commands](commands.md)
