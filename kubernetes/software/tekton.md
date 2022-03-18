@@ -27,8 +27,27 @@
       for IMAGE in "docker.io/gcr.io/tekton-releases/dogfooding/tkn:latest-20220304" \
          "docker.io/gcr.io/tekton-releases/github.com/tektoncd/operator/cmd/kubernetes/proxy-webhook:v0.54.0" \
          "docker.io/gcr.io/tekton-releases/github.com/tektoncd/operator/cmd/kubernetes/operator:v0.54.0" \
-         "docker.io/gcr.io/tekton-releases/github.com/tektoncd/operator/cmd/kubernetes/webhook:v0.54.0" \
-         "docker.io/gcr.io/tekton-releases/github.com/tektoncd/dashboard/cmd/dashboard:v0.23.0" \
+         "docker.io/gcr.io/tekton-releases/github.com/tektoncd/operator/cmd/kubernetes/webhook:v0.54.0" 
+      do
+          IMAGE_FILE=$(echo ${IMAGE} | sed "s/\//_/g" | sed "s/\:/_/g").dim
+          LOCAL_IMAGE_FIEL=${DOCKER_IMAGE_PATH}/${IMAGE_FILE}
+          if [ ! -f ${LOCAL_IMAGE_FIEL} ]; then
+              curl -o ${IMAGE_FILE} -L ${BASE_URL}/${IMAGE_FILE} \
+                  && mv ${IMAGE_FILE} ${LOCAL_IMAGE_FIEL} \
+                  || rm -rf ${IMAGE_FILE}
+          fi
+          docker image load -i ${LOCAL_IMAGE_FIEL} && rm -rf ${LOCAL_IMAGE_FIEL}
+          docker image inspect ${IMAGE} || docker pull ${IMAGE}
+          docker image tag ${IMAGE} ${LOCAL_IMAGE}/${IMAGE}
+          docker push ${LOCAL_IMAGE}/${IMAGE}
+      done
+      ```
+2. prepare images
+    * ```shell  
+      DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
+      BASE_URL="https://resource.cnconti.cc/docker-images"
+      LOCAL_IMAGE="localhost:5000"
+      for IMAGE in "docker.io/gcr.io/tekton-releases/github.com/tektoncd/dashboard/cmd/dashboard:v0.23.0" \
          "docker.io/gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/entrypoint:v0.32.0" \
          "docker.io/gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/kubeconfigwriter:v0.32.0" \
          "docker.io/gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.32.0" \
