@@ -15,20 +15,20 @@
 
 ## pre-requirements
 
-* [local.cluster.for.testing](../resources/local.cluster.for.testing.md)
-* [install ingress-nginx](ingress.nginx.md)
+* [create.local.cluster.with.kind](../create.local.cluster.with.kind.md)
+* install [ingress-nginx](ingress.nginx.md)
 
-## Do it
-1. prepare [cert.manager.values.yaml](resources/cert.manager.values.yaml.md)
-2. prepare images
+## do it
+1. prepare images
     * ```shell
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
       BASE_URL="https://resource.cnconti.cc/docker-images"
-      LOCAL_IMAGE="localhost:5000"
       for IMAGE in "quay.io/jetstack/cert-manager-controller:v1.5.4" \
           "quay.io/jetstack/cert-manager-webhook:v1.5.4" \
           "quay.io/jetstack/cert-manager-cainjector:v1.5.4" \
-          "quay.io/jetstack/cert-manager-ctl:v1.5.4"
+          "quay.io/jetstack/cert-manager-ctl:v1.5.4" \
+          "quay.io/jetstack/cert-manager-acmesolver:v1.5.4" \
+          "ghcr.io/devmachine-fr/cert-manager-alidns-webhook/cert-manager-alidns-webhook:0.2.0"
       do
           IMAGE_FILE=$(echo ${IMAGE} | sed "s/\//_/g" | sed "s/\:/_/g").dim
           LOCAL_IMAGE_FIEL=${DOCKER_IMAGE_PATH}/${IMAGE_FILE}
@@ -38,11 +38,10 @@
                   || rm -rf ${IMAGE_FILE}
           fi
           docker image load -i ${LOCAL_IMAGE_FIEL} && rm -rf ${LOCAL_IMAGE_FIEL}
-          docker image inspect ${IMAGE} || docker pull ${IMAGE}
-          docker image tag ${IMAGE} ${LOCAL_IMAGE}/${IMAGE}
-          docker push ${LOCAL_IMAGE}/${IMAGE}
+          kind load docker-images ${IMAGE}
       done
       ```
+2. prepare [cert.manager.values.yaml](resources/cert.manager.values.yaml.md)
 3. install by helm
     * ```shell
        helm install \
@@ -97,7 +96,3 @@
      * ```shell
        kubectl -n basic-components apply -f alidns.webhook.cluster.issuer.yaml
        ```
-## Test
-
-      
-      

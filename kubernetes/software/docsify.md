@@ -15,7 +15,7 @@
 
 ## pre-requirements
 
-* [local.cluster.for.testing.md](../resources/local.cluster.for.testing.md)
+* [local.cluster.for.testing.md](../create.local.cluster.with.kind.md)
 * [ingress](../basic/ingress.nginx.md)
 * [cert-manager](../basic/cert.manager.md)
 

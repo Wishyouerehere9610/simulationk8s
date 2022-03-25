@@ -16,7 +16,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
 spec:
   rules:
-    - host: docker-registry.local.com
+    - host: docker-registry.local.cnconti.cc
       http:
         paths:
           - path: /?(.*)
@@ -28,5 +28,5 @@ spec:
                   number: 5000
   tls:
     - hosts:
-        - docker-registry.local.com
-      secretName: docker-registry.local.com-tls
+        - docker-registry.local.cnconti.cc
+      secretName: docker-registry.local.cnconti.cc-tls

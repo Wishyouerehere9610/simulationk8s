@@ -16,66 +16,48 @@
 
 ## pre-requirements
 
-* none
+* [create.local.cluster.with.kind](../create.local.cluster.with.kind.md)
 
-## Do it
-1. [create local cluster for testing](../resources/local.cluster.for.testing.md)
-2. install ingress nginx
-    * prepare [ingress.nginx.values.yaml](resources/ingress.nginx.values.yaml.md)
-    * prepare images
-        + ```shell
-          DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
-          BASE_URL="https://resource.cnconti.cc/docker-images"
-          LOCAL_IMAGE="localhost:5000"
-          for IMAGE in "k8s.gcr.io/ingress-nginx/controller:v1.0.3" \
-              "k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.0" \
-              "k8s.gcr.io/defaultbackend-amd64:1.5"
-          do
-              IMAGE_FILE=$(echo ${IMAGE} | sed "s/\//_/g" | sed "s/\:/_/g").dim
-              LOCAL_IMAGE_FIEL=${DOCKER_IMAGE_PATH}/${IMAGE_FILE}
-              if [ ! -f ${LOCAL_IMAGE_FIEL} ]; then
-                  curl -o ${IMAGE_FILE} -L ${BASE_URL}/${IMAGE_FILE} \
-                      && mv ${IMAGE_FILE} ${LOCAL_IMAGE_FIEL} \
-                      || rm -rf ${IMAGE_FILE}
-              fi
-              docker image load -i ${LOCAL_IMAGE_FIEL} && rm -rf ${LOCAL_IMAGE_FIEL}
-              docker image inspect ${IMAGE} || docker pull ${IMAGE}
-              docker image tag ${IMAGE} ${LOCAL_IMAGE}/${IMAGE}
-              docker push ${LOCAL_IMAGE}/${IMAGE}
-          done
-          ```
-    * install by helm
-      * ```shell
-        helm install \
-            --create-namespace --namespace basic-components \
-            my-ingress-nginx \
-            https://resource.cnconti.cc/charts/kubernetes.github.io/ingress-nginx/ingress-nginx-4.0.5.tgz \
-            --values ingress.nginx.values.yaml \
-            --atomic
-        ```
-3. install nginx service
+## do it
+1. prepare images
+    * ```shell
+      DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
+      BASE_URL="https://resource.cnconti.cc/docker-images"
+      for IMAGE in "k8s.gcr.io/ingress-nginx/controller:v1.0.3" \
+          "k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.0" \
+          "docker.io/bitnami/nginx:1.21.3-debian-10-r29" \
+          "k8s.gcr.io/defaultbackend-amd64:1.5"
+      do
+          IMAGE_FILE=$(echo ${IMAGE} | sed "s/\//_/g" | sed "s/\:/_/g").dim
+          LOCAL_IMAGE_FIEL=${DOCKER_IMAGE_PATH}/${IMAGE_FILE}
+          if [ ! -f ${LOCAL_IMAGE_FIEL} ]; then
+              curl -o ${IMAGE_FILE} -L ${BASE_URL}/${IMAGE_FILE} \
+                  && mv ${IMAGE_FILE} ${LOCAL_IMAGE_FIEL} \
+                  || rm -rf ${IMAGE_FILE}
+          fi
+          docker image load -i ${LOCAL_IMAGE_FIEL} && rm -rf ${LOCAL_IMAGE_FIEL}
+          kind load docker-images ${IMAGE}
+      done
+      ```
+2. prepare [ingress.nginx.values.yaml](resources/ingress.nginx.values.yaml.md)
+3. install by helm
+    * ```shell
+      helm install \
+          --create-namespace --namespace basic-components \
+          my-ingress-nginx \
+          https://resource.cnconti.cc/charts/kubernetes.github.io/ingress-nginx/ingress-nginx-4.0.5.tgz \
+          --values ingress.nginx.values.yaml \
+          --atomic
+      ```
+
+# test
+1. prepare `test` namespace
+    * ```shell
+         kubectl get namespace test > /dev/null 2>&1 || kubectl create namespace test
+      ```
+2. install nginx service
     * prepare [nginx.values.yaml](resources/nginx.values.yaml.md)
-    * prepare images
-        + ```shell
-          DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
-          BASE_URL="https://resource.cnconti.cc/docker-images"
-          LOCAL_IMAGE="localhost:5000"
-          for IMAGE in "docker.io/bitnami/nginx:1.21.3-debian-10-r29" 
-          do
-              IMAGE_FILE=$(echo ${IMAGE} | sed "s/\//_/g" | sed "s/\:/_/g").dim
-              LOCAL_IMAGE_FIEL=${DOCKER_IMAGE_PATH}/${IMAGE_FILE}
-              if [ ! -f ${LOCAL_IMAGE_FIEL} ]; then
-                  curl -o ${IMAGE_FILE} -L ${BASE_URL}/${IMAGE_FILE} \
-                      && mv ${IMAGE_FILE} ${LOCAL_IMAGE_FIEL} \
-                      || rm -rf ${IMAGE_FILE}
-              fi
-              docker image load -i ${LOCAL_IMAGE_FIEL} && rm -rf ${LOCAL_IMAGE_FIEL}
-              docker image inspect ${IMAGE} || docker pull ${IMAGE}
-              docker image tag ${IMAGE} ${LOCAL_IMAGE}/${IMAGE}
-              docker push ${LOCAL_IMAGE}/${IMAGE}
-          done
-          ```
-    * isntall by helm
+    * install by helm
       * ```shell
         helm install \
             --create-namespace --namespace test \
@@ -84,9 +66,7 @@
             --values nginx.values.yaml \
             --atomic
         ```
-
-## Test
-1. access nginx service with ingress
+3. check connection
     + ```shell
       curl --header 'Host: my-nginx.local.com' http://localhost
       ```

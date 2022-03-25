@@ -14,17 +14,15 @@
 * test docker registry
 
 ## pre-requirements
-* [local.cluster.for.testing](../resources/local.cluster.for.testing.md)
+* [local.cluster.for.testing](../create.local.cluster.with.kind.md)
 * [ingress-nginx](ingress.nginx.md)
 * [cert-manager](cert.manager.md)
 
 ## Do it
-1. prepare [docker.registry.values.yaml](resources/docker.registry.values.yaml.md)
-2. prepare images
+1. prepare images
     * ```shell
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
       BASE_URL="https://resource.cnconti.cc/docker-images"
-      LOCAL_IMAGE="localhost:5000"
       for IMAGE in "docker.io/registry:2.7.1" \
           "docker.io/busybox:1.33.1-uclibc"
       do
@@ -36,11 +34,10 @@
                   || rm -rf ${IMAGE_FILE}
           fi
           docker image load -i ${LOCAL_IMAGE_FIEL} && rm -rf ${LOCAL_IMAGE_FIEL}
-          docker image inspect ${IMAGE} || docker pull ${IMAGE}
-          docker image tag ${IMAGE} ${LOCAL_IMAGE}/${IMAGE}
-          docker push ${LOCAL_IMAGE}/${IMAGE}
+          kind load docker-images ${IMAGE}
       done
       ```
+2. prepare [docker.registry.values.yaml](resources/docker.registry.values.yaml.md)
 3. install by helm
    * ```shell
      helm install \
@@ -62,7 +59,7 @@
 1. check with docker-registry
    * ```shell
       IMAGE=docker.io/busybox:1.33.1-uclibc \
-          && TARGET_IMAGE=docker-registry.local.com:32443/$IMAGE \
+          && TARGET_IMAGE=docker-registry.local.cnconti.cc:32443/$IMAGE \
           && docker tag $IMAGE $TARGET_IMAGE \
           && docker push $TARGET_IMAGE \
           && docker image rm $IMAGE \

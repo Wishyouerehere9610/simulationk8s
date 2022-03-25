@@ -19,7 +19,7 @@
 
 ## purpose
 
-* [create local cluster for testing](../resources/local.cluster.for.testing.md)
+* [create local cluster for testing](../create.local.cluster.with.kind.md)
 
 ## do it
 

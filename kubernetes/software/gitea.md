@@ -14,7 +14,7 @@
 * install gitea
 
 ## pre-requirements
-* [create local cluster for testing](../resources/local.cluster.for.testing.md)
+* [create local cluster for testing](../create.local.cluster.with.kind.md)
 * [ingress](../basic/ingress.nginx.md)
 * [cert-manager](../basic/cert.manager.md)
 

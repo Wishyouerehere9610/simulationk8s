@@ -1,7 +1,7 @@
 ## kubernetes
 
-* [download kubernetes binary tools](resources/download.kubernetes.binary.tools.md)
-* [local.cluster.for.testing](resources/local.cluster.for.testing.md)
+* [download kubernetes binary tools](download.kubernetes.binary.tools.md)
+* [create local cluster with kind](create.local.cluster.with.kind.md)
 * [basic-components](basic/README.md)
 * [software](software/README.md)
 * [storage](storage/README.md)

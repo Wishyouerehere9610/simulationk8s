@@ -19,4 +19,6 @@
     * [dashboard](dashboard.md)
     * [verdaccio](application/verdaccio)
     * [nexus](application/nexus)
+* monitor
+    * [kube-prometheus-stack](monitor/kube-prometheus-stack.md)
 * [haproxy](haproxy.md)
