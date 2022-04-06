@@ -69,3 +69,17 @@
           && dokcer rm ${DOCKER_TARGET_IMAGE}
   done
   ```
+  
+## docker-registry
+* ```shell
+  REGISTRY_NAME="docker-registry"
+  running="$(docker inspect -f '{{.State.Running}}' ${REGISTRY_NAME} 2>/dev/null || true)"
+  if [ "${running}" != 'true' ]; then
+      DOCKER_REGISTRY_IMAGE=registry:2.7.1
+      docker inspect $DOCKER_REGISTRY_IMAGE > /dev/null 2>&1 || docker pull $DOCKER_REGISTRY_IMAGE
+      docker run --restart=always \
+          -p "127.0.0.1:5000:5000" \
+          --name "${REGISTRY_NAME}" \
+          -d $DOCKER_REGISTRY_IMAGE
+  fi
+  ```
