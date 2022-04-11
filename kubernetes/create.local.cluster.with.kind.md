@@ -50,7 +50,9 @@
     * prepare [kind.cluster.yaml](resources/kind.cluster.yaml.md) as `/root/bin`
     * prepare [kind.with.registry.sh](resources/kind.with.registry.sh) as `/root/bin`
     * ```shell
-      bash /root/bin/kind.with.registry.sh /root/conf/kind.cluster.yaml  /root/bin/kind /root/bin/kubectl
+      bash /root/installation/kind/kind.with.registry.sh \
+          /root/installation/kind/kind.cluster.yaml \
+          /root/bin/kind /root/bin/kubectl
       ```
 4. test `kind-cluster`
     * ```shell

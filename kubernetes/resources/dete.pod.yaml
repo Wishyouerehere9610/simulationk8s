@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: conti-pod
+  labels:
+    kubernetes.io/cluster-service: "true"
+spec:
+  containers:
+    - name: conti-pod
+      image: busybox:1.33.1-uclibc
+      command:
+        - tail
+        - "-f"
+        - /etc/hosts
+      ports:
+        - containerPort: 80
+      livenessProbe:
+        exec:
+          command:
+          - ls
+          - /etc
+      readinessProbe:
+        exec:
+          command:
+          - ls
+          - /etc

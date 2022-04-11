@@ -39,7 +39,7 @@
       helm install \
           --create-namespace --namespace application \
           my-sshd \
-          https://resources.conti2021.icu/chart/sshd-0.2.1.tgz \
+          https://resource.cnconti.cc/chart/sshd-0.2.1.tgz \
           --values sshd.values.yaml \
           --atomic
       ```

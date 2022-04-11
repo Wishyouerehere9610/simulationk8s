@@ -1,6 +1,6 @@
 controller:
   image:
-    registry: localhost:5000/k8s.gcr.io
+    registry: k8s.gcr.io
     image: ingress-nginx/controller
     tag: "v1.0.3"
     digest: ""
@@ -14,7 +14,7 @@ controller:
   admissionWebhooks:
     patch:
       image:
-        registry: localhost:5000/k8s.gcr.io
+        registry: k8s.gcr.io
         image: ingress-nginx/kube-webhook-certgen
         tag: v1.0
         digest: ""
@@ -23,7 +23,7 @@ defaultBackend:
   enabled: false
   name: defaultbackend
   image:
-    registry: localhost:5000/k8s.gcr.ios
+    registry: k8s.gcr.ios
     image: defaultbackend-amd64
     tag: "1.5"
     pullPolicy: IfNotPresent

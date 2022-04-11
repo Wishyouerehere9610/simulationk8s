@@ -28,15 +28,16 @@
           "docker.io/bitnami/nginx:1.21.3-debian-10-r29" \
           "k8s.gcr.io/defaultbackend-amd64:1.5"
       do
-          IMAGE_FILE=$(echo ${IMAGE} | sed "s/\//_/g" | sed "s/\:/_/g").dim
-          LOCAL_IMAGE_FIEL=${DOCKER_IMAGE_PATH}/${IMAGE_FILE}
-          if [ ! -f ${LOCAL_IMAGE_FIEL} ]; then
-              curl -o ${IMAGE_FILE} -L ${BASE_URL}/${IMAGE_FILE} \
-                  && mv ${IMAGE_FILE} ${LOCAL_IMAGE_FIEL} \
+          IMAGE_NAME=$(echo ${IMAGE} | sed "s/\//_/g" | sed "s/\:/_/g").dim
+          IMAGE_FILE=${DOCKER_IMAGE_PATH}/${IMAGE_NAME}
+          if [ ! -f ${IMAGE_FILE} ]; then
+              TMP_FILE=${IMAGE_NAME}.tmp
+              curl -o "${TMP_FILE}" -L ${BASE_URL}/${IMAGE_NAME} \
+                  && mv ${TMP_FILE} ${IMAGE_FILE} \
                   || rm -rf ${IMAGE_FILE}
           fi
-          docker image load -i ${LOCAL_IMAGE_FIEL} && rm -rf ${LOCAL_IMAGE_FIEL}
-          kind load docker-images ${IMAGE}
+          docker image load -i ${IMAGE_FILE} && rm -rf ${IMAGE_FILE}
+          kind load docker-image ${IMAGE}
       done
       ```
 2. prepare [ingress.nginx.values.yaml](resources/ingress.nginx.values.yaml.md)

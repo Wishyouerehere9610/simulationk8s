@@ -30,20 +30,58 @@
   curl --cacert ${CACERT} --header "Authorization: Bearer ${TOKEN}" -X GET ${APISERVER}/api
   ```
 
+### 预准备(仓库无image)
+* ```shell
+   for IMAGE in "docker.elastic.co/elasticsearch/elasticsearch:7.17.1" \
+       "docker.elastic.co/elasticsearch/elasticsearch:7.17.0"
+   do
+       docker pull ${IMAGE} \
+           && docker inspect ${IMAGE} 2>&1 \
+           && echo "success"
+   done
+   ```
+
 ### 制作在线镜像
 * ```shell
-  for IMAGE in "docker.io/busybox:1.33.1-uclibc" \
-      "docker.io/bitnami/bitnami-shell:10-debian-10-r198"
+  DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
+  for IMAGE in "docker.io/busybox:1.33.1-uclibc"
   do
-      IMAGE_FILE=$(echo ${IMAGE} | sed "s/\//_/g" | sed "s/\:/_/g").dim
-      LOCAL_IMAGE_FIEL=/tmp/${IMAGE_FILE}
-      docker inspect ${IMAGE} 2>&1 > /dev/null \
-          && (docker save -o ${LOCAL_IMAGE_FIEL} ${IMAGE}) \
-          || (docker pull ${IMAGE} && docker save -o ${LOCAL_IMAGE_FIEL} ${IMAGE})
-      ossutil64 cp -rf ${LOCAL_IMAGE_FIEL} oss://aconti/docker-images/ \
-          && rm -rf ${LOCAL_IMAGE_FIEL}
+      IMAGE_NAME=$(echo ${IMAGE} | sed "s/\//_/g" | sed "s/\:/_/g").dim
+      IMAGE_FILE=${DOCKER_IMAGE_PATH}/${IMAGE_NAME}
+      if [ ! -f ${IMAGE_FILE} ]; then
+          TMP_FILE=${IMAGE_NAME}.tmp
+          docker inspect ${IMAGE} 2>&1 > /dev/null \
+              && (docker save -o ${IMAGE_FILE} ${IMAGE} ) \
+              || (docker pull ${IMAGE} \
+                  && docker save -o ${IMAGE_FILE} ${IMAGE} )
+      fi
+      chmod 644 ${IMAGE_FILE}
+      POD_NAME=$(kubectl -n application get pod \
+          -l "app.kubernetes.io/instance=my-resource-nginx" \
+          -o jsonpath="{.items[0].metadata.name}") \
+          && kubectl cp ${IMAGE_FILE} \
+             application/${POD_NAME}:/data/docker-images/${IMAGE_NAME} \
+             -c busybox
+      rm -rf ${IMAGE_FILE}
   done
   ```
+* ```shell
+  kubectl -n application exec -ti $(kubectl -n application get pod \
+      -l "app.kubernetes.io/instance=my-resource-nginx" \
+      -o jsonpath="{.items[0].metadata.name}" ) \
+      -c busybox -- sh
+  ```
+
+### Chart上传
+* ```shell
+  FILE="binary/"
+  POD_NAME=$(kubectl -n application get pod \
+    -l "app.kubernetes.io/instance=my-resource-nginx" \
+    -o jsonpath="{.items[0].metadata.name}") \
+    && kubectl cp ${FILE} \
+       application/${POD_NAME}:/data/${FILE} \
+       -c busybox
+    ```
 
 ### patch
 * pass
