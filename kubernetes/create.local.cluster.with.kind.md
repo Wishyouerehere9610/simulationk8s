@@ -48,7 +48,7 @@
       ```
 3. install `kind-cluster`
     * prepare [kind.cluster.yaml](resources/kind.cluster.yaml.md) as `/root/bin`
-    * prepare [kind.with.registry.sh](resources/kind.with.registry.sh) as `/root/bin`
+    * prepare [kind.with.registry.sh](resources/kind.with.registry.sh.md) as `/root/bin`
     * ```shell
       bash /root/installation/kind/kind.with.registry.sh \
           /root/installation/kind/kind.cluster.yaml \
