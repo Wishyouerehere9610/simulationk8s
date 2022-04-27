@@ -10,9 +10,6 @@
 ## Shortcut tool
 * [commands](commands.md)
 * [language](language/README.md)
-* TODO: [算法](/README.md)
-* TODO: [pass](/README.md)
-* TODO: [pass](/README.md)
 
 
 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
