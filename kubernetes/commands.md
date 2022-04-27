@@ -65,23 +65,25 @@
       rm -rf ${IMAGE_FILE}
   done
   ```
+
+
+### Chart上传
 * ```shell
   kubectl -n application exec -ti $(kubectl -n application get pod \
       -l "app.kubernetes.io/instance=my-resource-nginx" \
       -o jsonpath="{.items[0].metadata.name}" ) \
       -c busybox -- sh
   ```
-
-### Chart上传
 * ```shell
-  FILE="binary/"
   POD_NAME=$(kubectl -n application get pod \
-    -l "app.kubernetes.io/instance=my-resource-nginx" \
-    -o jsonpath="{.items[0].metadata.name}") \
-    && kubectl cp ${FILE} \
-       application/${POD_NAME}:/data/${FILE} \
-       -c busybox
-    ```
+      -l "app.kubernetes.io/instance=my-resource-nginx" \
+      -o jsonpath="{.items[0].metadata.name}")
+  # 仅上传到/conti目录下
+  for FILE in "binary"
+  do
+      kubectl cp ${FILE} application/${POD_NAME}:/conti/${FILE} -c busybox
+  done 
+  ```
 
 ### patch
 * pass
