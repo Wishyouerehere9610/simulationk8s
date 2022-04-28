@@ -7,7 +7,7 @@ service:
     type: ClusterIP
   ssh:
     type: NodePort
-    port: 22
+    port: 1022
     nodePort: 32022
 ingress:
   enabled: true

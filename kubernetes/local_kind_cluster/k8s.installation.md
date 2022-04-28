@@ -1,4 +1,4 @@
-# local kind single
+# local kind cluster
 
 ## main usage
 
@@ -24,7 +24,7 @@
 
 ## install
 1. configure repositories
-    * emove all repo configuration
+    * remove all repo configuration
       * ```shell
         rm -rf /etc/yum.repos.d/*
         ```
@@ -41,10 +41,23 @@
           && systemctl enable docker \
           && systemctl start docker
       ```
-4. prepare kind images
+4. configure `daemon.json`
+    * ```shell
+      mkdir -p /etc/docker
+      tee /etc/docker/daemon.json <<-'EOF'
+      {
+        "insecure-registries": ["insecure.docker.registry.local:80"],
+        "registry-mirrors": ["https://sp6dejha.mirror.aliyuncs.com"]
+      }
+      EOF
+      systemctl daemon-reload
+      systemctl restart docker
+      ```
+5. prepare kind images
     * ```shell
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
       BASE_URL="https://resource.cnconti.cc/docker-images"
+      # BASE_URL="https://resource-ops-test.lab.zjvis.net:32443/docker-images"
       for IMAGE in "docker.io/kindest/node:v1.22.1" \
           "docker.io/registry:2"
       do
@@ -55,18 +68,18 @@
                   && (mv ${IMAGE_FILE} ${LOCAL_IMAGE_FIEL}) 
           fi
           docker image load -i ${LOCAL_IMAGE_FIEL} \
-              && ( echo "Successfully loaded ${IMAGE}" && rm -rf ${LOCAL_IMAGE_FIEL} ) \
-              || ( echo "Failed Load ${IMAGE} , Please check the URL }" && rm -rf ${LOCAL_IMAGE_FIEL} ) 
+              && ( echo "Successfully loaded ${IMAGE}" && rm -f ${LOCAL_IMAGE_FIEL} ) \
+              || ( echo "Failed Load ${IMAGE} , Please check the URL }" && rm -f ${LOCAL_IMAGE_FIEL} ) 
       done
       ```
-5. install `kind-cluster`
+6. install `kind-cluster`
     * prepare [kind.cluster.yaml](resources/kind.cluster.yaml.md) as file `/tmp/kind.cluster.yaml`
     * prepare [kind.with.registry.sh](resources/kind.with.registry.sh.md) as file `/tmp/kind.with.registry.sh`
     * ```shell
       bash /tmp/kind.with.registry.sh /tmp/kind.cluster.yaml \
           /root/bin/kind /root/bin/kubectl
       ```
-6. test `kind-cluster`
+7. test `kind-cluster`
     * ```shell
       kubectl -n kube-system wait --for=condition=ready pod --all \
           && kubectl get pod --all-namespaces

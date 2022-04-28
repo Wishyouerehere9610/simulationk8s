@@ -9,12 +9,11 @@
 <br/><br/>
 
 ### K8s-clusetr
-* [local_kind_single](local_kind_single/README.md)
-* [local_kind_cluster](local_kind_cluster/README.md)
 * [local_cluster](local_cluster/README.md)
+* [local_kind_cluster](local_kind_cluster/README.md)
+
 
 ### other
-
 * [K8s的taints机制]()
 * [commands](commands.md)
 * [local-cluster](local_cluster/README.md)

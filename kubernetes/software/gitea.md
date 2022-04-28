@@ -22,35 +22,42 @@
 1. prepare [gitea.values.yaml](resources/gitea.values.yaml.md)
 2. prepare images
     * ```shell
-      DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
-      BASE_URL="https://resource.cnconti.cc/docker-images"
-      LOCAL_IMAGE="localhost:5000"
-      for IMAGE in "docker.io/gitea/gitea:1.15.3" \
-          "docker.io/bitnami/memcached:1.6.9-debian-10-r114" \
-          "docker.io/bitnami/memcached-exporter:0.8.0-debian-10-r105" \
-          "docker.io/bitnami/postgresql:11.11.0-debian-10-r62" \
-          "docker.io/bitnami/bitnami-shell:10" \
-          "docker.io/bitnami/postgres-exporter:0.9.0-debian-10-r34" 
+      DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p $DOCKER_IMAGE_PATH
+      BASE_URL="https://resource.static.zjvis.net/docker-images"
+      for IMAGE in "gitea_gitea_1.16.6.dim" \
+          "docker.io_bitnami_mariadb_10.5.12-debian-10-r0.dim" \
+          "docker.io_bitnami_bitnami-shell_10-debian-10-r153.dim" \
+          "docker.io_bitnami_mysqld-exporter_0.13.0-debian-10-r56.dim" \
+          "docker.io_bitnami_phpmyadmin_5.1.1-debian-10-r147.dim" \
+          "docker.io_bitnami_apache-exporter_0.10.1-debian-10-r54.dim"
       do
-          IMAGE_FILE=$(echo ${IMAGE} | sed "s/\//_/g" | sed "s/\:/_/g").dim
-          LOCAL_IMAGE_FIEL=${DOCKER_IMAGE_PATH}/${IMAGE_FILE}
-          if [ ! -f ${LOCAL_IMAGE_FIEL} ]; then
-              curl -o ${IMAGE_FILE} -L ${BASE_URL}/${IMAGE_FILE} \
-                  && mv ${IMAGE_FILE} ${LOCAL_IMAGE_FIEL} \
-                  || rm -rf ${IMAGE_FILE}
+          IMAGE_FILE=$DOCKER_IMAGE_PATH/$IMAGE
+          if [ ! -f $IMAGE_FILE ]; then
+              TMP_FILE=$IMAGE_FILE.tmp \
+                  && curl -o "$TMP_FILE" -L "$BASE_URL/$IMAGE" \
+                  && mv $TMP_FILE $IMAGE_FILE
           fi
-          docker image load -i ${LOCAL_IMAGE_FIEL} && rm -rf ${LOCAL_IMAGE_FIEL}
-          docker image inspect ${IMAGE} || docker pull ${IMAGE}
-          docker image tag ${IMAGE} ${LOCAL_IMAGE}/${IMAGE}
-          docker push ${LOCAL_IMAGE}/${IMAGE}
+          docker image load -i $IMAGE_FILE && rm -f $IMAGE_FILE
+      done
+      DOCKER_REGISTRY="insecure.docker.registry.local:80"
+      for IMAGE in "gitea/gitea:1.16.6"
+          "docker.io/bitnami/mariadb:10.5.12-debian-10-r0" \
+          "docker.io/bitnami/bitnami-shell:10-debian-10-r153" \
+          "docker.io/bitnami/mysqld-exporter:0.13.0-debian-10-r56" \
+          "docker.io/bitnami/phpmyadmin:5.1.1-debian-10-r147" \
+          "docker.io/bitnami/apache-exporter:0.10.1-debian-10-r54"
+      do
+          DOCKER_TARGET_IMAGE=$DOCKER_REGISTRY/$IMAGE
+          docker tag $IMAGE $DOCKER_TARGET_IMAGE \
+              && docker push $DOCKER_TARGET_IMAGE \
+              && docker image rm $DOCKER_TARGET_IMAGE
       done
       ```
 3. create `gitea-admin-secret`
     * ```shell
       # uses the "Array" declaration
       # referencing the variable again with as $PASSWORD an index array is the same as ${PASSWORD[0]}
-      kubectl get namespace application \
-          || kubectl create namespace application
+      kubectl get namespace application || kubectl create namespace application
       PASSWORD=($((echo -n $RANDOM | md5sum 2>/dev/null) || (echo -n $RANDOM | md5 2>/dev/null)))
       # NOTE: username should have at least 6 characters
       kubectl -n application \
@@ -69,23 +76,40 @@
       ```
 
 ## Test
-* visit `gitea.local.com`
-    * port-forward
-        + ```shell
-          kubectl --namespace application port-forward svc/my-gitea-http 3000:3000 --address 0.0.0.0
-          ```
-    * visit http://$HOST:3000
-    * password
-        + ```shell
-          kubectl get secret gitea-admin-secret -n gitea -o jsonpath={.data.password} | base64 --decode && echo
-          ```
+1. check connection
+    * ```shell
+      curl --insecure --header 'Host: gitea.local.com' https://localhost
+      ```
+2. visit gitea via website
+    * visit `https://gitea.local.com` with your browser
+    * with your browser
+      + ```shell
+        kubectl -n application get secret gitea-admin-secret -o jsonpath="{.data.username}" | base64 --decode && echo
+        kubectl -n application get secret gitea-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo
+        ```
+    * login as admin user
+    * create repository named `test-repo`
+    * add ssh public key(step omit)
+3. visit gitea via ssh
+    + ```shell
+      git config --global user.email "youemail@example.com"
+      git config --global user.name "Your Name"
+      
+      touch README.md
+      git init
+      git checkout -b main
+      git add README.md
+      git commit -m "first commit"
+      git remote add origin ssh://git@gitea.local.com:1022/gitea_admin/test-repo.git
+      git push -u origin main
+      ```
+4. test email feature by creating a user and sending notification email to the user
+5. visit `https://gitea.local.com`
 
-* visit gitea from SSH
-    * port-forward
-        + ```shell
-          kubectl --namespace application port-forward svc/my-gitea-ssh 1022:22 --address 0.0.0.0
-          ```
-    + 测试ssh链接是否正常
-        * ```shell
-          git clone ssh://git@gitea.local.com:1022/gitea_admin/test-repo.git
-          ```
+### uninstall
+1. uninstall `gitea`
+    * ```shell
+      helm -n application uninstall my-gitea \
+          && kubectl -n application delete pvc data-my-gitea-0 data-my-gitea-postgresql-0 \
+          && kubectl -n application delete secret gitea-admin-secret
+      ```
