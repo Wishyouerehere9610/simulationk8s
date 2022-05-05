@@ -1,11 +1,11 @@
 #  local
 
 * roles
-    + master: TH51-10.0.0.128
-    + worker1: TH52-10.0.0.129
-    + worker2: TH53-10.0.0.130
-    + worker3: TH54-10.0.0.131
-* TODO: [k8s installation](README.md)
+    + master: z51-192.168.31.51
+    + worker1: z52-192.168.31.52
+    + worker2: z53-192.168.31.53
+    + worker3: z54-192.168.31.54
+* [k8s installation](k8s.installation.md)
 * basic-components
     + [ingress-nginx](basic/ingress-nginx.md)
     + [cert-manager](basic/cert-manager.md)

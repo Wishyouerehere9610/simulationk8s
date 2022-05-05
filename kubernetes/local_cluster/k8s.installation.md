@@ -2,11 +2,11 @@
 
 ### prepare
 
-1. 6 nodes with centos stream 8
-   + master: TH51-10.0.0.128
-   + worker1: TH52-10.0.0.129
-   + worker2: TH53-10.0.0.130
-   + worker3: TH54-10.0.0.131
+1. 4 nodes with centos stream 8
+   + master: z51-192.168.31.51
+   + worker1: z52-192.168.31.52
+   + worker2: z53-192.168.31.53
+   + worker3: z54-192.168.31.54
 2. change hostname
     * ```shell
       for HOST in "TH51" \
