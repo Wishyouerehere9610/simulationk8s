@@ -8,7 +8,7 @@
 * [kubernetes](kubernetes/README.md)
 
 ## Shortcut tool
-* [commands](commands.md)
+* [commands](commands/README.md)
 * [language](language/README.md)
 
 

@@ -83,3 +83,9 @@
           -d $DOCKER_REGISTRY_IMAGE
   fi
   ```
+* docker-registry API
+  * ```shell
+    GET /v2/_catalog # 列出所有存储库
+    GET /V2/image/tags/list  # 列出所有image所有tag
+    ?n=<inter> # 指定个数
+    ```

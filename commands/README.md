@@ -1,16 +1,21 @@
 ## commands
 
-* [shell](/linux/resource/commands.md)
-* [database](database/resources/README.md)
-* [docker](/docker/resources/commands.md)
+### basic
+
+* [shell](/linux/commands.md)
+* [docker](/docker/commands.md)
 * [kubernetes](/kubernetes/commands.md)
-* [java](/language/java/commands.md)
+* [java](/language/commands.md)
 * [python](/language/python/commands.md)
+* [golang](/language/golang/commands.md)
 
-<br/><br/>
+### database
+* [mysql](/database/mysql/commands.md)
+* [redis](/database/redis/commands.md)
 
-#### Other
-  * [vim](vim.md)
-  * [git](git.md)
-  * [command](resource/linux.shell.md)
+### other
+* [VIM](vim.md)
+* [Git](git.md)
+
+
   
