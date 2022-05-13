@@ -4,6 +4,7 @@
 2. prepare images
     * ```shell
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p $DOCKER_IMAGE_PATH
+      # BASE_URL="https://resource-ops-test.lab.zjvis.net:32443/docker-images"
       BASE_URL="https://resource.cnconti.cc/docker-images"
       for IMAGE in "quay.io_jetstack_cert-manager-controller_v1.5.4.dim" \
           "quay.io_jetstack_cert-manager-webhook_v1.5.4.dim" \

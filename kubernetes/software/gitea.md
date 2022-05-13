@@ -14,11 +14,12 @@
 * install gitea
 
 ## pre-requirements
-* [create local cluster for testing](../create.local.cluster.with.kind.md)
-* [ingress](../basic/ingress.nginx.md)
-* [cert-manager](../basic/cert.manager.md)
+* [init_kind_cluster](/kubernetes/local_kind_cluster/README.md)
+* basic-components
+  * [ingress](../basic/ingress.nginx.md)
+  * [cert-manager](../basic/cert.manager.md)
 
-## Do it
+## do it
 1. prepare [gitea.values.yaml](resources/gitea.values.yaml.md)
 2. prepare images
     * ```shell

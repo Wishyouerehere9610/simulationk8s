@@ -74,17 +74,21 @@
       ```
 6. install `kind-cluster`
     * prepare [kind.cluster.yaml](resources/kind.cluster.yaml.md) as file `/tmp/kind.cluster.yaml`
+      * changing `networking.apiServerAddress` 
     * prepare [kind.with.registry.sh](resources/kind.with.registry.sh.md) as file `/tmp/kind.with.registry.sh`
     * ```shell
       bash /tmp/kind.with.registry.sh /tmp/kind.cluster.yaml \
           /root/bin/kind /root/bin/kubectl
       ```
-7. test `kind-cluster`
+7. check cluster `kind-cluster`
     * ```shell
       kubectl -n kube-system wait --for=condition=ready pod --all \
           && kubectl get pod --all-namespaces
       ```
-
+8. challenge kind `/etc/host`
+    * ```shell
+      docker exec kind-control-plane bash -c 'echo 172.17.0.1 insecure.docker.registry.local >> /etc/hosts'
+      ```
 ## unisntall 
 * ```shell
   kind delete clusters kind

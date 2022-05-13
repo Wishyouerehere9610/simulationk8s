@@ -12,59 +12,84 @@
 * none
 
 ## pre-requirements
-* [create local cluster for testing](../create.local.cluster.with.kind.md)
-* [ingress](../basic/ingress.nginx.md)
+* [create.local.cluster.with.kind](/kubernetes/create.local.cluster.with.kind.md)
+* [ingress-nginx](../basic/ingress.nginx.md)
 * [cert-manager](../basic/cert.manager.md)
+* [docker-registry](../basic/docker.registry.md)
 
-## Do it
-
-1. prepare [verdaccio.values.yaml](resources/verdaccio.values.yaml.md)
+## do it
+1. prepare [resource.nginx.values.yaml](resources/resource.nginx.values.yaml.md)
 2. prepare images
     * ```shell  
-      DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
+      DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p $DOCKER_IMAGE_PATH
+      # BASE_URL="https://resource-ops-test.lab.zjvis.net:32443/docker-images"
       BASE_URL="https://resource.cnconti.cc/docker-images"
-      LOCAL_IMAGE="localhost:5000"
-      for IMAGE in "docker.io/verdaccio/verdaccio:5.2.0" 
+      for IMAGE in "docker.io_bitnami_nginx_1.21.3-debian-10-r29.dim" \
+          "docker.io_busybox_1.33.1-uclibc.dim"
       do
-          IMAGE_FILE=$(echo ${IMAGE} | sed "s/\//_/g" | sed "s/\:/_/g").dim
-          LOCAL_IMAGE_FIEL=${DOCKER_IMAGE_PATH}/${IMAGE_FILE}
-          if [ ! -f ${LOCAL_IMAGE_FIEL} ]; then
-              curl -o ${IMAGE_FILE} -L ${BASE_URL}/${IMAGE_FILE} \
-                  && mv ${IMAGE_FILE} ${LOCAL_IMAGE_FIEL} \
-                  || rm -rf ${IMAGE_FILE}
+          IMAGE_FILE=$DOCKER_IMAGE_PATH/$IMAGE
+          if [ ! -f $IMAGE_FILE ]; then
+              TMP_FILE=$IMAGE_FILE.tmp \
+                  && curl -o "$TMP_FILE" -L "$BASE_URL/$IMAGE" \
+                  && mv $TMP_FILE $IMAGE_FILE
           fi
-          docker image load -i ${LOCAL_IMAGE_FIEL} && rm -rf ${LOCAL_IMAGE_FIEL}
-          docker image inspect ${IMAGE} || docker pull ${IMAGE}
-          docker image tag ${IMAGE} ${LOCAL_IMAGE}/${IMAGE}
-          docker push ${LOCAL_IMAGE}/${IMAGE}
+          docker image load -i $IMAGE_FILE && rm -f $IMAGE_FILE
+      done
+      DOCKER_REGISTRY="insecure.docker.registry.local:80"
+      for IMAGE in "docker.io/bitnami/nginx:1.21.3-debian-10-r29" \
+          "docker.io/busybox:1.33.1-uclibc"
+      do
+          DOCKER_TARGET_IMAGE=$DOCKER_REGISTRY/$IMAGE
+          docker tag $IMAGE $DOCKER_TARGET_IMAGE \
+              && docker push $DOCKER_TARGET_IMAGE \
+              && docker image rm $DOCKER_TARGET_IMAGE
       done
       ```
-3. install by helm
+3. create namespace `application` if not exists
+    * ```shell
+      kubectl get namespace application || kubectl create namespace application
+      ```
+4. create `resource-nginx-pvc`
+    * prepare [resource.nginx.pvc.yaml](resources/resource.nginx.pvc.yaml.md)
+    * ```shell
+      kubectl -n application apply -f resource.nginx.pvc.yaml
+      ```
+5. install by helm
     * ```shell
       helm install \
           --create-namespace --namespace application \
-          my-verdaccio \
-          https://resource.cnconti.cc/charts/verdaccio-4.6.2.tgz \
-          --values verdaccio.values.yaml \
+          my-resource-nginx \
+          https://resource.cnconti.cc/charts/charts.bitnami.com/bitnami/nginx-9.5.7.tgz \
+          --values resource.nginx.values.yaml \
           --atomic
       ```
 
 ## test
 1. check connection
     * ```shell
-      curl --insecure --header 'Host: npm.local.com' https://localhost
+      echo '127.0.0.1 resource.local' >> /etc/hosts \
+          && curl --insecure --header 'Host: resource.local' https://localhost
       ```
-2. visit gitea via website
-    * visit `https://npm.local.com`
-    * ```shell
-      kubectl -n application get secret gitea-admin-secret -o jsonpath="{.data.username}" | base64 --decode && echo
-      kubectl -n application get secret gitea-admin-secret -o jsonpath="{.data.password}" | base64 --decode && echo
-      ```
+2. test resource
+   * add reource
+     * ```shell
+       kubectl -n application exec -it deployment/my-resource-nginx -c busybox -- sh -c \
+           "echo this is a resource > /data/file-created-by-busybox"
+       ```
+   * check resource by `curl`
+     * ```shell
+       curl --insecure --header 'Host: resource.local' https://localhost/file-created-by-busybox
+       ```
 
 ## uninstall
-* ```shell
-  helm -n application uninstall my-verdaccio
-  ```
+1. uninstall `resource-nginx`
+    * ```shell
+      helm -n application uninstall resource-nginx
+      ```
+2. delete pvc `resource-nginx-pvc`
+    * ```shell
+      kubectl -n application delete pvc resource-nginx-pvc
+      ```
 
 
 

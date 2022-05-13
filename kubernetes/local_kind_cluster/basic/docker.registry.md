@@ -4,6 +4,7 @@
 2. prepare images
     * ```shell
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p $DOCKER_IMAGE_PATH
+      # BASE_URL="https://resource-ops-test.lab.zjvis.net:32443/docker-images"
       BASE_URL="https://resource.cnconti.cc/docker-images"
       for IMAGE in "docker.io_registry_2.7.1.dim" \
           "docker.io_busybox_1.33.1-uclibc.dim"
@@ -45,7 +46,7 @@
 5. check with every node
     * ```shell
       IMAGE=docker.io/busybox:1.33.1-uclibc \
-          && TARGET_IMAGE=docker-registry-ops-test.lab.zjvis.net:32443/$IMAGE \
+          && TARGET_IMAGE=insecure.docker.registry.local:80/$IMAGE \
           && docker tag $IMAGE $TARGET_IMAGE \
           && docker push $TARGET_IMAGE \
           && docker image rm $IMAGE \

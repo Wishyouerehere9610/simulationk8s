@@ -1,5 +1,5 @@
 image:
-  repository: localhost:5000/docker.io/verdaccio/verdaccio
+  repository: insecure.docker.registry.local:80/docker.io/verdaccio/verdaccio
   tag: 5.2.0
   pullPolicy: IfNotPresent
   pullSecrets: [ ]
@@ -20,13 +20,13 @@ ingress:
   paths:
     - /
   hosts:
-    - verdaccio.local.com
+    - verdaccio.local
   annotations:
-    cert-manager.io/cluster-issuer: self-signed-issuer
+    cert-manager.io/cluster-issuer: self-signed-clusterissuer
   tls:
-    - secretName: verdaccio.local.com-tls
+    - secretName: verdaccio.local-tls
       hosts:
-        - verdaccio.local.com
+        - verdaccio.local
 serviceAccount:
   create: false
 configMap: |
@@ -40,7 +40,7 @@ configMap: |
       max_users: -1
   uplinks:
     npm-taobao:
-      url: https://registry.npm.taobao.org/
+      url: https://registry.npmmirror.com/
       agent_options:
         keepAlive: true
         maxSockets: 40

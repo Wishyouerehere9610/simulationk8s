@@ -14,5 +14,5 @@
 
 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
-<p align="center">A positive attitude will have positive results,because attitudes are contagious</p>
-<p align="center"><a href="https://beian.miit.gov.cn">冀ICP备2021028814号</a></p>
+<p style="text-align: center">A positive attitude will have positive results,because attitudes are contagious</p>
+<p style="text-align: center" ><a href="https://beian.miit.gov.cn">冀ICP备2021028814号</a></p>

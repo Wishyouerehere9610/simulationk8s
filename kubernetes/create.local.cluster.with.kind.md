@@ -32,6 +32,7 @@
 2. prepare images
     * ```shell
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
+      # BASE_URL="https://resource-ops-test.lab.zjvis.net:32443/docker-images"
       BASE_URL="https://resource.cnconti.cc/docker-images"
       for IMAGE in "docker.io/kindest/node:v1.22.1" \
           "docker.io/registry:2"
@@ -43,19 +44,24 @@
                   && mv ${IMAGE_FILE} ${LOCAL_IMAGE_FIEL} \
                   || rm -rf ${IMAGE_FILE}
           fi
-          docker image load -i ${LOCAL_IMAGE_FIEL} && rm -rf ${LOCAL_IMAGE_FIEL} 
+          docker image load -i ${LOCAL_IMAGE_FIEL} && rm -f ${LOCAL_IMAGE_FIEL} 
       done
       ```
 3. install `kind-cluster`
-    * prepare [kind.cluster.yaml](resources/kind.cluster.yaml.md) as `/root/bin`
-    * prepare [kind.with.registry.sh](resources/kind.with.registry.sh.md) as `/root/bin`
+    * prepare [kind.cluster.yaml](resources/kind.cluster.yaml.md) as `/tmp/kind.cluster.yaml`
+    * prepare [kind.with.registry.sh](resources/kind.with.registry.sh.md) as `/tmp/kind.with.registry.sh`
     * ```shell
-      bash /root/installation/kind/kind.with.registry.sh \
-          /root/installation/kind/kind.cluster.yaml \
+      bash /tmp/kind.with.registry.sh /tmp/kind.cluster.yaml \
           /root/bin/kind /root/bin/kubectl
       ```
-4. test `kind-cluster`
+4. check `kind-cluster`
     * ```shell
       kubectl -n kube-system wait --for=condition=ready pod --all \
           && kubectl get pod --all-namespaces
+      ```
+      
+### uninstall
+1. uninstall `kind`
+    * ```shell
+      kind delete clusters kind
       ```

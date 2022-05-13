@@ -26,7 +26,8 @@ spec:
                 name: my-docker-registry
                 port:
                   number: 5000
-  tls:
-    - hosts:
-        - insecure.docker.registry.local
-      secretName: insecure.docker.registry.local-tls
+  # test nedd http !!!
+  # tls:
+  #   - hosts:
+  #       - insecure.docker.registry.local
+  #     secretName: insecure.docker.registry.local-tls

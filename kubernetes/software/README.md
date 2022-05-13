@@ -1,16 +1,18 @@
 ## software
 
 ### deploy
-* [gitea](gitea.md)
-* [haproxy](haproxy.md)
-* [sshd](sshd.md)
-* [jupyterhub](jupyterhub.md)
-* [docsify](docsify.md)
 * [resources-nginx](resources-nginx.md)
+* [docsify](docsify.md)
 * [verdaccio](verdaccio.md)
 * [nexus](nexus.md)
-* [jenkins](jenkinsd.md)
+* [chart-museum](chart-museum.md)
 * [tekton](tekton.md)
+* TODO: [gitea](gitea.md)
+* TODO: [haproxy](haproxy.md)
+* TODO: [sshd](sshd.md)
+* TODO: [jupyterhub](jupyterhub.md)
+
+
 
 
 ### docs
