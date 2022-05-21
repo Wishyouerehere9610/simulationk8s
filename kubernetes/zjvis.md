@@ -16,6 +16,7 @@
 ## chart-museum
 * ops: https://chartmuseum-ops.lab.zjvis.net:32443/api/charts
 * ops-test: https://chartmuseum-ops-test.lab.zjvis.net:32443/api/charts
+* 
 
 ## mariadb
 * username: `root`
@@ -72,3 +73,5 @@
     kubectl -n monitor get secret my-kube-prometheus-stack-grafana \
         -o jsonpath="{.data.admin-password}" | base64 --decode && echo
     ```
+  
+Copy to clipboard
