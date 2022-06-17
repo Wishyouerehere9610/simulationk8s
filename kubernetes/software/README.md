@@ -11,6 +11,7 @@
 * TODO: [haproxy](haproxy.md)
 * TODO: [sshd](sshd.md)
 * TODO: [jupyterhub](jupyterhub.md)
+* [pypiserver](pypiserver.md)
 
 
 

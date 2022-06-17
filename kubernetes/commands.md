@@ -27,7 +27,7 @@
   do
       scp ${IMAGE} root@${TARGET_HOST}:/tmp/${IMAGE}
   done
-```
+  ```
   
 ### image upload
 * ```shell
@@ -44,12 +44,21 @@
   done 
   ```
   
-### chart upload
+### File upload
 * ```shell
-  kubectl -n application exec -ti deployment/my-resource-nginx -c busybox -- sh 
-      && cd /data
+  kubectl -n application exec -ti deployment/my-resource-nginx \
+      -c busybox -- sh -c "cd /conti && sh"
   ```
-
+* ```shell
+  POD_NAME=$(kubectl -n application get pod \
+      -l "app.kubernetes.io/instance=my-resource-nginx" \
+      -o jsonpath="{.items[0].metadata.name}")
+  for FILE in "main_path.png"
+  do
+      kubectl cp ${FILE} application/${POD_NAME}:/conti/${FILE} -c busybox
+      echo "${FILE} upload done"
+  done 
+  ```
 ### patch
 * ```shell
   kubectl patch -n application svc my-redis-cluster \ 
