@@ -61,15 +61,13 @@
       for IMAGE in "docker.io/kindest/node:v1.22.1" \
           "docker.io/registry:2"
       do
-          IMAGE_FILE=$(echo ${IMAGE} | sed "s/\//_/g" | sed "s/\:/_/g").dim
-          LOCAL_IMAGE_FIEL=${DOCKER_IMAGE_PATH}/${IMAGE_FILE}
-          if [ ! -f ${LOCAL_IMAGE_FIEL} ]; then
-              curl -o ${IMAGE_FILE} -L ${BASE_URL}/${IMAGE_FILE} \
-                  && (mv ${IMAGE_FILE} ${LOCAL_IMAGE_FIEL}) 
+          IMAGE_FILE=$DOCKER_IMAGE_PATH/$IMAGE
+          if [ ! -f $IMAGE_FILE ]; then
+              TMP_FILE=$IMAGE_FILE.tmp \
+                  && curl -o "$TMP_FILE" -L "$BASE_URL/$IMAGE" \
+                  && mv $TMP_FILE $IMAGE_FILE
           fi
-          docker image load -i ${LOCAL_IMAGE_FIEL} \
-              && ( echo "Successfully loaded ${IMAGE}" && rm -f ${LOCAL_IMAGE_FIEL} ) \
-              || ( echo "Failed Load ${IMAGE} , Please check the URL }" && rm -f ${LOCAL_IMAGE_FIEL} ) 
+          docker image load -i $IMAGE_FILE && rm -f $IMAGE_FILE
       done
       ```
 6. install `kind-cluster`
@@ -87,9 +85,11 @@
       ```
 8. challenge kind `/etc/host`
     * ```shell
-      docker exec kind-control-plane bash -c 'echo 172.17.0.1 insecure.docker.registry.local >> /etc/hosts'
+      docker exec kind-control-plane bash -c \
+          'echo 172.17.0.1 insecure.docker.registry.local >> /etc/hosts'
       ```
-## unisntall 
+
+## uninstallation
 * ```shell
   kind delete clusters kind
   ```

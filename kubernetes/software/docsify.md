@@ -14,78 +14,72 @@
 * 搭建nginx进行web服务
 
 ## pre-requirements
-
-* [local.cluster.for.testing.md](../create.local.cluster.with.kind.md)
-* [ingress](../basic/ingress.nginx.md)
-* [cert-manager](../basic/cert.manager.md)
+* [create.local.cluster.with.kind](/kubernetes/create.local.cluster.with.kind.md)
+* [local_kind_cluster](/kubernetes/local_kind_cluster/README.md)
 
 ## Do it
-
-1. prepare ssh-key-secret
-    * create `rsa` keys by `ssh-keygen` if not generated before
-        + ```
-          mkdir -p ssh-keys/ \
-              && ssh-keygen -t rsa -b 4096 -N "" -f ssh-keys/id_rsa
-          ```
-    * create namespace `application` if not exists
-        + ```
-          kubectl get namespace application \
-              || kubectl create namespace application
-          ```
-    * generate `git-ssh-key-secret`
-        + ```
-          kubectl -n application create secret generic git-ssh-key-secret --from-file=ssh-keys/
-          ```
+1. prepare `git-ssh-key`
     * add `ssh-keys/id_rsa.pub` to git repo server as deploy key
-
-2. prepare [docs-conti.nginx.yaml](resources/docs-conti.nginx.yaml.md)
-3. prepare images
+    * ```shell
+      kubectl get namespace application || kubectl create namespace application
+          && kubectl -n application create secret generic git-ssh-key \
+                --from-file=${HOME}/.ssh/
+      ```
+2. prepare [docs.nginx.yaml](resources/docs.nginx.yaml.md)
+4. prepare images
     * ```shell
        DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
        BASE_URL="https://resource.cnconti.cc/docker-images"
-       LOCAL_IMAGE="localhost:5000"
+       # BASE_URL="https://resource-ops-test.lab.zjvis.net:32443/docker-images"
+       for IMAGE in "docker.io_bitnami_nginx_1.21.4-debian-10-r0.dim" \
+           "docker.io_bitnami_git_2.33.0-debian-10-r76.dim" 
+       do
+           IMAGE_FILE=$DOCKER_IMAGE_PATH/$IMAGE
+           if [ ! -f $IMAGE_FILE ]; then
+               TMP_FILE=$IMAGE_FILE.tmp \
+                   && curl -o "$TMP_FILE" -L "$BASE_URL/$IMAGE" \
+                   && mv $TMP_FILE $IMAGE_FILE
+           fi
+           docker image load -i $IMAGE_FILE && rm -f $IMAGE_FILE
+       done
+       LOCAL_IMAGE="insecure.docker.registry.local:80"
        for IMAGE in "docker.io/bitnami/nginx:1.21.4-debian-10-r0" \
            "docker.io/bitnami/git:2.33.0-debian-10-r76" 
        do
-           IMAGE_FILE=$(echo ${IMAGE} | sed "s/\//_/g" | sed "s/\:/_/g").dim
-           LOCAL_IMAGE_FIEL=${DOCKER_IMAGE_PATH}/${IMAGE_FILE}
-           if [ ! -f ${LOCAL_IMAGE_FIEL} ]; then
-               curl -o ${IMAGE_FILE} -L ${BASE_URL}/${IMAGE_FILE} \
-                   && mv ${IMAGE_FILE} ${LOCAL_IMAGE_FIEL} \
-                   || rm -rf ${IMAGE_FILE}
-           fi
-           docker image load -i ${LOCAL_IMAGE_FIEL} && rm -rf ${LOCAL_IMAGE_FIEL}
-           docker image inspect ${IMAGE} || docker pull ${IMAGE}
-           docker image tag ${IMAGE} ${LOCAL_IMAGE}/${IMAGE}
-           docker push ${LOCAL_IMAGE}/${IMAGE}
+           DOCKER_TARGET_IMAGE=$DOCKER_REGISTRY/$IMAGE
+           docker tag $IMAGE $DOCKER_TARGET_IMAGE \
+               && docker push $DOCKER_TARGET_IMAGE \
+               && docker image rm $DOCKER_TARGET_IMAGE
        done
        ```
-4. install by helm
-    * ```
+5. install by helm
+    * ```shell
+      # https://resource-ops-test.lab.zjvis.net:32443/charts/charts.bitnami.com/bitnami/nginx-9.5.7.tgz
       helm install \
           --create-namespace --namespace application \
-          docs-conti \
+          my-docs \
           https://resource.cnconti.cc/charts/nginx-9.5.7.tgz \
-          --values docs-conti.nginx.yaml \
+          --values docs.nginx.yaml \
           --atomic
       ```
 
 ## Test
 * visit
-    * ```
-      curl  --header 'Host:docs-conti.cnconti.cc' http://localhost/
+    * ```shell
+      curl  --header 'Host:docs.local' http://localhost/
       ```
 * upgrade
-    * ```
+    * ```shell
+      # https://resource-ops-test.lab.zjvis.net:32443/charts/charts.bitnami.com/bitnami/nginx-9.5.7.tgz
       helm upgrade \
           --namespace application \
           docs-conti \
           https://resource.cnconti.cc/charts/nginx-9.5.7.tgz \
-          --values docs-conti.nginx.yaml \
+          --values docs.nginx.yaml \
           --atomic
       ```
 
 * uninstall
-    * ````
-      helm uninstall -n application docs-conti
+    * ````shell
+      helm uninstall -n application my-docs
       ````

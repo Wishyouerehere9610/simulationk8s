@@ -13,17 +13,15 @@
 
 ## pre-requirements
 * [create.local.cluster.with.kind](/kubernetes/create.local.cluster.with.kind.md)
-* [ingress-nginx](../basic/ingress.nginx.md)
-* [cert-manager](../basic/cert.manager.md)
-* [docker-registry](../basic/docker.registry.md)
+* [local_kind_cluster](/kubernetes/local_kind_cluster/README.md)
 
 ## do it
 1. prepare [resource.nginx.values.yaml](resources/resource.nginx.values.yaml.md)
 2. prepare images
     * ```shell  
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p $DOCKER_IMAGE_PATH
-      # BASE_URL="https://resource-ops-test.lab.zjvis.net:32443/docker-images"
       BASE_URL="https://resource.cnconti.cc/docker-images"
+      # BASE_URL="https://resource-ops-test.lab.zjvis.net:32443/docker-images"
       for IMAGE in "docker.io_bitnami_nginx_1.21.3-debian-10-r29.dim" \
           "docker.io_busybox_1.33.1-uclibc.dim"
       do

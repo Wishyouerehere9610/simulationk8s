@@ -7,11 +7,11 @@
 * [basic-components](basic/README.md)
 * [software](software/README.md)
 * [storage](storage/README.md)
+* [monitor](monitor/README.md)
 
 ### K8s-clusetr
 * [local_cluster](local_cluster/README.md)
 * [local_kind_cluster](local_kind_cluster/README.md)
-* [zjvis-entry](zjvis.md)
 
 ### other
 * [commands](commands.md)
