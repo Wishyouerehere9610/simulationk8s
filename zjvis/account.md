@@ -11,7 +11,7 @@
 * username: `root`
 * ```shell
   # password
-  NAMESPACE="middleware-nebula-test"
+  NAMESPACE="middleware-test"
   kubectl get secret --namespace ${NAMESPACE} my-mariadb \
       -o jsonpath="{.data.mariadb-root-password}" | base64 --decode && echo
   ```
@@ -19,7 +19,7 @@
 ## minio
 * ```shell
   # username & password
-  NAMESPACE="middleware-nebula-test"
+  NAMESPACE="middleware-test"
   kubectl get secret --namespace ${NAMESPACE} my-minio \
       -o jsonpath="{.data.access-key}" | base64 --decode && echo
   kubectl get secret --namespace ${NAMESPACE} my-minio \
@@ -29,7 +29,7 @@
 ## redis-cluster
 * ```shell
   # password
-  NAMESPACE="middleware-nebula-test"
+  NAMESPACE="middleware-test"
   kubectl -n ${NAMESPACE} get secret my-redis-cluster \
       -o jsonpath={.data.redis-password} | base64 --decode && echo
   ```
