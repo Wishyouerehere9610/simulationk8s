@@ -3,6 +3,7 @@
 * [dashboard](dashboard.md)
 * [docsify](docsify.md)
 * [mariadb](mariadb.md)
+* [phpmyadmin](phpmyadmin.md)
 * [minio](minio.md)
 * [redis](redis.md)
 * [redis-cluster](redis-cluster.md)
