@@ -1,6 +1,6 @@
-## kubernetes
+# Kubernetes
 
-### kubernetes
+## kubernetes
 
 * [download kubernetes binary tools](download.kubernetes.binary.tools.md)
 * [create local cluster with kind](create.local.cluster.with.kind.md)

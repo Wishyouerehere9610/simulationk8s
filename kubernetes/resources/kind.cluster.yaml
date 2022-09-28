@@ -1,7 +1,7 @@
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
-# networking:
-#   apiServerAddress: 192.168.31.21
+networking:
+  apiServerAddress: 192.168.31.21
 nodes:
   - role: control-plane
     extraPortMappings:
@@ -17,6 +17,7 @@ nodes:
       - containerPort: 33080
         hostPort: 1080
         protocol: TCP
+  # 默认单节点kind
   # - role: worker
   # - role: worker
   # - role: worker

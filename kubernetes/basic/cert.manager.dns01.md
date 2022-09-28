@@ -2,7 +2,7 @@
 
 ## main usage
 * create certification of ssl automatically by cert-manager
-* use http01 method
+* use dns01 method
 
 ## conceptions
 * none
@@ -10,6 +10,7 @@
 ## purpose
 * create a kubernetes cluster by kind
 * setup cert-manager
+* setup alidns-webhook
 
 ## precondition
 * [create a kubernetes cluster](/kubernetes/create.local.cluster.with.kind.md)
@@ -25,7 +26,8 @@
           "quay.io_jetstack_cert-manager-webhook_v1.5.4.dim" \
           "quay.io_jetstack_cert-manager-cainjector_v1.5.4.dim" \
           "quay.io_jetstack_cert-manager-ctl_v1.5.4.dim" \
-          "quay.io_jetstack_cert-manager-acmesolver_v1.5.4.dim"
+          "quay.io_jetstack_cert-manager-acmesolver_v1.5.4.dim" \
+          "ghcr.io_devmachine-fr_cert-manager-alidns-webhook_cert-manager-alidns-webhook_0.2.0.dim"
       do
           IMAGE_FILE=$DOCKER_IMAGE_PATH/$IMAGE
           if [ ! -f $IMAGE_FILE ]; then
@@ -40,7 +42,8 @@
           "quay.io/jetstack_cert-manager-webhook:v1.5.4" \
           "quay.io/jetstack_cert-manager-cainjector:v1.5.4" \
           "quay.io/jetstack_cert-manager-ctl:v1.5.4" \
-          "quay.io/jetstack_cert-manager-acmesolver:v1.5.4"
+          "quay.io/jetstack_cert-manager-acmesolver:v1.5.4" \
+          "ghcr.io/devmachine-fr/cert-manager-alidns-webhook_cert-manager-alidns-webhook:0.2.0"
       do
           DOCKER_TARGET_IMAGE=$DOCKER_REGISTRY/$IMAGE
           docker tag $IMAGE $DOCKER_TARGET_IMAGE \
@@ -59,10 +62,51 @@
            --values cert.manager.values.yaml \
            --atomic
        ```
-4. create cluster-issuer
-   * prepare [self.signed.cluster.issuer.yaml](resources/self.signed.cluster.issuer.yaml.md)
-     * ```shell
-       kubectl -n basic-components apply -f self.signed.cluster.issuer.yaml
+4. install `alidns-webhook`
+    * prepare [alidns.webhook.values.yaml](resources/alidns.webhook.values.yaml.md)
+    * make sure permissions added to `$YOUR_ACCESS_KEY_ID`
+        + ```json
+          {
+            "Version": "1",
+            "Statement": [
+              {
+                "Effect": "Allow",
+                "Action": [
+                  "alidns:AddDomainRecord",
+                  "alidns:DeleteDomainRecord"
+                ],
+                "Resource": "acs:alidns:*:*:domain/cnconti.cc"
+              }, {
+                "Effect": "Allow",
+                "Action": [
+                  "alidns:DescribeDomains",
+                  "alidns:DescribeDomainRecords"
+                ],
+                "Resource": "acs:alidns:*:*:domain/*"
+              }
+            ]
+          }
+          ```
+    * create secret of `alidns-webhook-secrets`
+        + ```shell
+          kubectl -n basic-components create secret generic alidns-webhook-secrets \
+              --from-literal="access-token=${YOUR_ACCESS_KEY_ID}" \
+              --from-literal="secret-key=${YOUR_ACCESS_KEY_SECRET}"
+          ```
+    * install by helm
+        + NOTE: `https://resource-ops.lab.zjvis.net:32443/charts/alidns-webhook-0.6.0.tgz`
+        + ```shell
+          helm install \
+              --create-namespace --namespace basic-components \
+              my-alidns-webhook \
+              https://resource.cnconti.cc/charts/alidns-webhook-0.6.0.tgz \
+              --values alidns.webhook.values.yaml \
+              --atomic
+          ```
+5. create `cluster-issuer`
+    * prepare [alidns.webhook.cluster.issuer.yaml](resources/alidns.webhook.cluster.issuer.yaml.md)
+        * ```shell
+       kubectl -n basic-components apply -f alidns.webhook.cluster.issuer.yaml
        ```
 
 ## test
@@ -70,10 +114,10 @@
 
 ## uninstall
 1. delete ClusterIssuer `self-signed-cluster-issuer`
-    * ```shell
+   * ```shell
       kubectl -n basic-components delete clusterissuer self-signed-cluster-issuer
       ```
 2. uninstall `my-cert-manager`
-    * ```shell
+   * ```shell
       helm -n basic-components uninstall my-cert-manager
       ```

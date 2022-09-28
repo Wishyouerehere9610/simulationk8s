@@ -1,5 +1,5 @@
 image:
-  registry: insecure.docker.registry.local:80
+  registry: localhost:5000
   repository: docker.io/bitnami/nginx
   tag: 1.21.3-debian-10-r29
   pullPolicy: IfNotPresent
@@ -24,7 +24,7 @@ serverBlock: |-
   }
 sidecars:
   - name: busybox
-    image: insecure.docker.registry.local:80/docker.io/busybox:1.33.1-uclibc
+    image: localhost:5000/docker.io/busybox:1.33.1-uclibc
     imagePullPolicy: Always
     command: [ 'sh', '-c', 'tail -f /etc/hosts' ]
     volumeMounts:
@@ -34,9 +34,9 @@ ingress:
   enabled: true
   annotations:
     kubernetes.io/ingress.class: nginx
-    cert-manager.io/cluster-issuer: self-signed-clusterissuer
+    cert-manager.io/cluster-issuer: self-signed-cluster-issuer
     nginx.ingress.kubernetes.io/rewrite-target: /$1
-    nginx.ingress.kubernetes.io/proxy-body-size: 10g
+    nginx.ingress.kubernetes.io/proxy-body-size: 5g
   hostname: resource.local
   path: /?(.*)
   tls: true

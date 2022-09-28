@@ -1,10 +1,9 @@
-## database
+# Database
 
 * pass
 * pass
 * pass
 
-### other
-* commands
+## Commands
   * [mysql](mysql/commands.md)
   * [redis](redis/commands.md)

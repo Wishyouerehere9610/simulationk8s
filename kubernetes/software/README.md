@@ -2,6 +2,7 @@
 
 ### deploy
 * [resources-nginx](resources-nginx.md)
+* [dashboard](dashboard.md)
 * [docsify](docsify.md)
 * [verdaccio](verdaccio.md)
 * [nexus](nexus.md)

@@ -1,7 +1,6 @@
-## docker installation
+## Docker installation
 
 ### install with CentOS 8
-
 * ```shell
   cat > /etc/yum.repos.d/docker-ce.repo <<EOF
   [docker-ce-stable]
@@ -17,7 +16,6 @@
   ```
 
 ### install with Ubuntu 20.04.2 LTS (x86_64)
-
 * ```shell
   apt-get install apt-transport-https ca-certificates curl gnupg lsb-release
   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg

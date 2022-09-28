@@ -15,11 +15,11 @@
 ## pre-requirements
 * [download kubernetes binary tools](../download.kubernetes.binary.tools.md)
 * [create local cluster for testing](../create.local.cluster.with.kind.md)
-* [ingress-nginx](ingress.nginx.md)
-* [cert-manager](cert.manager.md)
+* [ingress-nginx](../basic/ingress.nginx.md)
+* [cert-manager](../basic/cert.manager.md)
 
 ## Do it
-1. prepart [dashboard.values.yaml](resources/dashboard.values.yaml.md)
+1. prepare [dashboard.values.yaml](../basic/resources/dashboard.values.yaml.md)
 2. prepare images
    * ```shell  
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
@@ -57,7 +57,7 @@
       curl --insecure --header 'Host: dashboard.local.com' https://localhost
       ```
 2. create read only `user`
-    * prepare [create.user.yaml](resources/create.user.yaml.md)
+    * prepare [create.user.yaml](../basic/resources/create.user.yaml.md)
     * ```shell
       kubectl apply -f create.user.yaml
       ```

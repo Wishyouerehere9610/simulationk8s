@@ -1,16 +1,16 @@
 <p align="center"><font size="6"><b>Welcome to ContiDocs</b></font></p>
 
 ## Technology stack
-* [linux](linux/README.md)
-* [database](database/README.md)
-* [hadoop](hadoop/README.md)
-* [docker](docker/README.md)
-* [kubernetes](kubernetes/README.md)
+* [Linux](linux/README.md)
+* [Database](database/README.md)
+* [Hadoop](hadoop/README.md)
+* [Docker](docker/README.md)
+* [Kubernetes](kubernetes/README.md)
 
 ## Shortcut tool
-* [commands](commands/README.md)
-* [language](language/README.md)
-* [ZJVIS-Tools](zjvis/README.md)
+* [Commands](commands/README.md)
+* [Language](language/README.md)
+
 
 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 

@@ -1,4 +1,4 @@
-## hadoop
+## Hadoop
 
 ### hadoop
 * pass

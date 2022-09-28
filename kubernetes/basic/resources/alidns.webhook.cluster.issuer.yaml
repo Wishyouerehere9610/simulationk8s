@@ -1,12 +1,12 @@
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: self-signed-clusterissuer
+  name: self-signed-cluster-issuer
 spec:
   acme:
     email: conti821@163.com
     privateKeySecretRef:
-      name: self-signed-clusterissuer
+      name: self-signed-cluster-issuer
     server: https://acme-v02.api.letsencrypt.org/directory
     solvers:
       - dns01:
