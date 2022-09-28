@@ -1,5 +1,5 @@
 image:
-  registry: insecure.docker.registry.local:80/docker.io
+  registry: localhost:5000/docker.io
   repository: bitnami/nginx
   tag: 1.21.4-debian-10-r0
   pullPolicy: IfNotPresent
@@ -16,7 +16,7 @@ service:
   type: ClusterIP
 cloneStaticSiteFromGit:
   image:
-    registry: insecure.docker.registry.local:80/docker.io
+    registry: localhost:5000/docker.io
     repository: bitnami/git
     tag: 2.33.0-debian-10-r76
   enabled: true

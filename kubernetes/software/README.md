@@ -4,6 +4,8 @@
 * [resources-nginx](resources-nginx.md)
 * [dashboard](dashboard.md)
 * [docsify](docsify.md)
+* [mariadb](mariadb.md)
+* [minio](minio.md)
 * [verdaccio](verdaccio.md)
 * [nexus](nexus.md)
 * [chart-museum](chart-museum.md)
