@@ -1,5 +1,4 @@
 # phpmyadmin
-* CName: `phpmyadmin-ops-dev.lab.zjvis.net` `ops-dev-01.lab.zjvis.net`
 
 ## main usage
 * Provides a Web page for managing mysql in a cluster
@@ -19,8 +18,8 @@
 1. prepare images
     * ```shell
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p $DOCKER_IMAGE_PATH
-      # BASE_URL="https://resource-ops.lab.zjvis.net:32443/docker-images"
       BASE_URL="https://resource.cnconti.cc/docker-images"
+      # BASE_URL="https://resource-ops.lab.zjvis.net:32443/docker-images"
       for IMAGE in "docker.io_bitnami_phpmyadmin_5.1.1-debian-10-r147.dim" \
           "docker.io_bitnami_apache-exporter_0.10.1-debian-10-r54.dim"
       do

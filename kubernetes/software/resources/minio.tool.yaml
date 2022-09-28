@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: minio-tool
-          image: localhost:5000net:32443/docker.io/bitnami/minio-client:2022.8.11-debian-11-r3
+          image: localhost:5000/docker.io/bitnami/minio-client:2022.8.11-debian-11-r3
           imagePullPolicy: IfNotPresent
           env:
             - name: TZ

@@ -19,8 +19,8 @@
 1. prepare images
     * ```shell
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
-      # BASE_URL="https://resource-ops.lab.zjvis.net:32443/docker-images"
       BASE_URL="https://resource.cnconti.cc/docker-images"
+      # BASE_URL="https://resource-ops.lab.zjvis.net:32443/docker-images"
       for IMAGE in "docker.io_registry_2.7.1.dim" \
           "docker.io_busybox_1.33.1-uclibc.dim"
       do
@@ -33,8 +33,7 @@
           docker image load -i $IMAGE_FILE && rm -f $IMAGE_FILE
       done
       DOCKER_REGISTRY="localhost:5000"
-      for IMAGE in "docker.io/registry:2.7.1" \
-          "docker.io/busybox:1.33.1-uclibc"
+      for IMAGE in "docker.io/registry:2.7.1"
       do
           DOCKER_TARGET_IMAGE=$DOCKER_REGISTRY/$IMAGE
           docker tag $IMAGE $DOCKER_TARGET_IMAGE \
@@ -64,14 +63,15 @@
 ## test
 1. check with docker-registry
    * ```shell
-      IMAGE=docker.io/busybox:1.33.1-uclibc \
-          && TARGET_IMAGE=docker-registry.local/$IMAGE \
-          && docker tag $IMAGE $TARGET_IMAGE \
-          && docker push $TARGET_IMAGE \
-          && docker image rm $IMAGE \
-          && docker image rm $TARGET_IMAGE \
-          && docker pull $TARGET_IMAGE \
-          && echo success
+     echo '127.0.0.1 docker-registry.local' >> /etc/hosts \
+         && IMAGE=docker.io/busybox:1.33.1-uclibc \
+         && TARGET_IMAGE=docker-registry.local/$IMAGE \
+         && docker tag $IMAGE $TARGET_IMAGE \
+         && docker push $TARGET_IMAGE \
+         && docker image rm $IMAGE \
+         && docker image rm $TARGET_IMAGE \
+         && docker pull $TARGET_IMAGE \
+         && echo success
      ```
 
 ## uninstall

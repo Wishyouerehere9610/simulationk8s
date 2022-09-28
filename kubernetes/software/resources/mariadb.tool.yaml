@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: mariadb-tool
-          image: localhost:5000net:32443/docker.io/bitnami/mariadb:10.5.12-debian-10-r0
+          image: localhost:5000/docker.io/bitnami/mariadb:10.5.12-debian-10-r0
           imagePullPolicy: IfNotPresent
           env:
             - name: MARIADB_ROOT_PASSWORD

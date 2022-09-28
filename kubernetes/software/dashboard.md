@@ -20,8 +20,8 @@
 1. prepare images
     * ```shell  
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p $DOCKER_IMAGE_PATH
-      # BASE_URL="https://resource-ops.lab.zjvis.net:32443/docker-images"
       BASE_URL="https://resource.cnconti.cc/docker-images"
+      # BASE_URL="https://resource-ops.lab.zjvis.net:32443/docker-images"
       for IMAGE in "docker.io_kubernetesui_dashboard_v2.4.0.dim" \
           "docker.io_kubernetesui_metrics-scraper_v1.0.7.dim" 
       do
@@ -48,9 +48,9 @@
     * NOTE: `https://resource-ops.lab.zjvis.net:32443/charts/kubernetes.github.io/dashboard/kubernetes-dashboard-5.0.5.tgz`
     * ```shell
       helm install \
-          --create-namespace --namespace basic-components \
+          --create-namespace --namespace application \
           my-dashboard \
-          https://resource.cnconti.cc/charts/kubernetes.github.io/dashboard/kubernetes-dashboard-5.0.5.tgz
+          https://resource.cnconti.cc/charts/kubernetes.github.io/dashboard/kubernetes-dashboard-5.0.5.tgz \
           --values dashboard.values.yaml \
           --atomic
       ```
@@ -67,7 +67,7 @@
       ```
 3. extract user token
     * ```shell
-      kubectl -n application get secret $(kubectl -n basic-components get ServiceAccount \
+      kubectl -n application get secret $(kubectl -n application get ServiceAccount \
           dashboard-ro -o jsonpath="{.secrets[0].name}") \
           -o jsonpath="{.data.token}" | base64 --decode && echo
       ```

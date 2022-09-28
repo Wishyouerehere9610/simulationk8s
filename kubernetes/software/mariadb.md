@@ -20,8 +20,8 @@
 1. prepare images
     * ```shell
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p $DOCKER_IMAGE_PATH
-      # BASE_URL="https://resource-ops.lab.zjvis.net:32443/docker-images"
       BASE_URL="https://resource.cnconti.cc/docker-images"
+      # BASE_URL="https://resource-ops.lab.zjvis.net:32443/docker-images"
       for IMAGE in "docker.io_bitnami_mariadb_10.5.12-debian-10-r0.dim" \
           "docker.io_bitnami_bitnami-shell_10-debian-10-r153.dim" \
           "docker.io_bitnami_mysqld-exporter_0.13.0-debian-10-r56.dim"
@@ -65,8 +65,8 @@
 ## test
 1. connect to `mariadb`
     * ```shell
-      kubectl -n application exec -it deployment/maria-db-tool -- bash -c \
-          'echo "show databases" | mysql -h my-mariadb.middleware-test -uroot -p$MARIADB_ROOT_PASSWORD'
+      kubectl -n application exec -it deployment/mariadb-tool -- bash -c \
+          'echo "show databases" | mysql -h my-mariadb.application -uroot -p$MARIADB_ROOT_PASSWORD'
       ```
 
 ## uninstall

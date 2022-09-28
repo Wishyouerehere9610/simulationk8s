@@ -19,8 +19,8 @@
 1. prepare images
     * ```shell
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p $DOCKER_IMAGE_PATH
-      # BASE_URL="https://resource-ops.lab.zjvis.net:32443/docker-images"
       BASE_URL="https://resource.cnconti.cc/docker-images"
+      # BASE_URL="https://resource-ops.lab.zjvis.net:32443/docker-images"
       for IMAGE in "quay.io_jetstack_cert-manager-controller_v1.5.4.dim" \
           "quay.io_jetstack_cert-manager-webhook_v1.5.4.dim" \
           "quay.io_jetstack_cert-manager-cainjector_v1.5.4.dim" \
@@ -36,11 +36,11 @@
           docker image load -i $IMAGE_FILE && rm -f $IMAGE_FILE
       done
       DOCKER_REGISTRY="localhost:5000"
-      for IMAGE in "quay.io/jetstack_cert-manager-controller:v1.5.4" \
-          "quay.io/jetstack_cert-manager-webhook:v1.5.4" \
-          "quay.io/jetstack_cert-manager-cainjector:v1.5.4" \
-          "quay.io/jetstack_cert-manager-ctl:v1.5.4" \
-          "quay.io/jetstack_cert-manager-acmesolver:v1.5.4"
+      for IMAGE in "quay.io/jetstack/cert-manager-controller:v1.5.4" \
+          "quay.io/jetstack/cert-manager-webhook:v1.5.4" \
+          "quay.io/jetstack/cert-manager-cainjector:v1.5.4" \
+          "quay.io/jetstack/cert-manager-ctl:v1.5.4" \
+          "quay.io/jetstack/cert-manager-acmesolver:v1.5.4"
       do
           DOCKER_TARGET_IMAGE=$DOCKER_REGISTRY/$IMAGE
           docker tag $IMAGE $DOCKER_TARGET_IMAGE \

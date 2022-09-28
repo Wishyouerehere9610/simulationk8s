@@ -18,8 +18,8 @@
 1. prepare images
     * ```shell  
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p $DOCKER_IMAGE_PATH
-      # BASE_URL="https://resource-ops.lab.zjvis.net:32443/docker-images"
       BASE_URL="https://resource.cnconti.cc/docker-images"
+      # BASE_URL="https://resource-ops.lab.zjvis.net:32443/docker-images"
       for IMAGE in "docker.io_bitnami_nginx_1.21.3-debian-10-r29.dim" \
           "docker.io_busybox_1.33.1-uclibc.dim"
       do

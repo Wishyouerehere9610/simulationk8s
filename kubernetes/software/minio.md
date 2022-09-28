@@ -19,8 +19,8 @@
 1. prepare images
     * ```shell
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p $DOCKER_IMAGE_PATH
-      # BASE_URL="https://resource-ops.lab.zjvis.net:32443/docker-images"
       BASE_URL="https://resource.cnconti.cc/docker-images"
+      # BASE_URL="https://resource-ops.lab.zjvis.net:32443/docker-images"
       for IMAGE in "docker.io_bitnami_minio_2022.8.22-debian-11-r0.dim" \
           "docker.io_bitnami_minio-client_2022.8.11-debian-11-r3.dim" \
           "docker.io_bitnami_bitnami-shell_11-debian-11-r28.dim"

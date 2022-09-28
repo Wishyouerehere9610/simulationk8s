@@ -5,6 +5,7 @@
     * ```shell
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p $DOCKER_IMAGE_PATH
       BASE_URL="https://resource.cnconti.cc/docker-images"
+      # BASE_URL="https://resource-ops.lab.zjvis.net:32443/docker-images"
       for IMAGE in "docker.io_docker.elastic.co_elasticsearch_elasticsearch_7.16.3.dim" \
           "docker.io_docker.elastic.co_kibana_kibana_7.16.3.dim" \
           "docker.io_docker.elastic.co_beats_filebeat_7.16.3.dim" \
