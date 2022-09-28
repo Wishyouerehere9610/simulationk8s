@@ -1,11 +1,11 @@
 ## software
-
-### deploy
 * [resources-nginx](resources-nginx.md)
 * [dashboard](dashboard.md)
 * [docsify](docsify.md)
 * [mariadb](mariadb.md)
 * [minio](minio.md)
+* [redis](redis.md)
+* [redis-cluster](redis-cluster.md)
 * [verdaccio](verdaccio.md)
 * [nexus](nexus.md)
 * [chart-museum](chart-museum.md)
@@ -15,9 +15,6 @@
 * TODO: [sshd](sshd.md)
 * TODO: [jupyterhub](jupyterhub.md)
 * [pypiserver](pypiserver.md)
-
-
-
 
 ### docs
 * [gitea](docs/gitea/README.md)
