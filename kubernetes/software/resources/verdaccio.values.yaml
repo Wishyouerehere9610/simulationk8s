@@ -1,5 +1,5 @@
 image:
-  repository: insecure.docker.registry.local:80/docker.io/verdaccio/verdaccio
+  repository: localhost:5000/docker.io/verdaccio/verdaccio
   tag: 5.2.0
   pullPolicy: IfNotPresent
   pullSecrets: [ ]
@@ -22,7 +22,7 @@ ingress:
   hosts:
     - verdaccio.local
   annotations:
-    cert-manager.io/cluster-issuer: self-signed-clusterissuer
+    cert-manager.io/cluster-issuer: self-signed-cluster-issuer
   tls:
     - secretName: verdaccio.local-tls
       hosts:
@@ -70,9 +70,17 @@ persistence:
   storageClass: standard
   accessMode: ReadWriteOnce
   size: 8Gi
+  volumes:
+    - name: htpasswd
+      secret:
+        secretName: verdaccio-admin-secret
+        items:
+          - key: htpasswd
+            path: htpasswd
+  mounts:
+    - mountPath: /verdaccio/admin.htpasswd
+      name: htpasswd
+      subPath: htpasswd
+      readOnly: true
 priorityClass:
    enabled: false
-secrets:
-  htpasswd:
-    - username: "admin"
-      password: "change_password_to_your_own"

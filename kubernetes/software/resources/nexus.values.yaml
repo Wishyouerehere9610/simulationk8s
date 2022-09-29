@@ -31,18 +31,18 @@ ingress:
   enabled: true
   ingressClassName: "nginx"
   annotations:
-    cert-manager.io/cluster-issuer: self-signed-clusterissuer
+    cert-manager.io/cluster-issuer: self-signed-cluster-issuer
     nginx.ingress.kubernetes.io/proxy-body-size: 2g
     nginx.org/client-max-body-size: 2g
     nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
   hostPath: /
-  hostRepo: nexus.local.com
+  hostRepo: nexus.local
   tls:
-    - secretName: nexus.local.com-tls
+    - secretName: nexus.local-tls
       hosts:
-        - nexus.local.com
+        - nexus.local
 service:
   name: nexus
   enabled: true
@@ -54,8 +54,3 @@ persistence:
   storageSize: 8Gi
 serviceAccount:
   create: flase
-### 重点关注config
-config:
-  enabled: false
-  mountPath: /sonatype-nexus-conf
-  data: []

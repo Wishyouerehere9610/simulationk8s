@@ -1,15 +1,15 @@
-## Docker
+# Docker
 
-### docker
+## docker
 * [installation](installation.md)
 * [multi-architecture](multi-architecture.md)
 * software with docker
   + [nfs](software/nfs.md)
-  + [phpmyadmin](software/phpmyadmin.md)
   + [nginx](software/nginx.md)
   + [haproxy](software/haproxy.md)
-  + [mysqldump](software/mysqldump.md)
-  + [v2fly](software/v2fly.md)
+  + [haproxy-pem](software/haproxy-pem.md)
+
+## dockerfile
 * [dockerfile grammar](dockerfile.md)
 
 ### other
