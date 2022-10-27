@@ -1,0 +1,68 @@
+neo4j:
+  password: "d799b9590"
+  edition: "community"
+  acceptLicenseAgreement: "no"
+  offlineMaintenanceModeEnabled: false
+  resources:
+    cpu: "1000m"
+    memory: "2Gi"
+volumes:
+  data:
+    mode: "dynamic"
+    dynamic:
+      storageClassName: "standard"
+      accessModes:
+        - ReadWriteOnce
+      requests:
+        storage: 10Gi
+  backups:
+    mode: "share"
+    share:
+      name: "data"
+  logs:
+    mode: "share"
+    share:
+      name: "data"
+  metrics:
+    mode: "share"
+    share:
+      name: "data"
+  import:
+    mode: "share"
+    share:
+      name: "data"
+services:
+  neo4j:
+    enabled: false
+  admin:
+    enabled: true
+    spec:
+      type: ClusterIP
+
+config:
+  dbms.config.strict_validation: "true"
+  dbms.memory.pagecache.size: "256m"
+  dbms.query_cache_size: "50"
+  dbms.memory.heap.initial_size: "512m"
+  dbms.memory.heap.max_size: "512m"
+  dbms.ssl.policy.bolt.enabled: "false"
+  dbms.ssl.policy.https.enabled: "false"
+
+#apoc_config:
+#  apoc.trigger.enabled: "true"
+#  apoc.jdbc.apoctest.url: "jdbc:foo:bar"
+
+image:
+  customImage: localhost:5000/docker.io/neo4j:4.4.10
+  imagePullPolicy: IfNotPresent
+
+logInitialPassword: false
+
+jvm:
+  useNeo4jDefaultJvmArguments: false
+  # additionalJvmArguments is a list of strings. Each jvm argument should be a separate element:
+  additionalJvmArguments: []
+  # - "-XX:+HeapDumpOnOutOfMemoryError"
+  # - "-XX:HeapDumpPath=/logs/neo4j.hprof"
+  # - "-XX:MaxMetaspaceSize=180m"
+  # - "-XX:ReservedCodeCacheSize=40m"

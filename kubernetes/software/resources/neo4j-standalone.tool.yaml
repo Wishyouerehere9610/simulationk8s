@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: neo4j-standalone-tool
+  labels:
+    app.kubernetes.io/name: neo4j-standalone-tool
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: neo4j-standalone-tool
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: neo4j-standalone-tool
+    spec:
+      containers:
+        - name: neo4j-standalone-tool
+          image: docker-registry-ops-dev.lab.zjvis.net:32443/docker.io/neo4j:4.4.10
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: NEO4J_AUTH
+              valueFrom:
+                secretKeyRef:
+                  key: NEO4J_AUTH
+                  name: my-neo4j-standalone-auth
+            - name: TZ
+              value: Asia/Shanghai

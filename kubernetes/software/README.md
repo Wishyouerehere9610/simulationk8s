@@ -9,6 +9,7 @@
 * [redis-cluster](redis-cluster.md)
 * [verdaccio](verdaccio.md)
 * [nexus](nexus.md)
+* [neo4j-standalone](neo4j-standalone.md)
 * TODO: [chart-museum](chart-museum.md)
 * TODO: [tekton](tekton.md)
 * TODO: [gitea](gitea.md)

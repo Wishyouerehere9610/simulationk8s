@@ -1,0 +1,10 @@
+CREATE (a:test{id:"5001",name:"Abc",number:"1234567890",expiredate:"20/17"});
+MATCH (a:test) RETURN a ;
+MATCH (a:test) REMOVE a.expiredate RETURN a;
+MATCH (a:test) SET a.cvv = '888' RETURN a;
+MATCH (a:test) DELETE a;
+MATCH (a:test) RETURN a;
+CREATE (b:Profile1)-[r1:LIKES]->(c:Profile2);
+MATCH (b)-[r1:LIKES]-(c) RETURN b,r1,c;
+MATCH (b)-[r1:LIKES]-(c) DELETE b,r1,c;
+MATCH n DELETE n;
