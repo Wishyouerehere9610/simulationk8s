@@ -1,0 +1,27 @@
+image:
+  repository: localhost:5000/docker.io/purelb
+  pullPolicy: Always
+  tag: v0.6.4
+
+lbnodeagent:
+  localint: default
+  extlbint: kube-lb0
+  podSecurityPolicy:
+    enabled: false
+  resources:
+    limits:
+      memory: 100Mi
+  # Tolerations: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  tolerations: []
+  # For example, to allow lbnodeagents to run on master nodes, comment the above line and uncomment the following lines:
+  # tolerations:
+  # - effect: NoSchedule
+  #   key: node-role.kubernetes.io/master
+
+# Configurable values specific to allocator.
+allocator:
+  podSecurityPolicy:
+    enabled: false
+  resources:
+    limits:
+      memory: 100Mi

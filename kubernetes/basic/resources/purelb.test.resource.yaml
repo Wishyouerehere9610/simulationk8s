@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: purelb-test-nginx
+spec:
+  selector:
+    matchLabels:
+      app: purelb-test-nginx
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: purelb-test-nginx
+    spec:
+      containers:
+        - name: purelb-test-nginx
+          image: localhost:5000/docker.io/bitnami/nginx:1.21.3-debian-10-r29
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    purelb.io/service-group: purelb-layer2-ippool
+  name: purelb-test-nginx-service1
+spec:
+  allocateLoadBalancerNodePorts: false
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  selector:
+    app: purelb-test-nginx
+  ports:
+    - protocol: TCP
+      port: 80 # match for service access port
+      targetPort: 80 # match for pod access port
+  type: LoadBalancer
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    purelb.io/service-group: purelb-layer2-ippool
+  name: purelb-test-nginx-service2
+spec:
+  allocateLoadBalancerNodePorts: false
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  selector:
+    app: purelb-test-nginx
+  ports:
+    - protocol: TCP
+      port: 80 # match for service access port
+      targetPort: 80 # match for pod access port
+  type: LoadBalancer
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    purelb.io/service-group: purelb-layer2-ippool
+  name: purelb-test-nginx-service3
+spec:
+  allocateLoadBalancerNodePorts: false
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  selector:
+    app: purelb-test-nginx
+  ports:
+    - protocol: TCP
+      port: 80 # match for service access port
+      targetPort: 80 # match for pod access port
+  type: LoadBalancer

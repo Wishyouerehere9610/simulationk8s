@@ -15,6 +15,21 @@
   sort b.txt a.txt a.txt | uniq -u  # 差集 b - a
   ```
 
+### YUM仓库
+* `centos 7`
+    + ```shell
+      reposync -r base --download_path /data --downloadcomps --download-metadata
+          # --downloadcomps 下载comps.xml
+          # --download-metadata 下载所有非默认元数据
+      ```
+* `centos 8`
+    + ```shell
+      reposync --repo base --destdir /data  --downloadonly --download-metadata --downloadcomps
+          # --downloadonly 仅下载
+          # --download-metadata 下载所有非默认元数据
+          # --downloadcomps 下载comps.xml
+      ```
+
 ### 系统信息
 * ```shell
   arch      #显示机器的处理器架构(1)
