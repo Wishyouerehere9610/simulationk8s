@@ -2,23 +2,22 @@
 
 ## main usage
 * ingress nginx to expose http/https endpoints
+* create a kubernetes cluster by kind
+* setup ingress-nginx
 
 ## conceptions
 * none
 
-## purpose
-* create a kubernetes cluster by kind
-* setup ingress-nginx
-
 ## precondition
-* [create a kubernetes cluster](/kubernetes/create.local.cluster.with.kind.md)
+* [kind_cluster](/kubernetes/kind.cluster.md)
 
-## do it
-1. prepare images
+## operation
+1. prepare [ingress.nginx.values.yaml](resources/ingress.nginx.values.yaml.md)
+2. prepare images
     * ```shell
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p ${DOCKER_IMAGE_PATH}
       BASE_URL="https://resource.cnconti.cc/docker-images"
-      # BASE_URL="https://resource-ops.lab.zjvis.net:32443/docker-images"
+      # BASE_URL="https://resource.static.zjvis.net/docker-images"
       for IMAGE in "k8s.gcr.io_ingress-nginx_controller_v1.0.3.dim" \
           "k8s.gcr.io_ingress-nginx_kube-webhook-certgen_v1.0.dim" \
           "k8s.gcr.io_defaultbackend-amd64_1.5.dim" \
@@ -44,9 +43,8 @@
               && docker image rm $DOCKER_TARGET_IMAGE
       done
       ```
-2. prepare [ingress.nginx.values.yaml](resources/ingress.nginx.values.yaml.md)
-3. install by helm
-    * NOTE: `https://resource-ops.lab.zjvis.net:32443/charts/kubernetes.github.io/ingress-nginx/ingress-nginx-4.0.5.tgz`
+3. install `ingress nginx` by helm
+    * NOTE: `https://resource.static.zjvis.net/charts/kubernetes.github.io/ingress-nginx/ingress-nginx-4.0.5.tgz`
     * ```shell
       helm install \
           --create-namespace --namespace basic-components \
@@ -63,8 +61,7 @@
       ```
 2. install nginx service
     * prepare [nginx.values.yaml](resources/nginx.values.yaml.md)
-    * install by helm
-        + NOTE: `https://resource-ops.lab.zjvis.net:32443/charts/charts.bitnami.com/bitnami/nginx-9.5.7.tgz`
+    * install `nginx`
         + ```shell
           helm install \
               --create-namespace --namespace test \

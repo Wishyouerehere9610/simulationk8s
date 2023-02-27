@@ -6,7 +6,7 @@ KIND_BINARY=${2:-kind}
 KUBECTL_BINARY=${3:-kubectl}
 REGISTRY_NAME=${4:-kind-registry}
 REGISTRY_PORT=${5:-5000}
-KIND_IMAGE=${6:-kindest/node:v1.22.1}
+KIND_IMAGE=${6:-kindest/node:v1.25.3}
 
 running="$(docker inspect -f '{{.State.Running}}' "${REGISTRY_NAME}" 2>/dev/null || true)"
 if [ "${running}" != 'true' ]; then
