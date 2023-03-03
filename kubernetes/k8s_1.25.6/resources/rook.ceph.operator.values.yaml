@@ -1,0 +1,48 @@
+tolerations:
+  - effect: NoSchedule
+    operator: Exists
+    key: node-role.kubernetes.io/master
+csi:
+  provisionerTolerations:
+    - key: node-role.kubernetes.io/master
+      operator: Exists
+      effect: NoSchedule
+  pluginTolerations:
+    - key: node-role.kubernetes.io/master
+      operator: Exists
+      effect: NoSchedule
+  rbdProvisionerTolerations:
+    - key: node-role.kubernetes.io/master
+      operator: Exists
+      effect: NoSchedule
+  rbdPluginTolerations:
+    - key: node-role.kubernetes.io/master
+      operator: Exists
+      effect: NoSchedule
+  cephFSProvisionerTolerations:
+    - key: node-role.kubernetes.io/master
+      operator: Exists
+      effect: NoSchedule
+  cephFSPluginTolerations:
+    - key: node-role.kubernetes.io/master
+      operator: Exists
+      effect: NoSchedule
+agent:
+  toleration: NoSchedule
+  tolerationKey: node-role.kubernetes.io/master
+  tolerations:
+    - key: node-role.kubernetes.io/master
+      operator: Exists
+      effect: NoSchedule
+discover:
+  toleration: NoSchedule
+  tolerationKey: node-role.kubernetes.io/master
+  tolerations:
+    - key: node-role.kubernetes.io/master
+      operator: Exists
+      effect: NoSchedule
+admissionController:
+  tolerations:
+    - key: node-role.kubernetes.io/master
+      operator: Exists
+      effect: NoSchedule

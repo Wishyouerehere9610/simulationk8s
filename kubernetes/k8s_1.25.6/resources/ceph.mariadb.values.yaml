@@ -1,0 +1,9 @@
+image:
+  registry: docker.io
+  repository: bitnami/mariadb
+  tag: 10.5.12-debian-10-r0
+  pullPolicy: IfNotPresent
+primary:
+  persistence:
+    storageClass: rook-cephfs-01
+    size: 1024Mi
