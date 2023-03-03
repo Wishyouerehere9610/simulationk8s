@@ -75,7 +75,7 @@
 
 ### install k8s-master
 1. choose `calico-00` as master node
-2. initializers k8s-master
+2. initialize k8s-master
     * ```shell
       kubeadm init --pod-network-cidr=172.21.0.0/20 --kubernetes-version v1.25.6 \
           && systemctl restart kubelet

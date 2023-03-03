@@ -1,11 +1,9 @@
-### storage
+## storage
 
+### basic
 * [local static provisioner](local.static.provisioner.md)
 * [rook ceph](rook.ceph.md)
-* TODO [nfs subdir external provisioner]()
-* TODO [performance testing for rook ceph fs]()
-* TODO [adding/removing physical storage with rook ceph]()
-* TODO [rook ceph with failures]()
+* [nfs-provisioner](nfs-provisioner.md)
 
-<br></br>
-* [nfs-kerberos](nfs-kerberos.md)
+### other
+* [nfs-server](nfs-server.md)
