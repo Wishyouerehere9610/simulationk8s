@@ -1,1 +1,0 @@
-[calico.install.yaml](calico.install.yaml ':include')
