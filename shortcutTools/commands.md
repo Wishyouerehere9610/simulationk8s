@@ -2,13 +2,13 @@
 
 ## basic
 * [shell](/linux/commands.md)
-* [VIM](vim.md)
-* [Git](git.md)
+* [VIM](commands/vim.md)
+* [Git](commands/git.md)
 * [docker](/docker/commands.md)
 * [kubernetes](/kubernetes/commands.md)
 
 ## language
-* [java](/language/commands.md)
+* [java](/language/java/commands.md)
 * [python](/language/python/commands.md)
 * [golang](/language/golang/commands.md)
 
