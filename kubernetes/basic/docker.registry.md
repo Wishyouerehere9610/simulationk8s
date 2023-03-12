@@ -11,9 +11,9 @@
 * test docker registry
 
 ## precondition
-* [create a kubernetes cluster](/kubernetes/create.local.cluster.with.kind.md)
-* [installed ingress-nginx](/kubernetes/basic/ingress.nginx.md)
-* [installed cert-manager](/kubernetes/basic/cert.manager.md)
+* [kind.cluster](/kubernetes/kind.cluster.md)
+* [ingress-nginx](/kubernetes/basic/ingress.nginx.md)
+* [cert-manager](/kubernetes/basic/cert.manager.md)
 
 ## do it
 1. prepare images
@@ -22,6 +22,7 @@
       BASE_URL="https://resource.cnconti.cc/docker-images"
       # BASE_URL="https://resource-ops.lab.zjvis.net:32443/docker-images"
       for IMAGE in "docker.io_registry_2.7.1.dim" \
+          "docker.io_httpd_2.4.56-alpine3.17.dim" \
           "docker.io_busybox_1.33.1-uclibc.dim"
       do
           IMAGE_FILE=$DOCKER_IMAGE_PATH/$IMAGE
@@ -41,8 +42,21 @@
               && docker image rm $DOCKER_TARGET_IMAGE
       done
       ```
-2. prepare [docker.registry.values.yaml](resources/docker.registry.values.yaml.md)
-3. install by helm
+2. create `docker-registry-secret`
+    * ```shell
+      # create PASSWORD
+      PASSWORD=($((echo -n $RANDOM | md5sum 2>/dev/null) || (echo -n $RANDOM | md5 2>/dev/null)))
+      # Make htpasswd
+      docker run --rm --entrypoint htpasswd httpd:2.4.56-alpine3.17 -Bbn admin ${PASSWORD} > ${PWD}/htpasswd
+      # NOTE: username should have at least 6 characters
+      kubectl -n basic-components create secret generic docker-registry-secret \
+          --from-literal=username=admin \
+          --from-literal=password=${PASSWORD} \
+          --from-file=${PWD}/htpasswd -o yaml --dry-run=client \
+          | kubectl -n basic-components apply -f -
+      ```
+3. prepare [docker.registry.values.yaml](resources/docker.registry.values.yaml.md)
+4. install by helm
     *  NOTE: `https://resource-ops.lab.zjvis.net:32443/charts/helm.twun.io/docker-registry-1.14.0.tgz`
     * ```shell
       helm install \

@@ -7,19 +7,6 @@ persistence:
   enabled: true
   size: 50Gi
   storageClass: standard
-# docker-registry-password
-#configData:
-#  auth:
-#    htpasswd:
-#      realm: basic-realm
-#      path: /auth/htpasswd
-#extraEnvVars:
-#  - name: REGISTRY_AUTH
-#    value: "htpasswd"
-#  - name: REGISTRY_AUTH_HTPASSWD_REALM
-#    value: "Registry Realm"
-#  - name: REGISTRY_AUTH_HTPASSWD_PATH
-#    value: "/auth/htpasswd"
 #extraVolumeMounts:
 #  - name: auth
 #    mountPath: /auth
