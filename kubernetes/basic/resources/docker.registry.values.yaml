@@ -7,6 +7,13 @@ persistence:
   enabled: true
   size: 50Gi
   storageClass: standard
+#extraEnvVars:
+#  - name: REGISTRY_AUTH
+#    value: "htpasswd"
+#  - name: REGISTRY_AUTH_HTPASSWD_REALM
+#    value: "Registry Realm"
+#  - name: REGISTRY_AUTH_HTPASSWD_PATH
+#    value: "/auth/htpasswd"
 #extraVolumeMounts:
 #  - name: auth
 #    mountPath: /auth
