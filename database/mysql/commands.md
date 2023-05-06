@@ -1,11 +1,61 @@
 ## mysql command
 
 ### 用户及权限
-* 增加新用户
-    + 增加一个用户conti密码为AAaa1234，让其可以在本机上登录， 并对所有数据库有查询、插入、修改、删除的权限。
-    + ```mysql
-      GRANT SELECT,INSERT,UPDATE,DELETE ON *.* TO conti@localhost Identified BY “AAaa1234”;
-      # GRANT SELECT,INSERT,UPDATE,DELETE ON *.* TO conti@localhost Identified BY “AAaa1234”;
+* 创建用户
+    + ```sql
+      CREATE USER 'user_name'@'host' IDENTIFIED BY 'password';
+      -- user_name 用户名
+      -- host ["localhost", "0.0.0.0", "%"]
+      -- password 密码，不写则为无密码登录
+      -- CREATE USER 'conti_mysql'@'%' IDENTIFIED BY 'AAaa1234';
+      ```
+* 删除用户
+    + ```sql
+      DROP USER 'user_name'@'host';
+      -- user_name 用户名
+      -- host ["localhost", "0.0.0.0", "%"]
+      -- DROP USER conti_mysql;
+      ```
+* 设置与更改用户密码
+    + ```sql
+      ## 设置指定主机指定用户的密码
+      SET PASSWORD FOR 'username'@'host' = PASSWORD('newpassword');
+      -- SET PASSWORD FOR 'conti_mysql'@'%' = PASSWORD('CCcc1234');
+      ## 设置当前用户的密码
+      SET PASSWORD = PASSWORD('newpassword');
+      -- SET PASSWORD = PASSWORD('CCcc1234');
+      ```
+* 授权用户
+    + ```sql
+      GRANT privileges ON databasename.tablename TO 'username'@'host';
+      -- privileges 授予权力 ["select", "insert", "update", "..."] 全部则为 "all"
+      -- datbasename 赋权的库 全部则为 "*"
+      -- tablename 赋权的表 全部则为 "*"
+      -- 'username'@'host' 用户          
+      
+      -- 给用户conti_mysql授权在test库的person表上执行insert和select的权利
+      grant select, insert ON test.person TO 'conti_mysql'@'%';
+         
+      -- 给用户conti_mysql授权在所有库所有表的所有的权力。       
+      grant all on *.* TO 'conti_mysql'@'%'; 
+         
+      -- 操作MySQL外键权限。
+      grant references on testdb.* to 'conti_mysql'@'192.168.0.2';
+         
+      -- 操作MySQL临时表权限。
+      grant create temporary tables on testdb.* to 'conti_mysql'@'192.168.0.2';
+         
+      -- 操作MySQL索引权限。
+      grant index on testdb.* to 'conti_mysql'@'192.168.0.2';
+         
+      -- 操作 MySQL视图、查看视图源代码权限。
+      grant create view on testdb.* to 'conti_mysql'@'192.168.0.2';
+      grant show view on testdb.* to 'conti_mysql'@'192.168.0.2';
+         
+      -- 操作MySQL存储过程、函数 权限。
+      grant create routine on testdb.* to 'conti_mysql'@'192.168.0.2'; 
+      grant alter routine on testdb.* to 'conti_mysql'@'192.168.0.2'; 
+      grant execute on testdb.* to 'conti_mysql'@'192.168.0.2';
       ```
 
 ### 查看 MySQL 数据的大小
@@ -138,3 +188,20 @@ show full processlist;
 SHOW OPEN TABLES where `database` = 'my_database';
 ```
 
+### 表结构操作
+* 新增字段
+    + ```sql
+      ALTER TABLE `concept_extractor`
+        ADD `post_concept_id` varchar(255) DEFAULT NULL,
+        ADD `pre_concept_id` varchar(255) DEFAULT NULL;
+      ```
+* 删除字段
+    + ```sql
+      ALTER TABLE `algorithm_server` 
+          DROP `universal_user_id`;
+      ```
+* 修改字段
+    + ```sql
+      ALTER TABLE `attribute_extractor` 
+          MODIFY `attribute_extractor_id` bigint(20) NOT NULL;
+      ```

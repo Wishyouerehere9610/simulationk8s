@@ -5,7 +5,13 @@
   # kubectl -n application port-forward --address 0.0.0.0 conti-pod 8080:80 # local:pod
   # kubectl -n application port-forward --address 0.0.0.0 svc/conti-svc 8080:80 # local:pod
   ```
-  
+
+### delete pod
+* ```shell
+  kubectl -n application delete pod podname --force --grace-period=0
+  ## grace-period表示过渡存活期，默认30s, 0表示立即终止POD
+  ```
+
 ### file upload
 * ```shell
   kubectl -n application exec -ti deployment/my-resource-nginx -c busybox -- sh
