@@ -10,3 +10,4 @@
 
 ## other
 * [commands](commands.md)
+* [basic mirrors](mirrors/README.md)

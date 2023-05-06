@@ -1,0 +1,1 @@
+[tuna mirrot](tuna_debian_buster.repo ':include')

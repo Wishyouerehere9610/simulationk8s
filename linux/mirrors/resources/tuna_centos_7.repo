@@ -1,0 +1,13 @@
+[base]
+name=CentOS-$releasever
+#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=os
+baseurl=http://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/os/$basearch/
+gpgcheck=1
+gpgkey=http://mirrors.tuna.tsinghua.edu.cn/centos/RPM-GPG-KEY-CentOS-7
+
+[extras]
+name=CentOS-$releasever
+#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=extras
+baseurl=http://mirrors.tuna.tsinghua.edu.cn/centos/$releasever/extras/$basearch/
+gpgcheck=1
+gpgkey=http://mirrors.tuna.tsinghua.edu.cn/centos/RPM-GPG-KEY-CentOS-7

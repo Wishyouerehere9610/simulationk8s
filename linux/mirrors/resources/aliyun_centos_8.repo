@@ -1,0 +1,17 @@
+[base]
+name=CentOS-8.5.2111 - Base - mirrors.aliyun.com
+baseurl=http://mirrors.aliyun.com/centos-vault/8.5.2111/BaseOS/$basearch/os/
+gpgcheck=0
+gpgkey=http://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-Official
+
+[extras]
+name=CentOS-8.5.2111 - Extras - mirrors.aliyun.com
+baseurl=http://mirrors.aliyun.com/centos-vault/8.5.2111/extras/$basearch/os/
+gpgcheck=0
+gpgkey=http://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-Official
+
+[AppStream]
+name=CentOS-8.5.2111 - AppStream - mirrors.aliyun.com
+baseurl=http://mirrors.aliyun.com/centos-vault/8.5.2111/AppStream/$basearch/os/
+gpgcheck=0
+gpgkey=http://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-Official
