@@ -1,1 +1,1 @@
-[Debian mirror](Debian_debian_buster.repo ":include")
+[Debian mirror](Debian_debian_buster.repo ':include')

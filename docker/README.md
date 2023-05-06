@@ -11,6 +11,7 @@
 
 ## dockerfile
 * [dockerfile grammar](dockerfile.md)
+* [docker image init](dockerfile/docker_images_init.md)
 
 ### other
 * [commands](commands.md)
