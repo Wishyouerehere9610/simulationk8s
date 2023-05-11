@@ -1,16 +1,16 @@
-# resources-nginx
+## resources-nginx
 
-## main usage
+### main usage
 * Make a static resource server
 
-## conceptions
+### conceptions
 * none
 
-## purpose
+### purpose
 * none
 
-## precondition
-* [create.local.cluster.with.kind](/kubernetes/create.local.cluster.with.kind.md)
+### precondition
+* [create.local.cluster.with.kind](/kubernetes/kind.cluster.md)
 * [installed ingress-nginx](/kubernetes/basic/ingress.nginx.md)
 * [installed cert-manager](/kubernetes/basic/cert.manager.md)
 

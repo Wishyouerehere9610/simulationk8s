@@ -1,7 +1,7 @@
-# create local cluster with kind
+## kind-cluster
 
 ## main usage
-* create a local k8s cluster 
+* create a local k8s cluster
 
 ## conceptions
 * none
