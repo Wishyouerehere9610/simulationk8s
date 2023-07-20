@@ -85,9 +85,10 @@ Docker是一个开源的应用容器引擎，基于go语言开发并遵循了apa
     + ```shell
       docker run --rm \
           --name mysql-server \
+          -p 3307:3306 \
           -e MYSQL_ROOT_PASSWORD=master_root_password \
           -e MYSQL_DATABASE=my_database \
-          bitnami/mysql:5.7.43-debian-11-r0
+          -d bitnami/mysql:5.7.43-debian-11-r0
       ```
     + ```shell
       docker run --rm \
