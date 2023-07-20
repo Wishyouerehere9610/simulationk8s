@@ -8,3 +8,4 @@
 ## commands
   * [mysql](mysql/commands.md)
   * [redis](redis/commands.md)
+  * [postgresql](postgresql/commands.md)
