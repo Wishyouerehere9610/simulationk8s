@@ -1,0 +1,1 @@
+[kubespray-setup.sh](kubespray-setup.sh ':include')

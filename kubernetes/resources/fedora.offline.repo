@@ -1,0 +1,17 @@
+[fedora]
+name=fedora
+baseurl=file:///data/base
+enabled=1
+gpgcheck=0
+
+[fedora]
+name=updates
+baseurl=file:///data/updates
+enabled=1
+gpgcheck=0
+
+[docker-ce]
+name=docker-ce
+baseurl=file:///data/docker-ce
+enabled=1
+gpgcheck=0

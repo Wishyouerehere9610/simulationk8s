@@ -12,6 +12,8 @@
 
 
 ## other
+* [kubernetes_230926](kubernetes_230926.md)
+* [kubespray-offline-231009](kubernetes_231009.md)
 * [kubernetes binary tools](binary_tools.md)
 * [commands](commands.md)
 * [k8s CNI](resources/cni.md)
