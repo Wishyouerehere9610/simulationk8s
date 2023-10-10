@@ -16,10 +16,11 @@
 
 ### installation operator
 1. configure repositories
-    * remove all repo configuration
+    * prepare local yum-registry [Fedora-38-yum-231009](resources/Fedora-38-yum-231009.md)
     * copy `Fedora-38-base-231009.tar.gz` as file `/data/Fedora-38-base-231009.tar.gz`
     * copy `Fedora-38-updates-231009.tar.gz` as file `/data/Fedora-38-updates-231009.tar.gz`
     * copy `Fedora-38-docker-ce-231009.tar.gz` as file `/data/Fedora-38-docker-ce-231009.tar.gz`
+    * remove all repo configuration
     * ```shell
       rm -rf /etc/yum.repos.d/* \
           && tar xvf /data/Fedora-38-base-231009.tar.gz -c /data/base \

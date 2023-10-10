@@ -1,0 +1,25 @@
+[fedora]
+name=Fedora $releasever - $basearch
+failovermethod=priority
+baseurl=http://mirrors.tuna.tsinghua.edu.cn/fedora/releases/$releasever/Everything/$basearch/os/
+metadata_expire=28d
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
+skip_if_unavailable=False
+
+[updates]
+name=Fedora $releasever - $basearch - Updates
+failovermethod=priority
+baseurl=http://mirrors.tuna.tsinghua.edu.cn/fedora/updates/$releasever/Everything/$basearch/
+enabled=1
+gpgcheck=1
+metadata_expire=6h
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
+skip_if_unavailable=False
+
+[docker-ce]
+name=Docker CE Stable - $basearch
+baseurl=https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/fedora/$releasever/$basearch/stable
+enabled=1
+gpgcheck=1
+gpgkey=https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/fedora/gpg
