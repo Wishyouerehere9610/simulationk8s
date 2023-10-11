@@ -12,7 +12,7 @@
     * ```shell
       rm -rf /etc/yum.repos.d/*
       ```
-3. copy [fedora.yum.repo](fedora.yum.repo) as file `/etc/yum.repos.d/fedora.yum.repo`
+3. copy [fedora.yum.repo](fedora.yum.repo.md) as file `/etc/yum.repos.d/fedora.yum.repo`
     * ```shell
       dnf clean all && dnf makecache \
           && reposync -p /data --repo=fedora --download-metadata \

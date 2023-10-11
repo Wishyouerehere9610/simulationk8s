@@ -1,0 +1,1 @@
+[kubespray-container-images.sh](kubespray-container-images.sh ':include')
