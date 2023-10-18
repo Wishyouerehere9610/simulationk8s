@@ -38,69 +38,77 @@
       ```
 3. install basic tools
     * ```shell
-      dnf install -y vim curl python3.6 python3-pip net-tools containerd.io \
-          docker-ce-23.0.6 docker-ce-cli-23.0.6 docker-ce-rootless-extras-23.0.6 docker-compose-plugin-2.19.1
+      dnf install -y vim curl net-tools docker-ce-23.0.6 containerd.io \
+           docker-ce-cli-23.0.6 docker-ce-rootless-extras-23.0.6 docker-compose-plugin-2.19.1
       ```
-4. clone kubespray with specific version(v2.23.0)
-    * prepare [kubespray-offline-231009](resources/kubespray-offline-231009.md)
-    * copy `kubespray-offline-v2.23.0.tar.gz` as file `$HOME/kubespray-v2.23.0.tar.gz`
-    * ```shell
-      KUBESPRAY_DIREACTORY=$HOME/kubespray
-      tar xvf $HOME/kubespray-v2.23.0.tar.gz -C $KUBESPRAY_DIREACTORY
-      cd $KUBESPRAY_DIREACTORY
-      ```
-5. load python dependencies for kubespray
-    * ```shell
-      VENV_DIRECTORY=$HOME/kubespray/venv \
-          && source $VENV_DIRECTORY/bin/activate
-      ```
-6. prepare images
+4. prepare images
     * prepare [kubespray-images](resources/kubespray-images.md)
     * copy `kubespray-images.tar.gz` as file `$HOME/kubespray-images.tar.gz`
     * ```shell
-      DOCKER_IMAGE_PATH=$HOME/docker-images && mkdir -p $DOCKER_IMAGE_PATH
-      tar xvf $HOME/kubespray-images.tar.gz -C $DOCKER_IMAGE_PATH && \
-      for IMAGE in "docker.io_library_nginx_1.25.2-alpine.dim" \
-          "docker.io_library_registry_2.8.1.dim"
+      DOCKER_IMAGE_PATH=$HOME/kubespray-images && mkdir -p $DOCKER_IMAGE_PATH
+      tar xvf $HOME/kubespray-images.tar.gz -C $HOME && \
+      for IMAGE in "docker.io-library-nginx-1.25.2-alpine.dim" \
+          "docker.io-library-registry-2.8.1.dim" \
+          "quay.io-kubespray-kubespray:v2.23.0.dim"
       do
           docker image load -i $DOCKER_IMAGE_PATH/$IMAGE
       done
       ```
-7. 启动一个nginx服务, 提供file
-    * prepare [kubespray-nginx-file](resources/kubespray-nginx-file.md)
-    * copy `kubespray-nginx-file.tar.gz` as file `/data/kubespray-nginx-file.tar.gz`
-    * ```shell
-      tar zcvf /data/kubespray-nginx-file.tar.gz -C $DOCKER_IMAGE_PATH
-      ```
+5. prepare file repo
+    * prepare [kubespray-nginx](resources/kubespray-nginx.md)
+    * copy `kubespray-nginx.tar.gz` as file `$HOME/kubespray-nginx.tar.gz`
     * start nginx-server in docker
     * ```shell
-      bash nginx-offline.sh
+      tar zcvf $HOME/kubespray-nginx.tar.gz -C $HOME \
+          && bash $HOME/kubespray-nginx/nginx-file.sh
       ```
-8. 启动一个registry, 提供images
-    * prepare [kubespray-container-images.sh](resources/kubespray-container-images.sh.md)
+6. prepare docker-registry
     * ```shell
-      DOCKER_IMAGE_PATH=$HOME/docker-images && mkdir -p $DOCKER_IMAGE_PATH \
-          && bash kubespray-container-images.sh
+      docker run \
+          --name registry \
+          --restart always \
+          -p 5000:5000 \
+          -d docker.io/library/registry:2.8.1
       ```
+    * registering the images to local registry
+    * ```shell
+       bash $HOME/kubespray-images/images.sh
+       ```
+7. clone kubespray with specific version(v2.23.0)
+    * prepare kubespray-231009](resources/
+    * copy `kubespray-231009.tar.gz` as file `$HOME/kubespray-231009.tar.gz`
+    * ```shell
       
-10. generate configurations for kubespray
-     * ```shell
-       cp -rfp inventory/sample inventory/mycluster
-       declare -a IPS=(192.168.112.131 192.168.112.132 192.168.112.133)
-       CONFIG_FILE=inventory/mycluster/hosts.yaml python3 contrib/inventory_builder/inventory.py ${IPS[@]}
-       # Review and change parameters under ``inventory/mycluster/group_vars``
-       #less inventory/mycluster/group_vars/all/all.yml
-       #less inventory/mycluster/group_vars/k8s_cluster/k8s-cluster.yml
-       # modify `upstream_dns_servers in `inventory/mycluster/group_vars/all/all.yml`
-       # uncomment `upstream_dns_servers` and add `223.5.5.5`, `223.6.6.6` to dns servers
-       # https://github.com/kubernetes-sigs/kubespray/issues/9948
-       vim inventory/mycluster/group_vars/all/all.yml
-       ```
-11. install base environment
-     * copy [kubespray-setup.sh](resources/kubespray-setup.sh.md) as file `/tmp/kubespray-setup.sh`
-     * ```shell
-       bash /tmp/kubespray-setup.sh
-       ```
+      tar xvf $HOME/kubespray-offline-231009.tar.gz -C $HOME
+      cd $KUBESPRAY_DIREACTORY
+      ```
+8. load python dependencies for kubespray
+    * ```shell
+      VENV_DIRECTORY=$HOME/kubespray/venv \
+          && source $VENV_DIRECTORY/bin/activate
+      ```
+
+
+
+9. generate configurations for kubespray
+    * ```shell
+      cp -rfp inventory/sample inventory/mycluster
+      declare -a IPS=(192.168.12.12 192.168.12.13 192.168.12.14)
+      CONFIG_FILE=inventory/mycluster/hosts.yaml python3 contrib/inventory_builder/inventory.py ${IPS[@]}
+      ```
+10. stop and disable firewalld
+    * ```shell
+      ansible -i inventory/mycluster/hosts.yaml all -m command -a "systemctl stop firewalld"
+      ansible -i inventory/mycluster/hosts.yaml all -m command -a "systemctl disable firewalld"
+      ```
+11. modify `inventory/mycluster/group_vars/all/offline.yml`
+    * ```text
+      ### Private Container Image Registry
+      registry_host: "kubespray-operator:5000"
+      files_repo: "http://kubespray-operator:8080"
+      ### If using CentOS, RedHat, AlmaLinux or Fedora
+      yum_repo: "http://mirrors.tuna.tsinghua.edu.cn"
+      ```
 12. install kubernetes cluster with ansible
      * ```shell
        ansible-playbook -i inventory/mycluster/hosts.yaml --become --become-user=root reset.yml
