@@ -7,10 +7,8 @@
     + `192.168.31.71 calico-01`
     + `192.168.31.72 calico-02`
     + `192.168.31.73 calico-03`
- 
-## installation `20230209`
 
-### install base environment
+## install base environment
 1. configure `/etc/hosts` for all nodes
     * ```shell
       cat >> /etc/hosts <<EOF
@@ -73,7 +71,7 @@
       done
       ```
 
-### install k8s-master
+## install k8s-master
 1. choose `calico-00` as master node
 2. initialize k8s-master
     * ```shell
@@ -112,7 +110,7 @@
       kubectl wait --for=condition=ready node --all
       ```
 
-### install k8s-worker
+## install k8s-worker
 1. choose `calico-01` ~ `calico-03` as k8s-worker
     * ```shell
       $(ssh calico-00 "kubeadm token create --print-join-command")
@@ -128,12 +126,12 @@
        kubectl wait --for=condition=ready node --all
        ```
 
-### install k8s-storage
+## install k8s-storage
 
-#### rook-ceph
+### rook-ceph
 * [rook-ceph-installation](rook-ceph-installation.md) `optional`
 
-#### nfs-external-nas
+### nfs-external-nas
 1. prepare images for all nodes
     * ```shell
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p $DOCKER_IMAGE_PATH
