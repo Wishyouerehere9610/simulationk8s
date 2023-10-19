@@ -8,11 +8,9 @@
     * worker2: 192.168.11.132
     * worker3: 192.168.11.133
 2. resources info
-    * basic-env #部署准备工作中需要执行自动化脚本
-    * nginx #nginx默认根目录，k8s部署相关的文件
-    * registry #私有镜像仓库registry镜像及部署脚本
-    * kubespray-v2.23.0.tar.gz #官方kubespray-v2.23.0源码
-    * kubespray-venv #解决ansible及python环境问题
+    * kubespray-nginx #nginx默认根目录，k8s部署相关的文件
+    * kubespray-images #私有镜像仓库registry镜像及部署脚本
+    * kubespray #官方kubespray-v2.23.0源码
 
 ### installation operator
 1. configure repositories
@@ -49,12 +47,13 @@
       tar xvf $HOME/kubespray-images.tar.gz -C $HOME && \
       for IMAGE in "docker.io-library-nginx-1.25.2-alpine.dim" \
           "docker.io-library-registry-2.8.1.dim" \
-          "quay.io-kubespray-kubespray:v2.23.0.dim"
+          "quay.io-kubespray-kubespray-v2.23.0.dim"
       do
           docker image load -i $DOCKER_IMAGE_PATH/$IMAGE
       done
       ```
-5. prepare file repo
+5. prepare yum repo
+6. prepare file repo
     * prepare [kubespray-nginx](resources/kubespray-nginx.md)
     * copy `kubespray-nginx.tar.gz` as file `$HOME/kubespray-nginx.tar.gz`
     * start nginx-server in docker
@@ -62,7 +61,7 @@
       tar zcvf $HOME/kubespray-nginx.tar.gz -C $HOME \
           && bash $HOME/kubespray-nginx/nginx-file.sh
       ```
-6. prepare docker-registry
+7. prepare docker-registry
     * ```shell
       docker run \
           --name registry \
@@ -74,22 +73,21 @@
     * ```shell
        bash $HOME/kubespray-images/images.sh
        ```
-7. clone kubespray with specific version(v2.23.0)
-    * prepare kubespray-231009](resources/
-    * copy `kubespray-231009.tar.gz` as file `$HOME/kubespray-231009.tar.gz`
+8. clone kubespray with specific version(v2.23.0)
+    * prepare [kubespray-v2.23.0](resources/kubespray-v2.23.0.md)
+    * copy `kubespray-v2.23.0.tar.gz` as file `$HOME/kubespray-v2.23.0.tar.gz`
     * ```shell
-      
-      tar xvf $HOME/kubespray-offline-231009.tar.gz -C $HOME
-      cd $KUBESPRAY_DIREACTORY
+      tar xvf $HOME/kubespray-v2.23.0.tar.gz -C $HOME
       ```
-8. load python dependencies for kubespray
+    * start kubespray in docker
     * ```shell
-      VENV_DIRECTORY=$HOME/kubespray/venv \
-          && source $VENV_DIRECTORY/bin/activate
+      docker run \
+          --rm -it \
+          --workdir /app \
+          -v $HOME/kubespray:/app \
+          -v $HOME/.ssh:/root/.ssh:ro \
+          quay.io/kubespray/kubespray:v2.23.0 bash
       ```
-
-
-
 9. generate configurations for kubespray
     * ```shell
       cp -rfp inventory/sample inventory/mycluster
@@ -103,11 +101,9 @@
       ```
 11. modify `inventory/mycluster/group_vars/all/offline.yml`
     * ```text
-      ### Private Container Image Registry
       registry_host: "kubespray-operator:5000"
       files_repo: "http://kubespray-operator:8080"
-      ### If using CentOS, RedHat, AlmaLinux or Fedora
-      yum_repo: "http://mirrors.tuna.tsinghua.edu.cn"
+      yum_repo: "http://kubespray-operator:9090"
       ```
 12. install kubernetes cluster with ansible
      * ```shell
@@ -118,6 +114,6 @@
 13. copy configurations for kubectl
      * ```shell
        mkdir ~/.kube \
-           && sudo cp /etc/kubernetes/admin.conf ~/.kube/config \
-           && sudo chown ben.wangz:ben.wangz ~/.kube/config
+           && cp /etc/kubernetes/admin.conf ~/.kube/config \
+           && chown $(id -u):$(id -g) $HOME/.kube/config
        ```

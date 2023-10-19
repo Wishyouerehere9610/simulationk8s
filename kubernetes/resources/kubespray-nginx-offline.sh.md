@@ -1,0 +1,1 @@
+[kubespray-nginx-offline.sh](kubespray-nginx-offline.sh ':include')
