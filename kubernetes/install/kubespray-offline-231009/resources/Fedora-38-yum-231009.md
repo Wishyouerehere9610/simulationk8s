@@ -1,5 +1,3 @@
-## Fedora-38-yum-231009
-
 ### make yum-registry in docker
 1. start fedora in docker
     * ```shell
@@ -15,6 +13,7 @@
 3. copy [fedora.yum.repo](fedora.yum.repo.md) as file `/etc/yum.repos.d/fedora.yum.repo`
     * ```shell
       dnf clean all && dnf makecache \
+          && dnf install -y vim curl yum-utils dnf-utils \
           && reposync -p /data --repo=fedora --download-metadata \
           && reposync -p /data --repo=updates --download-metadata \
           && reposync -p /data --repo=docker-ce --download-metadata
