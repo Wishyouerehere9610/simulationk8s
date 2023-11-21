@@ -1,0 +1,21 @@
+persistence:
+  storageClass: "standard"
+  size: 20Gi
+redis:
+  configmap: |-
+    maxmemory-policy allkeys-lru
+    maxmemory 20GB
+  useAOFPersistence: "no"
+cluster:
+  nodes: 6
+image:
+  registry: docker.io
+  repository: bitnami/redis-cluster
+  tag: 6.2.2-debian-10-r0
+  pullPolicy: IfNotPresent
+metrics:
+  image:
+    registry: docker.io
+    repository: bitnami/redis-exporter
+    tag: 1.20.0-debian-10-r27
+    pullPolicy: IfNotPresent

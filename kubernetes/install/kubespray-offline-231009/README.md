@@ -53,7 +53,18 @@
       done
       ```
 5. prepare yum repo
-6. prepare file repo
+    * prepare [fedora-38-yum.nginx.conf](resources/fedora-38-yum.nginx.conf.md)
+    * ```shell
+      docker run \
+          --name fedora-38-yum \
+          --restart always \
+          -p 8090:80 \
+          -v /data/base:/usr/share/nginx/html/base \
+          -v /data/updates:/usr/share/nginx/html/updates \
+          -v /data/docker-ce:/usr/share/nginx/html/docker-ce \
+          -d docker.io/library/nginx:1.25.2-alpine
+      ```
+7. prepare file repo
     * prepare [kubespray-nginx](resources/kubespray-nginx.md)
     * copy `kubespray-nginx.tar.gz` as file `$HOME/kubespray-nginx.tar.gz`
     * start nginx-server in docker
@@ -61,7 +72,7 @@
       tar zcvf $HOME/kubespray-nginx.tar.gz -C $HOME \
           && bash $HOME/kubespray-nginx/nginx-file.sh
       ```
-7. prepare docker-registry
+8. prepare docker-registry
     * ```shell
       docker run \
           --name registry \
@@ -73,7 +84,7 @@
     * ```shell
        bash $HOME/kubespray-images/images.sh
        ```
-8. clone kubespray with specific version(v2.23.0)
+9. clone kubespray with specific version(v2.23.0)
     * prepare [kubespray-v2.23.0](resources/kubespray-v2.23.0.md)
     * copy `kubespray-v2.23.0.tar.gz` as file `$HOME/kubespray-v2.23.0.tar.gz`
     * ```shell
@@ -88,30 +99,30 @@
           -v $HOME/.ssh:/root/.ssh:ro \
           quay.io/kubespray/kubespray:v2.23.0 bash
       ```
-9. generate configurations for kubespray
-    * ```shell
-      cp -rfp inventory/sample inventory/mycluster
-      declare -a IPS=(192.168.12.12 192.168.12.13 192.168.12.14)
-      CONFIG_FILE=inventory/mycluster/hosts.yaml python3 contrib/inventory_builder/inventory.py ${IPS[@]}
-      ```
-10. stop and disable firewalld
+10. generate configurations for kubespray
+     * ```shell
+       cp -rfp inventory/sample inventory/mycluster
+       declare -a IPS=(192.168.12.12 192.168.12.13 192.168.12.14)
+       CONFIG_FILE=inventory/mycluster/hosts.yaml python3 contrib/inventory_builder/inventory.py ${IPS[@]}
+       ```
+11. stop and disable firewalld
     * ```shell
       ansible -i inventory/mycluster/hosts.yaml all -m command -a "systemctl stop firewalld"
       ansible -i inventory/mycluster/hosts.yaml all -m command -a "systemctl disable firewalld"
       ```
-11. modify `inventory/mycluster/group_vars/all/offline.yml`
+12. modify `inventory/mycluster/group_vars/all/offline.yml`
     * ```text
       registry_host: "kubespray-operator:5000"
       files_repo: "http://kubespray-operator:8080"
       yum_repo: "http://kubespray-operator:9090"
       ```
-12. install kubernetes cluster with ansible
+13. install kubernetes cluster with ansible
      * ```shell
        ansible-playbook -i inventory/mycluster/hosts.yaml --become --become-user=root reset.yml
        # you may have to retry several times to install kubernetes cluster successfully for the bad network
        ansible-playbook -i inventory/mycluster/hosts.yaml --become --become-user=root cluster.yml
        ```
-13. copy configurations for kubectl
+14. copy configurations for kubectl
      * ```shell
        mkdir ~/.kube \
            && cp /etc/kubernetes/admin.conf ~/.kube/config \

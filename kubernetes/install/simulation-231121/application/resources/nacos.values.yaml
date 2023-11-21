@@ -1,0 +1,44 @@
+statefulset:
+  enabled: true
+replicaCount: 3
+image:
+  registry: docker.io
+  repository: nacos/nacos-server
+  tag: v2.2.0
+service:
+  type: ClusterIP
+  ports:
+    http:
+      port: 8848
+    grpc:
+      port: 9848
+extraEnvVars:
+  - name: PREFER_HOST_MODE
+    value: "hostname"
+  - name: TZ
+    value: "Asia/Shanghai"
+  - name: SPRING_DATASOURCE_PLATFORM
+    value: "mysql"
+  - name: NACOS_AUTH_ENABLE
+    value: "true"
+ingress:
+  enabled: true
+  ingressClassName: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: self-signed-cluster-issuer
+    nginx.ingress.kubernetes.io/proxy-body-size: 10g
+  hostname: nacos-simulation.cnconti.cc
+  path: /nacos
+  tls: true
+mysql:
+  enabled: false
+  external:
+    mysqlMasterHost: "********"
+    mysqlDatabase: "nacos"
+    mysqlMasterPort: "********"
+    mysqlMasterUser: "********"
+    mysqlMasterPassword: "********"
+    mysqlSlaveHost: "********"
+    mysqlSlavePort: "********"
+initDB:
+  enabled: false
