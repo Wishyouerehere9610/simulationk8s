@@ -4,7 +4,7 @@
 1. prepare images
     * ```shell
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p $DOCKER_IMAGE_PATH
-      BASE_URL="https://resource-ops.lab.zjvis.net:32443/docker-images"
+      BASE_URL="https://resource-ops-dev.lab.zjvis.net:32443/docker-images"
       for IMAGE in "docker.io_library_influxdb_1.8.10-alpine.dim"
       do
           IMAGE_FILE=$DOCKER_IMAGE_PATH/$IMAGE

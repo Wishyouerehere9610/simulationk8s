@@ -4,7 +4,7 @@
 1. prepare images
     * ```shell
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p $DOCKER_IMAGE_PATH
-      BASE_URL="https://resource-ops.lab.zjvis.net:32443/docker-images"
+      BASE_URL="https://resource-ops-dev.lab.zjvis.net:32443/docker-images"
       for IMAGE in "docker.io_grafana_grafana_9.2.15.dim" \
           "docker.io_bats_bats_v1.4.1.dim" \
           "docker.io_curlimages_curl_7.85.0.dim" \

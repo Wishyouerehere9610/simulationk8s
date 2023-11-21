@@ -14,8 +14,11 @@ nodes:
       - containerPort: 32022
         hostPort: 1022
         protocol: TCP
-      - containerPort: 31080
-        hostPort: 1080
+      - containerPort: 30848
+        hostPort: 2848
+        protocol: TCP
+      - containerPort: 31848
+        hostPort: 2848
         protocol: TCP
   # Default single node kind
   # - role: worker
