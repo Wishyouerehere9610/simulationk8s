@@ -10,7 +10,7 @@
 1. prepare images
     * ```yaml
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p $DOCKER_IMAGE_PATH
-      BASE_URL="https://resource-ops.lab.zjvis.net:32443/docker-images"
+      BASE_URL="https://resource-ops-dev.lab.zjvis.net:32443/docker-images"
       for IMAGE in "docker.io_python_3.8.16-bullseye.dim" \
           "docker.io_centos_centos8.4.2105.dim"
       do
