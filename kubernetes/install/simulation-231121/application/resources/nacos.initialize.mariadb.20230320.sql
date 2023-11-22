@@ -173,6 +173,6 @@ CREATE TABLE `permissions` (
                                UNIQUE INDEX `uk_role_permission` (`role`,`resource`,`action`) USING BTREE
 );
 
-INSERT INTO users (username,password,enabled) VALUES ('nacos','$2a$10$JMnHcaqQxTBdM91BnxZGAe6fVat6YHkfgPnpHB3mP996MlP/CBOyS', TRUE);
+INSERT INTO users (username,password,enabled) VALUES ('nacos','$2a$10$CZu3O5cLKfxm5npgyV.QIeE.7DCxi6i3qxTmxTx03viJIqYRho6eK', TRUE);
 
 INSERT INTO roles (username, role) VALUES ('nacos', 'ROLE_ADMIN');

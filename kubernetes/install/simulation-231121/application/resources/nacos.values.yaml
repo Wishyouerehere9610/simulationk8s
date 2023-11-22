@@ -25,20 +25,19 @@ ingress:
   enabled: true
   ingressClassName: "nginx"
   annotations:
-    cert-manager.io/cluster-issuer: self-signed-cluster-issuer
     nginx.ingress.kubernetes.io/proxy-body-size: 10g
   hostname: nacos-simulation.cnconti.cc
   path: /nacos
-  tls: true
+  tls: false
 mysql:
   enabled: false
   external:
-    mysqlMasterHost: "********"
+    mysqlMasterHost: "my-mariadb.middleware"
     mysqlDatabase: "nacos"
-    mysqlMasterPort: "********"
-    mysqlMasterUser: "********"
+    mysqlMasterPort: "3306"
+    mysqlMasterUser: "root"
     mysqlMasterPassword: "********"
-    mysqlSlaveHost: "********"
-    mysqlSlavePort: "********"
+    mysqlSlaveHost: "my-mariadb.middleware"
+    mysqlSlavePort: "3306"
 initDB:
   enabled: false

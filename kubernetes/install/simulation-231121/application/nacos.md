@@ -25,8 +25,8 @@
       kubectl -n middleware exec -it deployment/mariadb-tool -- bash -c \
           'echo "create database nacos" | mysql -h my-mariadb.middleware -uroot -p$MARIADB_ROOT_PASSWORD'
       ```
-3. prepare initialization SQL [nacos.initialize.mariadb.20230320.sql](resources/nacos.initialize.mariadb.20230320.sql.md)
-    * initialization `nacos` use `nacos.initialize.mariadb.20230320.sql`
+3. prepare initialization `mariadb`
+    * initialization `nacos` use [nacos.initialize.mariadb.20230320.sql](resources/nacos.initialize.mariadb.20230320.sql.md)
     * ```shell
       POD_NAME=$(kubectl get pod -n middleware -l "app.kubernetes.io/name=mariadb-tool" -o jsonpath="{.items[0].metadata.name}") \
       && export SQL_FILENAME="nacos.initialize.mariadb.20230320.sql" \
@@ -34,7 +34,7 @@
       && kubectl -n middleware exec -it ${POD_NAME} -- bash -c \
              "mysql -h my-mariadb.middleware -uroot -p\${MARIADB_ROOT_PASSWORD} nacos < /tmp/nacos.initialize.mariadb.20230320.sql"
       ```
-4. prepare helm values [nacos.values.yaml](resources/nacos.values.yaml)
+4. prepare helm values [nacos.values.yaml](resources/nacos.values.yaml.md)
 5. install `nacos` by helm
     * ```shell
       helm install \
@@ -42,7 +42,19 @@
           my-nacos \
           https://resource-ops.lab.zjvis.net/charts/ygqygq2.github.io/charts/nacos-2.1.4.tgz \
           --values nacos.values.yaml \
+          --timeout 1200s \
           --atomic
       ```
-6. 
+
+### test
+1. connect to `nacos`
+    * `http://nacos-simulation.cnconti.cc/nacos`
+    * username: `nacos`
+    * password: `Nacos@1234`
+
+### uninstall
+1. uninstall `my-nacos`
+    * ```shell
+      helm -n application uninstall my-nacos
+      ```
     

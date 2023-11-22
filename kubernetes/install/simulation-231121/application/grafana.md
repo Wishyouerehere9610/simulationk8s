@@ -34,7 +34,7 @@
       helm install \
           --create-namespace --namespace application \
           my-grafana \
-          https://resource-ops.lab.zjvis.net:32443/charts/grafana.github.io/helm-charts/grafana/grafana-6.54.0.tgz \
+          https://resource-ops-dev.lab.zjvis.net:32443/charts/grafana.github.io/helm-charts/grafana/grafana-6.54.0.tgz \
           --values grafana.values.yaml \
           --atomic
       ```
