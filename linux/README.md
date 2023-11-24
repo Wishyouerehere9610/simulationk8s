@@ -17,3 +17,4 @@
 ## other
 * [commands](commands.md)
 * [basic mirrors](mirrors/README.md)
+* [zjvis-node](other/zjvis-node.md)

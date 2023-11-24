@@ -27,12 +27,12 @@
 2. prepare basic image
     * `docker.io/cnconti/oraclejdk:simulation-r1` # [Dockerfile](resources/simulation.basic.md)
 3. prepare business image
-    * `dokcer.io/cnconti/simulation-backend:5fd3ba7d9f` # [Dockerfile](resources/simulation-backend.business.md)
+    * `docker.io/cnconti/simulation-backend:5fd3ba7d9f` # [Dockerfile](resources/simulation-backend.business.md)
     * ```shell
-      kind load docker-image dokcer.io/cnconti/simulation-backend:5fd3ba7d9f
+      kind load docker-image docker.io/cnconti/simulation-backend:5fd3ba7d9f
       ```
 4. prepare helm values 
-    * prepare [simulation.backend.values.yaml](resources/simulation-backend.values.yaml.md)
+    * prepare [simulation-backend.values.yaml](resources/simulation-backend.values.yaml.md)
     * change `image.tag`
 6. install `simulation-backend` by helm
     * ```shell
@@ -41,7 +41,7 @@
           simulation-backend \
           java \
           --repo https://chartmuseum-ops-dev.lab.zjvis.net:32443 \
-          --version 1.0.0-Cef75117 \
+          --version 1.0.0-C4f979aa \
           --values simulation-backend.values.yaml \
           --atomic
       ```

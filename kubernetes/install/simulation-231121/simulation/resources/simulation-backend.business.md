@@ -2,10 +2,7 @@
     + ```dockerfile
       FROM docker.io/cnconti/oraclejdk:simulation-r1
       
-      USER spring
-      
       COPY simulation.jar /app/application.jar
-      COPY application.yaml /app/application.yaml
       COPY entry-point.sh /app/entry-point.sh
       
       RUN chmod u+x /app/entry-point.sh

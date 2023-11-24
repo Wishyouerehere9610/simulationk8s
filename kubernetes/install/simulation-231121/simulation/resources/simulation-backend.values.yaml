@@ -1,5 +1,5 @@
 image:
-  repository: dokcer.io/cnconti/simulation-backend:5fd3ba7d9f
+  repository: docker.io/cnconti/simulation-backend
   tag: "5fd3ba7d9f"
 centos:
   name: centos
