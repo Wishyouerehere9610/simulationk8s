@@ -41,19 +41,6 @@
       kubectl -n middleware apply -f minio-tool.deployment.yaml
       ```
 
-### test
-1. connect to `my-minio`
-    * ```shell
-      kubectl -n middleware exec -it deployment/minio-tool -- bash -c 
-          'mc config host add minio-test http://${MINIO_SERVER_HOST}:${MINIO_SERVER_PORT} ${MINIO_SERVER_ACCESS_KEY} ${MINIO_SERVER_SECRET_KEY} \
-              && mc mb minio-test/minio-bucket \
-              && mc cp /opt/bitnami/minio-client/bin/mc minio-test/minio-bucket  \
-              && mc ls minio-test/minio-bucket \
-              && mc rm minio-test/minio-bucket/mc \
-              && mc rb minio-test/minio-bucket \
-              && mc config host remove minio-test'
-      ```
-
 ### uninstall
 1. delete deployment
     * ```shell

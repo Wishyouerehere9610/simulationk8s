@@ -18,7 +18,7 @@ nodes:
         hostPort: 2848
         protocol: TCP
       - containerPort: 31848
-        hostPort: 2848
+        hostPort: 3848
         protocol: TCP
   # Default single node kind
   # - role: worker

@@ -34,8 +34,13 @@
       && kubectl -n middleware exec -it ${POD_NAME} -- bash -c \
              "mysql -h my-mariadb.middleware -uroot -p\${MARIADB_ROOT_PASSWORD} nacos < /tmp/nacos.initialize.mariadb.20230320.sql"
       ```
-4. prepare helm values [nacos.values.yaml](resources/nacos.values.yaml.md)
-5. install `nacos` by helm
+4. Obtain `mariadb` password
+    * ```shell
+      kubectl get secret --namespace middleware my-mariadb \
+             -o jsonpath="{.data.mariadb-root-password}" | base64 --decode && echo
+      ```
+5. prepare helm values [nacos.values.yaml](resources/nacos.values.yaml.md)
+6. install `nacos` by helm
     * ```shell
       helm install \
           --create-namespace --namespace application \
@@ -51,6 +56,11 @@
     * `http://nacos-simulation.cnconti.cc/nacos`
     * username: `nacos`
     * password: `Nacos@1234`
+2. `nacos` create namespace
+    * ![img.png](img.png)
+3. `nacos` create Configuration
+    * Query `middleware & password` and modify content
+    * ![img_1.png](img_1.png)
 
 ### uninstall
 1. uninstall `my-nacos`

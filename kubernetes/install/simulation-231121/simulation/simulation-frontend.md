@@ -1,14 +1,8 @@
 ## simulation-frontend
 
 ### installation
-1. prepare business image
-    * `dokcer.io/cnconti/simulation-frontend:5fd3ba7d9f` # [Dockerfile](resources/simulation-frontend.business.md)
-    * ```shell
-      kind load docker-image dokcer.io/cnconti/simulation-frontend:5fd3ba7d9f
-      ```
-2. prepare helm values 
-    * prepare [simulation-frontend.values.yaml](resources/simulation-frontend.values.yaml.md)
-3. install `simulation-frontend` by helm
+1. prepare [simulation-frontend.values.yaml](resources/simulation-frontend.values.yaml.md)
+2. install `simulation-frontend` by helm
     * ```shell
       helm install \
           --create-namespace --namespace simulation \
@@ -16,17 +10,17 @@
           nginx \
           --repo https://chartmuseum-ops-dev.lab.zjvis.net:32443 \
           --version 1.0.0-C12b9740 \
-          --values simulation.frontend.values.yaml \
+          --values simulation-frontend.values.yaml \
           --atomic
       ```
-4. upgrade `simulation-frontend` by helm
+3. upgrade `simulation-frontend` by helm
     * ```shell
       helm upgrade --namespace simulation \
           simulation-frontend \
           nginx \
           --repo https://chartmuseum-ops-dev.lab.zjvis.net:32443 \
           --version 1.0.0-C12b9740 \
-          --values simulation.frontend.values.yaml \
+          --values simulation-frontend.values.yaml \
           --atomic
       ```
     

@@ -1,6 +1,6 @@
 image:
-  repository: docker.io/simulation-frontend-vue
-  tag: "5fd3ba7d9f"
+  repository: docker-registry-ops-dev.lab.zjvis.net:32443/docker.io/simulation-frontend-vue
+  tag: "df316417-1.0.0-C4f979aa"
 ingress:
   enabled: true
   className: "nginx"
