@@ -11,12 +11,11 @@
          && timedatectl set-timezone 'Asia/Shanghai'
      ```
 3. install `docker`
-    * install
-        * ```shell
-        yum -y install tar yum-utils device-mapper-persistent-data lvm2 docker-ce \
-            && systemctl enable docker \
-            && systemctl start docker
-        ```
+    * ```shell
+      yum -y install tar yum-utils device-mapper-persistent-data lvm2 docker-ce \
+          && systemctl enable docker \
+          && systemctl start docker
+      ```
 4. download kubernetes binary tools
     * ```shell
       mkdir -p /root/bin
