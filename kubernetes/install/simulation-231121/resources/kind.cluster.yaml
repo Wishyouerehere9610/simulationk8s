@@ -1,7 +1,7 @@
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 networking:
-  apiServerAddress: 192.168.31.21
+  apiServerAddress: 0.0.0.0
 nodes:
   - role: control-plane
     extraPortMappings:
@@ -20,11 +20,6 @@ nodes:
       - containerPort: 31848
         hostPort: 3848
         protocol: TCP
-  # Default single node kind
   # - role: worker
   # - role: worker
   # - role: worker
-containerdConfigPatches:
-  - |-
-    [plugins."io.containerd.grpc.v1.cri".registry.mirrors."localhost:5000"]
-      endpoint = ["http://kind-registry:5000"]

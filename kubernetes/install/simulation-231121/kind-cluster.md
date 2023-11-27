@@ -49,7 +49,6 @@
       ```
 6. install `kind-cluster` kind
     * prepare [kind.cluster.yaml](resources/kind.cluster.yaml.md) as file `/tmp/kind.cluster.yaml`
-        * modify `networking.apiServerAddress`
     * prepare [kind.with.registry.sh](resources/kind.with.registry.sh.md) as file `/tmp/kind.with.registry.sh`
     * ```shell
       bash /tmp/kind.with.registry.sh /tmp/kind.cluster.yaml \
@@ -64,5 +63,5 @@
 ## Uninstallation
 1. uninstall `kind-cluster`
     * ```shell
-      kind delete clusters kind
+      kind delete cluster --name kind
       ```
