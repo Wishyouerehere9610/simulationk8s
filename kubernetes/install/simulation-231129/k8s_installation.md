@@ -50,6 +50,7 @@
           "docker.io_k8s.gcr.io_kube-proxy_v1.23.3.dim" \
           "docker.io_k8s.gcr.io_etcd_3.5.1-0.dim" \
           "docker.io_k8s.gcr.io_kube-scheduler_v1.23.3.dim" \
+          "quay.io_tigera_operator_v1.29.0.dim" \
           "docker.io_registry_2.7.1.dim" \
           "quay.io_tigera_operator_v1.23.3.dim" \
           "docker.io_bitnami_mariadb_10.5.12-debian-10-r0.dim"
@@ -88,7 +89,7 @@
           && rm -rf linux-amd64/ helm-v3.6.2-linux-amd64.tar.gz
       ```
 5. install `tigera-operator` for k8s-cluster
-    * prepare [tigera-operator.values.yaml](resources/tigera-operator.values.yaml) as file `/tmp/tigera-operator.values.yaml`
+    * prepare [tigera-operator.values.yaml](resources/tigera-operator.values.yaml.md) as file `/tmp/tigera-operator.values.yaml`
     * ```shell
       helm install \
          --create-namespace --namespace calico-system \
@@ -169,41 +170,35 @@
           --atomic
       ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+### test k8s-cluster
+1. install `mariadb-test`
+    * prepare [mariadb-test.values.yaml](resources/mariadb-test.values.yaml.md) as file `/tmp/mariadb-test.values.yaml`
+    * ```shell
+      helm install \
+          --create-namespace --namespace test \
+          mariadb-test \
+          https://resource-ops.lab.zjvis.net/charts/charts.bitnami.com/bitnami/mariadb-9.4.2.tgz \
+          --values /tmp/mariadb-test.values.yaml \
+          --timeout 600s \
+          --atomic
+      ``` 
+2. prepare [mariadb-test.tool.yaml](resources/mariadb-test.tool.yaml.md) as file `/tmp/mariadb-test.tool.yaml`
+    * ```shell
+      kubectl -n test apply -f /tmp/mariadb-test.tool.yaml
+      ```
+3. connect to `mariadb-test`
+    * ```shell
+      kubectl -n test exec -it deployment/mariadb-tool -- bash -c \
+          'echo "show databases" | mysql -h mariadb-test.test -uroot -p$MARIADB_ROOT_PASSWORD'
+      ```
+4. checking pvc and pv
+    * ```shell
+      kubectl -n test get pvc
+      kubectl get sc && kubectl get pv
+      ```
+5. uninstall `mariadb-test`
+    * ```shell
+      helm -n test uninstall mariadb-test \
+          && kubectl -n test delete pvc data-mariadb-test-0 \
+          && kubectl delete namespace test
+      ```
