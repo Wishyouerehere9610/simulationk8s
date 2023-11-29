@@ -29,7 +29,7 @@
       systemctl stop firewalld && systemctl disable firewalld
       ```
 6. install base environment
-    * copy [setup.base.sh ](resources/setup.base.sh.md)
+    * copy [setup.base.sh](resources/setup.base.sh.md) as file `/tmp/setup.base.sh`
     * ```shell
       bash /tmp/setup.base.sh
       ```
