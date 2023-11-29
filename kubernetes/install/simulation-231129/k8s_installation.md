@@ -17,7 +17,7 @@
     * ```shell
       rm -rf /etc/yum.repos.d/*
       ```
-    * copy [all.in.one.7.repo](resources/all.in.one.7.repo.md) as file `/etc/yum.repos.d/all.in.one.7.repo`
+    * copy [all.in.one.8.repo](resources/all.in.one.8.repo.md) as file `/etc/yum.repos.d/all.in.one.8.repo`
 4. configure ntp
     * ```shell
       yum install -y chrony && systemctl enable chronyd && systemctl start chronyd \
