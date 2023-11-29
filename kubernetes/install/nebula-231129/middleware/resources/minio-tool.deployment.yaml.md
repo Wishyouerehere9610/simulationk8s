@@ -1,0 +1,1 @@
+[minio-tool.deployment.yaml](minio-tool.deployment.yaml ':include')

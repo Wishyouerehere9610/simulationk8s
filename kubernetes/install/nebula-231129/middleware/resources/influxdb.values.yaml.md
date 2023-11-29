@@ -1,0 +1,1 @@
+[influxdb.values.yaml](influxdb.values.yaml ':include')

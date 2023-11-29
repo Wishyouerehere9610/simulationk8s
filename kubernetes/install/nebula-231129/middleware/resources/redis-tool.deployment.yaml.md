@@ -1,0 +1,1 @@
+[redis-tool.deployment.yaml](redis-tool.deployment.yaml ':include')

@@ -1,0 +1,42 @@
+## ingress-nginx
+
+### installation
+1. prepare images
+    * ```shell
+      DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p $DOCKER_IMAGE_PATH
+      BASE_URL="https://resource-ops.lab.zjvis.net:32443/docker-images"
+      for IMAGE in "k8s.gcr.io_ingress-nginx_controller_v1.0.3.dim" \
+          "k8s.gcr.io_ingress-nginx_kube-webhook-certgen_v1.0.dim" \
+          "k8s.gcr.io_defaultbackend-amd64_1.5.dim"
+      do
+          IMAGE_FILE=$DOCKER_IMAGE_PATH/$IMAGE
+          if [ ! -f $IMAGE_FILE ]; then
+              TMP_FILE=$IMAGE_FILE.tmp \
+                  && curl -o "$TMP_FILE" -L "$BASE_URL/$IMAGE" \
+                  && mv $TMP_FILE $IMAGE_FILE
+          fi
+          docker image load -i $IMAGE_FILE && rm -rf $IMAGE_FILE
+      done
+      for IMAGE in "k8s.gcr.io/ingress-nginx/controller:v1.0.3" \
+          "k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.0" \
+          "k8s.gcr.io/defaultbackend-amd64:1.5"
+      do
+          kind load docker-image ${IMAGE}
+      done
+      ```
+2. prepare helm values [ingress.nginx.values.yaml](resources/ingress.nginx.values.yaml.md)
+3. install `ingress-nginx` by helm
+    * ```shell
+      helm install \
+          --create-namespace --namespace basic-components \
+          my-ingress-nginx \
+          https://resource-ops.lab.zjvis.net:32443/charts/kubernetes.github.io/ingress-nginx/ingress-nginx-4.0.5.tgz \
+          --values ingress.nginx.values.yaml \
+          --atomic
+      ```
+
+### uninstall
+1. uninstall `my-ingress-nginx`
+    * ```shell
+      helm -n basic-components uninstall my-ingress-nginx
+      ```

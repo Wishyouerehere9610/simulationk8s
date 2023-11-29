@@ -1,0 +1,14 @@
+image:
+  repository: "docker.io/library/influxdb"
+  tag: "1.8.10-alpine"
+  pullPolicy: IfNotPresent
+service:
+  type: ClusterIP
+persistence:
+  enabled: true
+  storageClass: "standard"
+  annotations:
+  accessMode: ReadWriteOnce
+  size: 10Gi
+setDefaultUser:
+  enabled: true
