@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: my-ingress-nginx
+    meta.helm.sh/release-namespace: basic-components
+    purelb.io/service-group: purelb-layer2-ippool
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/instance: my-ingress-nginx
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/version: 1.0.3
+    helm.sh/chart: ingress-nginx-4.0.5
+  name: my-ingress-nginx-controller-loadBalancer
+spec:
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  loadBalancerIP: 10.105.20.130
+  ports:
+    - appProtocol: http
+      name: http
+      nodePort: 32080
+      port: 80
+      protocol: TCP
+      targetPort: http
+    - appProtocol: https
+      name: https
+      nodePort: 32443
+      port: 443
+      protocol: TCP
+      targetPort: https
+  selector:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/instance: my-ingress-nginx
+    app.kubernetes.io/name: ingress-nginx
+  sessionAffinity: None
+  type: LoadBalancer

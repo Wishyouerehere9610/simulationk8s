@@ -1,0 +1,10 @@
+apiVersion: purelb.io/v1
+kind: ServiceGroup
+metadata:
+  name: purelb-layer2-ippool
+spec:
+  local:
+    v4pool:
+      subnet: '10.105.20.128/27'
+      pool: '10.105.20.129-10.105.20.159'
+      aggregation: /32

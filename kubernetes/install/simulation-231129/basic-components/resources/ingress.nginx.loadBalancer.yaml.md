@@ -1,0 +1,1 @@
+[ingress.nginx.loadBalancer.yaml](ingress.nginx.loadBalancer.yaml ':include')

@@ -1,0 +1,18 @@
+image:
+  repository: docker-registry-ops-dev.lab.zjvis.net:32443/docker.io/purelb
+  pullPolicy: Always
+  tag: v0.6.4
+lbnodeagent:
+  localint: default
+  extlbint: kube-lb0
+  podSecurityPolicy:
+    enabled: false
+  resources:
+    limits:
+      memory: 100Mi
+allocator:
+  podSecurityPolicy:
+    enabled: false
+  resources:
+    limits:
+      memory: 100Mi

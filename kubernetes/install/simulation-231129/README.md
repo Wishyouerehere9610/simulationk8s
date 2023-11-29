@@ -5,3 +5,7 @@
 
 ### installation
 * [k8s_installation](k8s_installation.md)
+* basic-components
+    + [ingress-nginx](basic-components/ingress-nginx.md)
+    + [cert-manager](basic-components/cert-manager.md)
+    + [docker-registry](basic-components/docker-registry.md)
