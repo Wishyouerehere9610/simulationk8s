@@ -23,6 +23,6 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: mariadb-root-password
-                  name: my-mariadb-test
+                  name: mariadb-test
             - name: TZ
               value: Asia/Shanghai
