@@ -6,8 +6,8 @@
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p $DOCKER_IMAGE_PATH
       BASE_URL="https://resource-ops.lab.zjvis.net:32443/docker-images"
       for IMAGE in "docker.io_bitnami_minio_2022.8.22-debian-11-r0.dim" \
-          "docker.io_bitnami_minio-client_2022.8.11-debian-11-r3.dim" \
-          "docker.io_bitnami_bitnami-shell_11-debian-11-r28.dim"
+      "docker.io_bitnami_minio-client_2022.8.11-debian-11-r3.dim" \
+      "docker.io_bitnami_bitnami-shell_11-debian-11-r28.dim"
       do
           IMAGE_FILE=$DOCKER_IMAGE_PATH/$IMAGE
           if [ ! -f $IMAGE_FILE ]; then
@@ -17,12 +17,15 @@
           fi
           docker image load -i $IMAGE_FILE && rm -f $IMAGE_FILE
       done
-      DOCKER_REGISTRY="docker-registry-ops-dev.lab.zjvis.net:32443"
+      DOCKER_REGISTRY="docker-registry-simulation.lab.zjvis.net:32443"
       for IMAGE in "docker.io/bitnami/minio:2022.8.22-debian-11-r0" \
           "docker.io/bitnami/minio-client:2022.8.11-debian-11-r3" \
           "docker.io/bitnami/bitnami-shell:11-debian-11-r28"
       do
-          kind load docker-image ${IMAGE}
+          DOCKER_TARGET_IMAGE=$DOCKER_REGISTRY/$IMAGE
+          docker tag $IMAGE $DOCKER_TARGET_IMAGE \
+              && docker push $DOCKER_TARGET_IMAGE \
+              && docker image rm $DOCKER_TARGET_IMAGE
       done
       ```
 2. prepare helm values [minio.values.yaml](resources/minio.values.yaml.md)
