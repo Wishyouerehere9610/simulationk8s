@@ -1,14 +1,16 @@
 image:
-  repository: "docker.io/library/influxdb"
+  repository: "docker-registry-simulation.lab.zjvis.net:32443/docker.io/library/influxdb"
   tag: "1.8.10-alpine"
   pullPolicy: IfNotPresent
 service:
   type: ClusterIP
+  nodePorts:
+    http: ""
 persistence:
   enabled: true
-  storageClass: "standard"
+  storageClass: "nfs-external-nas"
   annotations:
   accessMode: ReadWriteOnce
-  size: 10Gi
+  size: 50Gi
 setDefaultUser:
   enabled: true
