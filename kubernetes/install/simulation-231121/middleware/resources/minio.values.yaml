@@ -1,12 +1,12 @@
 image:
-  registry: docker.io
+  registry: docker-registry-simulation.lab.zjvis.net:32443/docker.io
   repository: bitnami/minio
-  tag: 2022.8.22-debian-11-r0
+  tag: 2021.9.18-debian-10-r0
   pullPolicy: IfNotPresent
 clientImage:
-  registry: docker.io
+  registry: docker-registry-simulation.lab.zjvis.net:32443/docker.io
   repository: bitnami/minio-client
-  tag: 2022.8.11-debian-11-r3
+  tag: 2021.9.2-debian-10-r17
 containerPorts:
   api: 9000
   console: 9001
@@ -17,7 +17,7 @@ ingress:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /$1
     nginx.ingress.kubernetes.io/proxy-body-size: 10g
-  hostname: web-minio.cnconti.cc
+  hostname: web-minio-new-simulation.lab.zjvis.net
   path: /?(.*)
   tls: false
 apiIngress:
@@ -26,18 +26,18 @@ apiIngress:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /$1
     nginx.ingress.kubernetes.io/proxy-body-size: 10g
-  hostname: api-minio.cnconti.cc
+  hostname: api-minio-new-simulation.lab.zjvis.net
   path: /?(.*)
   tls: false
 persistence:
   enabled: true
-  storageClass: standard
-  size: 30Gi
+  storageClass: nfs-external-nas
+  size: 100Gi
 volumePermissions:
   enabled: false
   image:
-    registry: docker.io
+    registry: docker-registry-simulation.lab.zjvis.net:32443/docker.io
     repository: bitnami/bitnami-shell
-    tag: 11-debian-11-r28
+    tag: 10-debian-10-r198
     pullPolicy: IfNotPresent
     pullSecrets: [ ]
