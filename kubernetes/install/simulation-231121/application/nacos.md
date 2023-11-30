@@ -18,7 +18,14 @@
           fi
           docker image load -i $IMAGE_FILE && rm -f $IMAGE_FILE
       done
-      kind load docker-image docker.io/nacos/nacos-server:v2.2.0
+      DOCKER_REGISTRY="docker-registry-simulation.lab.zjvis.net:32443"
+      for IMAGE in "docker.io/nacos/nacos-server:v2.2.0"
+      do
+          DOCKER_TARGET_IMAGE=$DOCKER_REGISTRY/$IMAGE
+          docker tag $IMAGE $DOCKER_TARGET_IMAGE \
+              && docker push $DOCKER_TARGET_IMAGE \
+              && docker image rm $DOCKER_TARGET_IMAGE
+      done
       ```
 2. create database `nacos`
     * ```shell
