@@ -1,7 +1,7 @@
 # Linux
 
 ## install
-* [install centos 7 ](install.centos.7.md)测试
+* [install centos 7 ](install.centos.7.md)
 
 ## basic
 * [install centos 8 by boot image](install.centos.8.by.boot.image.md)
