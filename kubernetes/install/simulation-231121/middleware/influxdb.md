@@ -15,7 +15,14 @@
           fi
           docker image load -i $IMAGE_FILE && rm -f $IMAGE_FILE
       done
-      kind load docker-image docker.io/library/influxdb:1.8.10-alpine
+      DOCKER_REGISTRY="docker-registry-simulation.lab.zjvis.net:32443"
+      for IMAGE in "docker.io/library/influxdb:1.8.10-alpine"
+      do
+          DOCKER_TARGET_IMAGE=$DOCKER_REGISTRY/$IMAGE
+          docker tag $IMAGE $DOCKER_TARGET_IMAGE \
+              && docker push $DOCKER_TARGET_IMAGE \
+              && docker image rm $DOCKER_TARGET_IMAGE
+      done
       ```
 2. prepare helm values [influxdb.values.yaml](resources/influxdb.values.yaml.md)
 3. install `influxdb` by helm
