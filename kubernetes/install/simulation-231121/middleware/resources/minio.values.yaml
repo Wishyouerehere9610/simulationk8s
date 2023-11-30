@@ -1,12 +1,12 @@
 image:
   registry: docker-registry-simulation.lab.zjvis.net:32443/docker.io
   repository: bitnami/minio
-  tag: 2021.9.18-debian-10-r0
+  tag: 2022.8.22-debian-11-r0
   pullPolicy: IfNotPresent
 clientImage:
   registry: docker-registry-simulation.lab.zjvis.net:32443/docker.io
   repository: bitnami/minio-client
-  tag: 2021.9.2-debian-10-r17
+  tag: 2022.8.11-debian-11-r3
 containerPorts:
   api: 9000
   console: 9001
@@ -38,6 +38,6 @@ volumePermissions:
   image:
     registry: docker-registry-simulation.lab.zjvis.net:32443/docker.io
     repository: bitnami/bitnami-shell
-    tag: 10-debian-10-r198
+    tag: 11-debian-11-r28
     pullPolicy: IfNotPresent
     pullSecrets: [ ]
