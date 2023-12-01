@@ -1,6 +1,7 @@
 replicas: 1
 image:
-  repository: docker.io/grafana/grafana
+  registry: docker-registry-simulation.lab.zjvis.net:32443/docker.io
+  repository: grafana/grafana
   tag: "9.2.15"
   pullPolicy: IfNotPresent
 testFramework:
@@ -9,7 +10,8 @@ testFramework:
   tag: "v1.4.1"
   imagePullPolicy: IfNotPresent
 downloadDashboardsImage:
-  repository: docker.io/curlimages/curl
+  registry: docker-registry-simulation.lab.zjvis.net:32443/docker.io
+  repository: curlimages/curl
   tag: 7.85.0
   pullPolicy: IfNotPresent
 service:
@@ -28,21 +30,23 @@ ingress:
 persistence:
   type: pvc
   enabled: true
-  storageClassName: "standard"
+  storageClassName: "nfs-external-nas"
   accessModes:
     - ReadWriteOnce
   size: 10Gi
 initChownData:
   enabled: true
   image:
-    repository: docker.io/library/busybox
+    registry: docker-registry-simulation.lab.zjvis.net:32443/docker.io
+    repository: library/busybox
     tag: "1.31.1"
     pullPolicy: IfNotPresent
 adminUser: admin
 adminPassword: AAaa1234
 sidecar:
   image:
-    repository: quay.io/kiwigrid/k8s-sidecar
+    registry: docker-registry-simulation.lab.zjvis.net:32443/quay.io
+    repository: kiwigrid/k8s-sidecar
     tag: 1.22.0
   imagePullPolicy: IfNotPresent
   dashboards:
