@@ -46,7 +46,7 @@
       kubectl get secret --namespace middleware my-mariadb \
              -o jsonpath="{.data.mariadb-root-password}" | base64 --decode && echo
       ```
-5. prepare helm values [nacos.values.yaml](resources/nacos.values.yaml.md)
+5. prepare helm values（rest mariadb password） [nacos.values.yaml](resources/nacos.values.yaml.md)
 6. install `nacos` by helm
     * ```shell
       helm install \
