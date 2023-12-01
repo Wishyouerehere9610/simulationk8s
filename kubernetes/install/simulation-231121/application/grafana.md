@@ -19,14 +19,18 @@
           fi
           docker image load -i $IMAGE_FILE && rm -f $IMAGE_FILE
       done
+      DOCKER_REGISTRY="docker-registry-simulation.lab.zjvis.net:32443"
       for IMAGE in "docker.io/grafana/grafana:9.2.15" \
           "docker.io/bats/bats:v1.4.1" \
           "docker.io/curlimages/curl:7.85.0" \
           "docker.io/library/busybox:1.31.1" \
           "quay.io/kiwigrid/k8s-sidecar:1.22.0"
       do
-          kind load docker-image ${IMAGE}
-      done
+          DOCKER_TARGET_IMAGE=$DOCKER_REGISTRY/$IMAGE
+          docker tag $IMAGE $DOCKER_TARGET_IMAGE \
+              && docker push $DOCKER_TARGET_IMAGE \
+              && docker image rm $DOCKER_TARGET_IMAGE
+      done      
       ```
 2. prepare helm values [grafana.values.yaml](resources/grafana.values.yaml.md)
 3. install `grafana` by helm
