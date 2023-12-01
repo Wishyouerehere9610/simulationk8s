@@ -22,7 +22,14 @@
           fi
           docker image load -i $IMAGE_FILE && rm -f $IMAGE_FILE
       done
-      kind load docker-image docker.io/centos:centos8.4.2105
+      DOCKER_REGISTRY="docker-registry-simulation.lab.zjvis.net:32443"
+      for IMAGE in "docker.io/centos:centos8.4.2105"
+      do
+          DOCKER_TARGET_IMAGE=$DOCKER_REGISTRY/$IMAGE
+          docker tag $IMAGE $DOCKER_TARGET_IMAGE \
+              && docker push $DOCKER_TARGET_IMAGE \
+              && docker image rm $DOCKER_TARGET_IMAGE
+      done
       ```
 4. create database `nacos`
     * ```shell
