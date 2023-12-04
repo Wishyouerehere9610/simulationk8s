@@ -1,0 +1,42 @@
+image:
+  registry: docker-registry-simulation.lab.zjvis.net:32443
+  repository: docker.io/bitnami/nginx
+  tag: 1.21.3-debian-10-r29
+  pullPolicy: IfNotPresent
+  pullSecrets: [ ]
+service:
+  type: ClusterIP
+  port: 8080
+extraVolumes:
+  - name: resource-nginx-volume
+    persistentVolumeClaim:
+      claimName: resource-nginx-pvc
+extraVolumeMounts:
+  - name: resource-nginx-volume
+    mountPath: /usr/share/nginx/html
+serverBlock: |-
+  server {
+    listen 8080;
+    location / {
+      root   /usr/share/nginx/html;
+      autoindex on;
+    }
+  }
+sidecars:
+  - name: busybox
+    image: docker-registry-simulation.lab.zjvis.net:32443/docker.io/busybox:1.33.1-uclibc
+    imagePullPolicy: Always
+    command: [ 'sh', '-c', 'tail -f /etc/hosts' ]
+    volumeMounts:
+      - name: resource-nginx-volume
+        mountPath: "/data"
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: alidns-webhook-letsencrypt
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/proxy-body-size: 10g
+  hostname: resource-ops-dev.lab.zjvis.net
+  path: /?(.*)
+  tls: true
