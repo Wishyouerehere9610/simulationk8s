@@ -44,6 +44,10 @@
 1. check connection
    * ```
      curl --insecure --header 'Host: phpmyadmin-ops-simulation.lab.zjvis.net' https://localhost:32080
+2. how to login
+    service:my-mariadb.middleware(db'spodname)
+    user：root(auth secret user)
+    password: ***** (auth secret password)
    
 ## uninstallation
 1. uninstall `phpmyadmin`
