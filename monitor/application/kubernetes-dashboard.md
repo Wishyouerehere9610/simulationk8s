@@ -7,7 +7,28 @@
 1. prepare [dashboard.values.yaml](resources/dashboard.values.yaml.md)
 2. prepare images
     * ```shell
-      
+      DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p $DOCKER_IMAGE_PATH
+      BASE_URL="https://resource-ops.lab.zjvis.net:32443/docker-images"
+      for IMAGE in "docker.io_kubernetesui_dashboard_v2.4.0.dim" \
+          "docker.io_kubernetesui_metrics-scraper_v1.0.7.dim" 
+      do
+          IMAGE_FILE=$DOCKER_IMAGE_PATH/$IMAGE
+          if [ ! -f $IMAGE_FILE ]; then
+              TMP_FILE=$IMAGE_FILE.tmp \
+                  && curl -o "$TMP_FILE" -L "$BASE_URL/$IMAGE" \
+                  && mv $TMP_FILE $IMAGE_FILE
+          fi
+          docker image load -i $IMAGE_FILE && rm -f $IMAGE_FILE
+      done
+      DOCKER_REGISTRY="docker-registry-simulation.lab.zjvis.net:32443"
+      for IMAGE in "docker.io/kubernetesui/dashboard:v2.4.0" \
+          "docker.io/kubernetesui/metrics-scraper:v1.0.7" 
+      do
+          DOCKER_TARGET_IMAGE=$DOCKER_REGISTRY/$IMAGE
+          docker tag $IMAGE $DOCKER_TARGET_IMAGE \
+              && docker push $DOCKER_TARGET_IMAGE \
+              && docker image rm $DOCKER_TARGET_IMAGE
+      done
       ```
 3. install dashboard
    * ```shell
