@@ -46,5 +46,5 @@
 ### uninstall 
 1. uninstall `my-grafana`
     * ```shell
-      helm -n middleware uninstall my-grafana
+      helm -n application uninstall my-grafana
       ```

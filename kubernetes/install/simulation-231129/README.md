@@ -9,3 +9,6 @@
     + [ingress-nginx](basic-components/ingress-nginx.md)
     + [cert-manager](basic-components/cert-manager.md)
     + [docker-registry](basic-components/docker-registry.md)
+
+### kubeadm rest
+   * [kubeadm reset](kubeadm-reset.md)

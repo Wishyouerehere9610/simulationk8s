@@ -45,3 +45,7 @@ CNAME: `docker-registry-simulation.lab.zjvis.net`: `10.101.16.62`
           && docker pull $TARGET_IMAGE \
           && echo success
       ```
+      
+6. uninstall
+  ```
+   helm -n basic-components uninstall my-docker-registry
