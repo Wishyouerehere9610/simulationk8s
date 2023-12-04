@@ -23,4 +23,3 @@ volumePermissions:
     pullPolicy: Always
 service:
   type: NodePort
-
