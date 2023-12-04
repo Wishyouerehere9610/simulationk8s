@@ -8,7 +8,7 @@
 
 ### installation
 1. prepare images
-    * ```yaml
+    * ```shell
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p $DOCKER_IMAGE_PATH
       BASE_URL="https://resource-ops-dev.lab.zjvis.net:32443/docker-images"
       for IMAGE in "docker.io_python_3.8.16-bullseye.dim" \
