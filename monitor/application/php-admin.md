@@ -43,7 +43,7 @@
 ## test
 1. check connection
    * ```
-     curl --insecure --header 'Host: phpmyadmin-ops-dev.lab.zjvis.net' https://localhost:32080
+     curl --insecure --header 'Host: phpmyadmin-ops-simulation.lab.zjvis.net' https://localhost:32080
    
 ## uninstallation
 1. uninstall `phpmyadmin`
