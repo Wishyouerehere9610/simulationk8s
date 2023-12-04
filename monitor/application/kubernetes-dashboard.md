@@ -43,14 +43,14 @@
 ## test
 1. check connection
    * ```shell
-      curl --insecure --header 'Host: dashboard-ops-dev.lab.zjvis.net' https://localhost:32443
+      curl --insecure --header 'Host: dashboard-ops-simulation.lab.zjvis.net' https://localhost:32443
      ```
 2. create read only user
    * prepare [dashboard.create.user.yaml](resources/dashboard.create.user.yaml.md)
    * ```shell
      kubectl apply -f dashboard.create.user.yaml
      ``` 
-3. visit `https://dashboard-ops-dev.lab.zjvis.net:32443`
+3. visit `https://dashboard-ops-simulation.lab.zjvis.net:32443/`
    * use the extracted token to login
    * ```shell
      kubectl -n application get secret \
