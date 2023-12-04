@@ -1,7 +1,7 @@
 ## resouce-nginx
  #### CName: 
- * resource-ops-dev.lab.zjvis.net 
- * ops-dev-01.lab.zjvis.net
+ * `resource-ops-dev.lab.zjvis.net`
+ * `ops-dev-01.lab.zjvis.net`
 
 ### install resource-nginx
 1. prepare [resource.nginx.values.yaml](resources/resource.nginx.values.yaml.md)
@@ -31,14 +31,14 @@
              && docker image rm $DOCKER_TARGET_IMAGE
      done   
       ```
-4. creat namespace `application` if not exits 
+3. creat namespace `application` if not exits 
    * ```shell
       kubectl get namespace application || kubectl create namespace application
      ```
-5. create `resource-nginx-pvc`
+4. create `resource-nginx-pvc`
    * prepare [resource.nginx.pvc.yaml](resources/resource.nginx.pvc.yaml.md)
    
-6. install resource-nginx
+5. install resource-nginx
    * ```shell
      helm install \
      --create-namespace --namespace application \

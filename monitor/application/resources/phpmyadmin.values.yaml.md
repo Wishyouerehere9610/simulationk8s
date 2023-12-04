@@ -1,0 +1,1 @@
+[phpmyadmin.values.yaml](phpmyadmin.values.yaml ':include')
