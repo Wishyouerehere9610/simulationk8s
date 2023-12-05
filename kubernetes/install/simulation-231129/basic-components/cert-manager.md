@@ -77,5 +77,6 @@
       ```
       
 ### uninstall cert-manager
-   ```   
-   helm -n basic-components uninstall my-cert-manager
+   * ```shell   
+     helm -n basic-components uninstall my-cert-manager
+     ```
