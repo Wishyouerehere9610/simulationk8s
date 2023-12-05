@@ -75,3 +75,7 @@
     * ```shell
       kubectl -n basic-components apply -f alidns.webhook.cluster.issuer.yaml
       ```
+      
+### uninstall cert-manager
+   ```   
+   helm -n basic-components uninstall my-cert-manager

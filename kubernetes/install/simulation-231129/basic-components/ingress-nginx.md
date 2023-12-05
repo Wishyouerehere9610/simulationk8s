@@ -28,3 +28,6 @@
           --values ingress.nginx.values.yaml \
           --atomic
       ```
+### uninstall ingress-nginx
+   ```   
+   helm -n basic-components uninstall my-ingress-nginx
