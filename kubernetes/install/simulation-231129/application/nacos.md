@@ -71,6 +71,10 @@
     * ![img_1.png](img_1.png)
 4. configuration example
    *  [simulation-bootstrap.yaml](resources/simulation-bootstrap.yaml.md)
+   *  modify `mariadb` password
+   *  modify `redis-cluster` password
+   *  modify `minio` accessKey、secretKey
+   *  modify `influx` password
        
 ### uninstall
 1. uninstall `my-nacos`

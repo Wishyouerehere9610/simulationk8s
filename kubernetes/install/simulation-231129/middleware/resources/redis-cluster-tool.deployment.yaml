@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: redis-cluster-tool
-          image: docker.io/bitnami/redis-cluster:6.2.2-debian-10-r0
+          image: *****
           imagePullPolicy: IfNotPresent
           env:
             - name: REDIS_PASSWORD

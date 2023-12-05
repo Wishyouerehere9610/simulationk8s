@@ -22,7 +22,7 @@ spring:
       driver-class-name: com.mysql.cj.jdbc.Driver
       url: jdbc:mysql://my-mariadb.middleware:3306/simulation?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=Asia/Shanghai
       username: root
-      password: 8p9MXdFxdv
+      password: ******
       filters: config
       initial-size: 10
       max-active: 20
@@ -45,7 +45,7 @@ spring:
         max-idle: 8 
         min-idle: 2 
         max-wait: -1 
-    password: 74PyLDEJhM
+    password: ******
     timeout: 500
 
 mybatis:
@@ -74,8 +74,8 @@ jwt:
 minio:
   endpoint: my-minio.middleware
   port: 9000
-  accessKey: admin
-  secretKey: xfW1uRCnNS
+  accessKey: ******
+  secretKey: ******
 
 
 async:
@@ -126,7 +126,7 @@ management:
         db: simulation
         uri: http://my-influxdb.middleware:8086
         user-name: admin
-        password: bZ6qCx2UdM
+        password: ******
         connect-timeout: 1s
         read-timeout: 10s
         auto-create-db: true
