@@ -15,17 +15,13 @@
                   && curl -o "$TMP_FILE" -L "$BASE_URL/$IMAGE" \
                   && mv $TMP_FILE $IMAGE_FILE
           fi
-          docker image load -i $IMAGE_FILE && rm -f $IMAGE_FILE
+          docker image load -i $IMAGE_FILE && rm -rf $IMAGE_FILE
       done
-      DOCKER_REGISTRY="docker-registry-simulation.lab.zjvis.net:32443"
       for IMAGE in "docker.io/bitnami/mariadb:10.5.12-debian-10-r0" \
           "docker.io/bitnami/bitnami-shell:10-debian-10-r153" \
           "docker.io/bitnami/mysqld-exporter:0.13.0-debian-10-r56"
       do
-          DOCKER_TARGET_IMAGE=$DOCKER_REGISTRY/$IMAGE
-          docker tag $IMAGE $DOCKER_TARGET_IMAGE \
-              && docker push $DOCKER_TARGET_IMAGE \
-              && docker image rm $DOCKER_TARGET_IMAGE
+          kind load docker-image ${IMAGE}
       done
       ```
 2. prepare helm values [mariadb.values.yaml](resources/mariadb.values.yaml.md)

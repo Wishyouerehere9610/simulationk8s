@@ -14,17 +14,13 @@
                   && curl -o "$TMP_FILE" -L "$BASE_URL/$IMAGE" \
                   && mv $TMP_FILE $IMAGE_FILE
           fi
-          docker image load -i $IMAGE_FILE && rm -f $IMAGE_FILE
+          docker image load -i $IMAGE_FILE && rm -rf $IMAGE_FILE
       done
-      DOCKER_REGISTRY="docker-registry-simulation.lab.zjvis.net:32443"
       for IMAGE in "docker.io/bitnami/redis-cluster:6.2.2-debian-10-r0" \
           "docker.io/bitnami/redis-exporter:1.20.0-debian-10-r27"
       do
-          DOCKER_TARGET_IMAGE=$DOCKER_REGISTRY/$IMAGE
-          docker tag $IMAGE $DOCKER_TARGET_IMAGE \
-              && docker push $DOCKER_TARGET_IMAGE \
-              && docker image rm $DOCKER_TARGET_IMAGE
-      done      
+          kind load docker-image ${IMAGE}
+      done
       ```
 2. prepare helm values [redis-cluster.values.yaml](resources/redis-cluster.values.yaml.md)
 3. install `redis-cluster` by helm

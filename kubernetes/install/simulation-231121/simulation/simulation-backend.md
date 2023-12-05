@@ -8,7 +8,7 @@
 
 ### installation
 1. prepare images
-    * ```shell
+    * ```yaml
       DOCKER_IMAGE_PATH=/root/docker-images && mkdir -p $DOCKER_IMAGE_PATH
       BASE_URL="https://resource-ops-dev.lab.zjvis.net:32443/docker-images"
       for IMAGE in "docker.io_python_3.8.16-bullseye.dim" \
@@ -22,14 +22,7 @@
           fi
           docker image load -i $IMAGE_FILE && rm -f $IMAGE_FILE
       done
-      DOCKER_REGISTRY="docker-registry-simulation.lab.zjvis.net:32443"
-      for IMAGE in "docker.io/centos:centos8.4.2105"
-      do
-          DOCKER_TARGET_IMAGE=$DOCKER_REGISTRY/$IMAGE
-          docker tag $IMAGE $DOCKER_TARGET_IMAGE \
-              && docker push $DOCKER_TARGET_IMAGE \
-              && docker image rm $DOCKER_TARGET_IMAGE
-      done
+      kind load docker-image docker.io/centos:centos8.4.2105
       ```
 4. create database `nacos`
     * ```shell
