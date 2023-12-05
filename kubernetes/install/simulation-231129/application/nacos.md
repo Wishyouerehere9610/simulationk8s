@@ -75,7 +75,7 @@
         servlet:
           session:
             timeout: 3600
-     
+      
       spring:
         application:
           name: simulation
@@ -119,28 +119,28 @@
               max-wait: -1 
           password: 74PyLDEJhM
           timeout: 500
-     
+      
       mybatis:
         mapper-locations: classpath*:mapper/*.xml
         type-aliases-package: org.zjvis.simulation.common.dto
         configuration:
           map-underscore-to-camel-case: true
         type-handlers-package: org.zjvis.simulation.common.handler
-     
+      
       pagehelper:
         helperDialect: mysql
         reasonable: true
         supportMethodsArguments: true
         params: count=countSql
         returnPageInfo: check
-     
+      
       jasypt:
         encryptor:
           password: 4tr=Kl34jDs@O/u4_#2c
-     
+      
       jwt:
         secret: 32e4bc02a7ccf34d72692db7f08aa945102e290beb4832d5673b987015d8cb4f
-     
+
       minio:
         endpoint: my-minio.middleware
         port: 9000
@@ -154,7 +154,7 @@
           queueCapacity: 1000
           keepAliveSeconds: 60
           threadNamePrefix: Async-Thread-
-     
+      
       group:
         threadPool:
           corePoolSize: 20
@@ -203,7 +203,7 @@
               num-threads: 2
               consistency: one
               compressed: true
-              batch-size: 1000
+              batch-size: 1000      
 ### uninstall
 1. uninstall `my-nacos`
     * ```shell
