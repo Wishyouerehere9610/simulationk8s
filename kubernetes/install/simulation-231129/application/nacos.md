@@ -134,24 +134,19 @@
         params: count=countSql
         returnPageInfo: check
       
-      
-      
       jasypt:
         encryptor:
           password: 4tr=Kl34jDs@O/u4_#2c
       
       jwt:
         secret: 32e4bc02a7ccf34d72692db7f08aa945102e290beb4832d5673b987015d8cb4f
-      
-      
-      
+
       minio:
         endpoint: my-minio.middleware
         port: 9000
         accessKey: admin
         secretKey: xfW1uRCnNS
-      
-      
+     
       async:
         threadPool:
           corePoolSize: 20
@@ -208,7 +203,7 @@
               num-threads: 2
               consistency: one
               compressed: true
-              batch-size: 1000
+              batch-size: 1000      
 ### uninstall
 1. uninstall `my-nacos`
     * ```shell
