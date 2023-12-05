@@ -1,0 +1,1 @@
+[mariadb-tool.deployment.yaml](mariadb-tool.deployment.yaml ':include')

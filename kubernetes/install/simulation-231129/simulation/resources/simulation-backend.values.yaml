@@ -1,0 +1,85 @@
+image:
+  repository: docker-registry-ops-dev.lab.zjvis.net:32443/docker.io/simulation-backend-springboot
+  tag: "8bc6395b-1.0.0-C4f979aa"
+centos:
+  name: centos
+  repository: docker.io/centos
+  tag: "centos8.4.2105"
+service:
+  type: ClusterIP
+  port: 8289
+  targetPort: 8289
+  socket:
+    io:
+      enabled: true
+      type: ClusterIP
+      port: 8389
+      targetPort: 8289
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+  hosts:
+    - host: simulation.cnconti.cc
+      paths:
+        - path: /api/?(.*)
+          pathType: ImplementationSpecific
+  socket:
+    io:
+      enabled: true
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/proxy-body-size: 5g
+        nginx.ingress.kubernetes.io/proxy-connect-timeout: "7200"
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "7200"
+        nginx.ingress.kubernetes.io/proxy-send-timeout: "7200"
+        nginx.ingress.kubernetes.io/websocket-services: "app-sockets-cluster-ip-service"
+      hosts:
+        - host: simulation.cnconti.cc
+          paths:
+            - path: /socket.io/?(.*)
+              pathType: ImplementationSpecific
+livenessProbe:
+  failureThreshold: 3
+  httpGet:
+    path: /health/check/liveness
+    port: 8289
+    scheme: HTTP
+  periodSeconds: 10
+  initialDelaySeconds: 180
+  successThreshold: 1
+  timeoutSeconds: 1
+readinessProbe:
+  failureThreshold: 3
+  httpGet:
+    path: /health/check/readiness
+    port: 8289
+    scheme: HTTP
+  periodSeconds: 10
+  initialDelaySeconds: 180
+  successThreshold: 1
+  timeoutSeconds: 1
+application:
+  environment:
+    - name: JAVA_OPS
+      value: "-server -Xms1024m -Xmx8096m -XX:+UseG1GC -DJM.LOG.PATH=/app/logs -DJM.SNAPSHOT.PATH=/app"
+secret:
+  application: |-
+    nacos:
+      config:
+        bootstrap:
+          enable: true
+          log-enable: true
+        server-addr: my-nacos.application:8848
+        data-id: simulation-bootstrap.yaml
+        namespace: simulation
+        group: DEFAULT_GROUP
+        type: yaml
+        auto-refresh: true
+        remote-first: true
+        username: nacos
+        password: Nacos@1234

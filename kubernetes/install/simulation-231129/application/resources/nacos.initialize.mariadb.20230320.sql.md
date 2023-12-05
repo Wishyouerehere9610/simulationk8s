@@ -1,0 +1,1 @@
+[nacos.initialize.mariadb.20230320.sql](nacos.initialize.mariadb.20230320.sql ':include')

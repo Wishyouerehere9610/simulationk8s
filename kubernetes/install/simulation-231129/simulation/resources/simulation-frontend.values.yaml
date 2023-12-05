@@ -1,0 +1,16 @@
+image:
+  repository: docker-registry-ops-dev.lab.zjvis.net:32443/docker.io/simulation-frontend-vue
+  tag: "df316417-1.0.0-C4f979aa"
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+  hosts:
+    - host: simulation.cnconti.cc
+      paths:
+        - path: /(.*)
+          pathType: ImplementationSpecific
