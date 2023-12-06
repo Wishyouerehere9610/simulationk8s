@@ -49,3 +49,6 @@ CNAME: `docker-registry-simulation.lab.zjvis.net`: `10.101.16.62`
 6. uninstall
   ```
    helm -n basic-components uninstall my-docker-registry
+   helm -n basic-components uninstall my-alidns-webhook
+   kubectl delete ingress my-dokcer-registry-ingress
+   
