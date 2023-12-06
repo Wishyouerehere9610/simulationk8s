@@ -33,7 +33,7 @@
       ```
 4. install `alidns-webhook`
     * prepare [alidns.webhook.values.yaml](resources/alidns.webhook.values.yaml.md)
-    * make sure permissions added to `$YOUR_ACCESS_KEY_ID`
+    * （`todo: Bokang Li`）make sure permissions added to `$YOUR_ACCESS_KEY_ID`
         + ```json
           {
             "Version": "1",
