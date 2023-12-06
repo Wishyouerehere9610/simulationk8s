@@ -2,7 +2,7 @@ def docsPath = project.file(".")
 def containerName = "ContiDocs"
 task startDocsNginxDocker(type: Exec) {
     def port = 8081
-    executable("podman")
+    executable("docker")
     args(
             "run", "--rm",
             "--name", containerName,
