@@ -47,9 +47,20 @@
       && kubectl -n ${NAMESPACE} get secret my-redis-cluster \
          -o jsonpath={.data.redis-password} | base64 --decode && echo
   ```
-## grafana
-   * kubectl get secret my-influxdb-auth --namespace middleware
-   * kubectl get secret my-influxdb-auth --namespace middleware -o yaml
+## influx
+
+* ```shell
+  # get secret name
+  kubectl -n middleware get secret
+  ```
+
+* ```shell
+  # user
+  kubectl get secret my-influxdb-auth -o "jsonpath={.data['influxdb-user']}" --namespace middleware | base64 --decode
+
+  # password
+  kubectl get secret my-influxdb-auth -o "jsonpath={.data['influxdb-password']}" --namespace middleware | base64 --decode
+  ```
 
   
   

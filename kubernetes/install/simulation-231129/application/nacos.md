@@ -61,7 +61,7 @@
 
 ### test
 1. connect to `nacos`
-    * `http://nacos-simulation.cnconti.cc/nacos`
+    * `http://nacos-simulation.cnconti.cc:32080/nacos/#/login`
     * username: `nacos`
     * password: `Nacos@1234`
 2. `nacos` create namespace
