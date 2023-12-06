@@ -29,5 +29,6 @@
           --atomic
       ```
 ### uninstall ingress-nginx
-   ```   
-   helm -n basic-components uninstall my-ingress-nginx
+   * ```shell 
+      helm -n basic-components uninstall my-ingress-nginx
+     ```
