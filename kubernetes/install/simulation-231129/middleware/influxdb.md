@@ -24,7 +24,7 @@
               && docker image rm $DOCKER_TARGET_IMAGE
       done
       ```
-2. prepare helm values [influxdb.values.yaml](resources/influxdb.values.yaml.md)
+2. prepare helm values [influxdb.values.yaml](../application/resources/influxdb.values.yaml.md)
 3. install `influxdb` by helm
     * ```shell
       helm install \
