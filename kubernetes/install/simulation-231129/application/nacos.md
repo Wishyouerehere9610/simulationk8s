@@ -66,10 +66,12 @@
     * password: `Nacos@1234`
 2. `nacos` create namespace
     * ![img.png](img.png)
-3. `nacos` create Configuration
+3.  export all configuration and import 
+    * ![nacos-config.png](nacos-config.png)
+4. `nacos` modify simulation-bootstrap.yaml
     * Query `middleware & password` and modify content
     * ![img_1.png](img_1.png)
-4. configuration example
+5. configuration example
    *  [simulation-bootstrap.yaml](resources/simulation-bootstrap.yaml.md)
    *  modify `mariadb` password
    *  modify `redis-cluster` password
