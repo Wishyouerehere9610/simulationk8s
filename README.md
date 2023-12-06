@@ -1,18 +1,24 @@
 <p style="text-align: center; font-size: xx-large; font-weight: bolder;">Welcome to ContiDocs</p>
 
-## Technology stack
-* [Linux](linux/README.md)
-* [Database](database/README.md)
-* [Language](language/README.md)
-* [Hadoop](hadoop/README.md)
-* [Docker](docker/README.md)
-* [Kubernetes](kubernetes/README.md)
+[//]: # (## Technology stack)
 
-## Shortcut tools
-* [Commands](shortcutTools/commands.md)
+[//]: # (* [Linux]&#40;linux/README.md&#41;)
+
+[//]: # (* [Database]&#40;database/README.md&#41;)
+
+[//]: # (* [Language]&#40;language/README.md&#41;)
+
+[//]: # (* [Hadoop]&#40;hadoop/README.md&#41;)
+
+[//]: # (* [Docker]&#40;docker/README.md&#41;)
+## Simulation Kubernetes
+* [Kubernetes](kubernetes/README.md)
 
 ## Monitor tools
 * [Monitor](monitor/README.md)
+
+## Shortcut tools
+* [Commands](shortcutTools/commands.md)
 
 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 

@@ -1,24 +1,41 @@
 ## Kubernetes
 
-### basic
-* [kind_cluster](kind.cluster.md)
-* [basic-components](basic/README.md)
-* [software](software/README.md)
-* [storage](storage/README.md)
-* [monitor](monitor/README.md)
+[//]: # (### basic)
 
-### share
-* [kubernetes](share/kubernetes.md)
+[//]: # (* [kind_cluster]&#40;kind.cluster.md&#41;)
 
-### install
-* [k8s-1.25.6](install/k8s_1.25.6/README.md)
-* [kubespray-230926](install/kubespray-230926/README.md)
-* [kubespray-offline-231009](install/kubespray-offline-231009/README.md)
-* [nebula-231129](install/nebula-231129/README.md)
-* [simulation-231121(测试安装集群)](install/simulation-231121/README.md)
-* [simulation-231129-kubeadm(正式搭建)](install/simulation-231129/README.md)
+[//]: # (* [basic-components]&#40;basic/README.md&#41;)
 
-## other
-* [kubernetes binary tools](binary_tools.md)
-* [commands](commands.md)
-* [k8s CNI](resources/cni.md)
+[//]: # (* [software]&#40;software/README.md&#41;)
+
+[//]: # (* [storage]&#40;storage/README.md&#41;)
+
+[//]: # (* [monitor]&#40;monitor/README.md&#41;)
+
+[//]: # ()
+[//]: # (### share)
+
+[//]: # (* [kubernetes]&#40;share/kubernetes.md&#41;)
+
+[//]: # (### install)
+[//]: # (* [k8s-1.25.6]&#40;install/k8s_1.25.6/README.md&#41;)
+
+[//]: # (* [kubespray-230926]&#40;install/kubespray-230926/README.md&#41;)
+
+[//]: # (* [kubespray-offline-231009]&#40;install/kubespray-offline-231009/README.md&#41;)
+
+[//]: # (* [nebula-231129]&#40;install/nebula-231129/README.md&#41;)
+
+###  Test docker&k8s
+* [simulation(测试安装集群)](install/simulation-231121/README.md)
+
+### Simulation k8s
+* [simulation(正式搭建)](install/simulation-231129/README.md)
+
+[//]: # (## other)
+
+[//]: # (* [kubernetes binary tools]&#40;binary_tools.md&#41;)
+
+[//]: # (* [commands]&#40;commands.md&#41;)
+
+[//]: # (* [k8s CNI]&#40;resources/cni.md&#41;)
