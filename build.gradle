@@ -13,7 +13,7 @@ task startDocsNginxDocker(type: Exec) {
     )
 }
 task stopDocsNginxDocker(type: Exec) {
-    executable("podman")
+    executable("docker")
     args(
             "kill", containerName,
     )

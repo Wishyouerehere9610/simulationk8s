@@ -39,6 +39,7 @@
 4. create deployment `redis-cluster-tool`
     * prepare [redis-cluster-tool.deployment.yaml](resources/redis-cluster-tool.deployment.yaml.md)
       * modify `image` content by docker registry in step 1
+      * ex:`docker-registry-simulation.lab.zjvis.net:32443/docker.io/bitnami/redis-cluster:6.2.2-debian-10-r0`
       
     * ```shell
       kubectl -n middleware apply -f redis-cluster-tool.deployment.yaml
