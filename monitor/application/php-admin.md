@@ -42,8 +42,8 @@
 
 ## test
 1. check connection
-     ```
-     curl --insecure --header 'Host: phpmyadmin-ops-simulation.lab.zjvis.net' https://localhost:32080
+   ```
+   curl --insecure --header 'Host: phpmyadmin-ops-simulation.lab.zjvis.net' https://localhost:32080
      
 2. how to login
     ```

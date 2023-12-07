@@ -36,7 +36,7 @@
      --create-namespace --namespace application \
      my-dashboard \
      https://resource-ops.lab.zjvis.net:32443/charts/kubernetes.github.io/dashboard/kubernetes-dashboard-5.0.5.tgz \
-     --values dashboard.values.yaml \*
+     --values dashboard.values.yaml \
      --atomic
      ```
      

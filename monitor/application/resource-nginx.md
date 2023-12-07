@@ -37,7 +37,10 @@
      ```
 4. create `resource-nginx-pvc`
    * prepare [resource.nginx.pvc.yaml](resources/resource.nginx.pvc.yaml.md)
-   
+   * ```shell
+     kubectl -n application apply -f resource.nginx.pvc.yaml
+     ```
+
 5. install resource-nginx
    * ```shell
      helm install \
