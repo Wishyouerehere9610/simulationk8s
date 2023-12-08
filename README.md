@@ -11,13 +11,16 @@
 [//]: # (* [Hadoop]&#40;hadoop/README.md&#41;)
 
 [//]: # (* [Docker]&#40;docker/README.md&#41;)
-## Simulation Kubernetes
+## Simulation kubernetes
 * [Kubernetes](kubernetes/README.md)
 
 ## Monitor tools
 * [Monitor](monitor/README.md)
 
 ## Shortcut tools
+* [Commands](shortcutTools/commands.md)
+
+##  Kubernetes structures
 * [Commands](shortcutTools/commands.md)
 
 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
