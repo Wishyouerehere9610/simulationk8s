@@ -21,7 +21,7 @@
 * [Commands](shortcutTools/commands.md)
 
 ##  Kubernetes structures
-* [Commands](shortcutTools/commands.md)
+* [k8s-structures](k8s-structures/k8s.md)
 
 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
