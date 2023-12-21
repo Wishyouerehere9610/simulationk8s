@@ -7,4 +7,5 @@
      10.101.16.62 dashboard-ops-simulation.lab.zjvis.net
      10.101.16.62 phpmyadmin-ops-simulation.lab.zjvis.net
      10.101.16.62 tekton-ops-simulation.lab.zjvis.net
+     10.101.16.62 web-minio-new-simulation.lab.zjvis.net 
 
